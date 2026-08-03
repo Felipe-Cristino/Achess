@@ -1,0 +1,18 @@
+version: '3.1'
+
+services:
+  game:
+    build: .
+    ports:
+      - 5000:5000
+    container_name: app
+    environment:
+      PORT: 5000
+      MYSQL_USER: felipebc
+      MYSQL_HOST: localhost
+      MYSQL_PASSWORD: abfelipe12
+      MYSQL_DATABASE: achess
+      MYSQL_PORT: 3306
+      JWT_SECRET: asgf97q9g9G9G9GFA90saf0ag083h0ahg
+      REDIS_HOST: redis
+    restart: always
