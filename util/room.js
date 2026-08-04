@@ -22,6 +22,7 @@ let numberOfRoomIndices = {
 
 const createRoom = (roomId, user, time, password = null) => {
     let room = { id: roomId, players: [null, null], moves: [], time, gameStarted: false }
+    
     room.players[0] = user
 
     if (password) {
@@ -118,7 +119,10 @@ const joinRoom = (roomId, user) => {
                         if (reply) {
                             let rooms = JSON.parse(reply);
                             
-                            rooms[roomIndices[roomId]].players[1] = user;
+                            if(rooms[roomIndices[roomId]] && 
+                                rooms[roomIndices[roomId]]?.players) {
+                                rooms[roomIndices[roomId]].players[1] = user;
+                            }
                             redisClient.set('rooms', JSON.stringify(rooms))
                         }
                     })

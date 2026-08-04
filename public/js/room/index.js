@@ -13,9 +13,9 @@ const blackCapturedPieces = document.getElementById("black-captured-pieces")
 const piecesToPromoteContainer = document.getElementById("pieces-to-promote-container")
 const piecesToPromote = document.getElementById("pieces-to-promote")
 const gameOverMessageContainer = document.getElementById("game-over-message-container")
-// const winnerUsername = gameOverMessageContainer.querySelector("p strong")
 const myScoreElement = document.getElementById("my-score")
 const enemyScoreElement = document.getElementById("enemy-score")
+let draggedPiece = null;
 
 // =====================
 // Game Variables
@@ -78,7 +78,8 @@ const displayChessPieces = () => {
         let box = document.getElementById(piece.position)
 
         box.innerHTML += `
-            <div class="piece light" data-piece="${piece.piece}" data-points="${piece.points}">
+            <div class="piece light" data-piece="${piece.piece}" 
+            draggable="true" data-points="${piece.points}">
                 <img src="${piece.icon}" alt="Chess Piece" >
             </div>
         `
@@ -88,7 +89,8 @@ const displayChessPieces = () => {
         let box = document.getElementById(piece.position)
 
         box.innerHTML += `
-            <div class="piece black" data-piece="${piece.piece}" data-points="${piece.points}">
+            <div class="piece black" data-piece="${piece.piece}" 
+            draggable="true" data-points="${piece.points}">
                 <img src="${piece.icon}" alt="Chess Piece" >
             </div>
         `
@@ -116,9 +118,30 @@ const onClickPiece = (e) => {
         return;
     }
 
+    let possibleMoves;
+
     selectedPiece = { position, piece }
 
-    let possibleMoves = findPossibleMoves(position, piece);
+    possibleMoves = findPossibleMoves(position, piece);
+
+    element.addEventListener("dragstart", function () {
+        draggedPiece = this;
+    });
+
+    possibleMoves.forEach((box) => {
+
+        box.addEventListener("dragover", function (e) {
+            e.preventDefault(); // Permite o drop
+        });
+
+        box.addEventListener("drop", function () {
+
+            if (!draggedPiece) return;
+
+            draggedPiece = null;
+        });
+
+    });
 
     showPossibleMoves(possibleMoves)
 }
@@ -126,6 +149,7 @@ const onClickPiece = (e) => {
 const addPieceListeners = () => {
     document.querySelectorAll(`.piece.${player}`).forEach(piece => {
         piece.addEventListener("click", onClickPiece)
+        piece.addEventListener("dragstart", onClickPiece);
     })
 
     document.querySelectorAll(`.piece.${enemy}`).forEach(piece => {
@@ -143,6 +167,7 @@ const showPossibleMoves = (possibleMoves) => {
         possibleMoveBox.classList.add("possible-move");
 
         possibleMoveBox.addEventListener("click", move)
+        possibleMoveBox.addEventListener("drop", move)
 
         box.appendChild(possibleMoveBox)
     })
@@ -152,6 +177,7 @@ const hidePossibleMoves = () => {
     document.querySelectorAll('.possible-move').forEach(possibleMoveBox => {
         let parent = possibleMoveBox.parentNode;
         possibleMoveBox.removeEventListener('click', move)
+        possibleMoveBox.removeEventListener('drop', move)
         parent.removeChild(possibleMoveBox)
     })
 }
@@ -282,12 +308,13 @@ const setCursor = (cusror) => {
 }
 
 const startGame = (playerTwo) => {
+
     playerBlack.querySelector(".username").innerText = playerTwo.username;
 
     waitingMessage.classList.add("hidden")
     playerBlack.classList.remove("hidden")
 
-    displayChessPieces()
+    displayChessPieces();
 
     setPiecesToPromote();
 }
@@ -1083,7 +1110,7 @@ const endGame = (winner = null, playerOne = null, playerTwo = null) => {
             enemyScoreElement.innerText = playerTwo.username + " -= "
                 + winningPoints + " pts";
             myScoreElement.classList.add("positive-score")
-            socket.emit("update-score", roomId,  winningPoints, -Math.abs(winningPoints), winner, loser);
+            socket.emit("update-score", roomId, winningPoints, -Math.abs(winningPoints), winner, loser);
         } else {
             winningPoints = parseInt((playerTwo.user_points - playerOne.user_points) * 1.4 / 100)
             myScoreElement.innerText = playerTwo.username + " += "
