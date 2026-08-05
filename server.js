@@ -111,18 +111,6 @@ io.on("connection", (socket) => {
                                     redisClient.set('totalRooms', totalRooms + "")
                                 }
                             })
-
-                            redisClient.get('number-of-rooms', (err, reply) => {
-                                if (err) throw err;
-
-                                if (reply) {
-                                    numberOfRooms = JSON.parse(reply)
-
-                                    numberOfRooms[numberOfRoomIndices[user.user_rank]] += 1;
-
-                                    redisClient.set('number-of-rooms', JSON.stringify(numberOfRooms));
-                                }
-                            })
                         }
                     })
                 } else {
@@ -140,7 +128,6 @@ io.on("connection", (socket) => {
 
             if (reply) {
                 let room = JSON.parse(reply);
-
                 let details = { players: room.players, time: room.time }
 
                 socket.emit("receive-game-details", details)
@@ -166,16 +153,7 @@ io.on("connection", (socket) => {
                 if (reply) {
                     totalRooms = parseInt(reply);
                 }
-
-                redisClient.get('number-of-rooms', (err, reply) => {
-                    if (err) throw err;
-
-                    if (reply) {
-                        numberOfRooms = JSON.parse(reply);
-                    }
-
-                    socket.emit('receive-number-of-rooms-and-users', numberOfRooms, totalRooms, totalUsers);
-                })
+                socket.emit('receive-number-of-rooms-and-users', totalRooms, totalUsers);
             })
         })
     })

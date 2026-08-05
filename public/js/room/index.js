@@ -62,7 +62,7 @@ const fetchUserCallback = (data) => {
     } else {
         socket.emit("user-connected", user, roomId);
     }
-
+    
     socket.emit("get-game-details", roomId, user)
 }
 
@@ -1139,7 +1139,6 @@ socket.on("receive-game-details", (details) => {
     gameDetails = details;
 
     let playerOne = gameDetails.players[0];
-
     gameHasTimer = gameDetails.time > 0
 
     if (!gameHasTimer) {

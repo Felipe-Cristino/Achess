@@ -80,20 +80,6 @@ const createRoom = (roomId, user, time, password = null) => {
             redisClient.set('totalRooms', "1")
         }
     })
-
-    redisClient.get('number-of-rooms', (err, reply) => {
-        if (err) throw err;
-
-        let numberOfRooms = [0, 0, 0, 0]
-
-        if (reply) {
-            numberOfRooms = JSON.parse(reply)
-        }
-
-        numberOfRooms[numberOfRoomIndices[user.user_rank]] += 1;
-
-        redisClient.set('number-of-rooms', JSON.stringify(numberOfRooms));
-    })
 }
 
 const joinRoom = (roomId, user) => {
@@ -166,18 +152,6 @@ const removeRoom = (roomId, userRank) => {
             totalRooms -= 1;
 
             redisClient.set('totalRooms', totalRooms + "")
-        }
-    })
-
-    redisClient.get('number-of-rooms', (err, reply) => {
-        if (err) throw err;
-
-        if (reply) {
-            numberOfRooms = JSON.parse(reply)
-
-            numberOfRooms[numberOfRoomIndices[userRank]] -= 1;
-
-            redisClient.set('number-of-rooms', JSON.stringify(numberOfRooms));
         }
     })
 }
