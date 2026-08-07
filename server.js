@@ -162,7 +162,7 @@ io.on("connection", (socket) => {
                     socket.emit("room-created", id)
                 }
 
-                if (room && room.players[0] && 
+                if (room && room.players[0] &&
                     room.players[0].username !== user.username) {
                     joinRoom(room.id, user);
                     socket.emit("room-joined", room.id);
@@ -392,35 +392,39 @@ io.on("connection", (socket) => {
         })
     })
 
-    socket.on("disconnect", () => {
-        let socketId = socket.id;
+    socket.on("disconnect", async () => {
+        const socketId = socket.id;
 
-        redisClient.get(socketId, (err, reply) => {
-            if (err) throw err;
+        try {
+            const userData = await redisClient.get(socketId);
 
-            if (reply) {
-                let user = JSON.parse(reply);
-
-                if (user.room) {
-
-                    redisClient.get(user.room, (err, reply) => {
-                        if (err) throw err;
-
-                        if (reply) {
-                            let room = JSON.parse(reply);
-
-                            if (!room.gameFinished) {
-                                io.to(user.room).emit("error", "The other player left the game")
-                            }
-                        }
-                    })
-                    removeRoom(user.room)
-                }
+            if (!userData) {
+                return;
             }
-        })
 
-        removeUser(socketId);
-    })
+            const user = JSON.parse(userData);
+
+            if (user.room) {
+
+                const roomData = await redisClient.get(user.room);
+
+                if (roomData) {
+                    const room = JSON.parse(roomData);
+
+                    if (!room.gameFinished) {
+                        io.to(user.room).emit("error", "The other player left the game");
+                    }
+                }
+
+                await removeRoom(user.room);
+            }
+
+            await removeUser(socketId);
+
+        } catch (err) {
+            console.error(err);
+        }
+    });
 })
 
 const PORT = process.env.PORT || 5000
