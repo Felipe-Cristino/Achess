@@ -15,6 +15,7 @@ const piecesToPromote = document.getElementById("pieces-to-promote")
 const gameOverMessageContainer = document.getElementById("game-over-message-container")
 const myScoreElement = document.getElementById("my-score")
 const enemyScoreElement = document.getElementById("enemy-score")
+// const aguardando = document.querySelector(".aguardando")
 let draggedPiece = null;
 
 // =====================
@@ -57,12 +58,7 @@ if (search.length > 1) {
 const fetchUserCallback = (data) => {
     user = data;
 
-    if (password) {
-        socket.emit("user-connected", user, roomId, password);
-    } else {
-        socket.emit("user-connected", user, roomId);
-    }
-    
+    socket.emit("user-connected", user, roomId);
     socket.emit("get-game-details", roomId, user)
 }
 
@@ -313,6 +309,8 @@ const startGame = (playerTwo) => {
 
     waitingMessage.classList.add("hidden")
     playerBlack.classList.remove("hidden")
+    room.classList.remove("hidden")
+    // aguardando.classList.add("hidden")
 
     displayChessPieces();
 
@@ -1171,7 +1169,6 @@ socket.on("receive-game-details", (details) => {
     }
 
     hideSpinner();
-    room.classList.remove("hidden")
 })
 
 // If we are the first player and someone joins then this event is emitted

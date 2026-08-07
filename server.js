@@ -51,7 +51,7 @@ let numberOfRoomIndices = {
 const io = socketIO(server);
 
 io.on("connection", (socket) => {
-    socket.on('user-connected', (user, roomId = null, password = null) => {
+    socket.on('user-connected', (user, roomId = null, time = null) => {
         if (roomId) {
             redisClient.get(roomId, (err, reply) => {
                 if (err) throw err
@@ -61,11 +61,6 @@ io.on("connection", (socket) => {
 
                     if (room.gameStarted) {
                         socket.emit("error", "The room is full")
-                        return;
-                    }
-
-                    if (room.password && (!password || room.password !== password)) {
-                        socket.emit("error", "To join the room you need the correct password");
                         return;
                     }
 
@@ -114,6 +109,9 @@ io.on("connection", (socket) => {
                         }
                     })
                 } else {
+                    // let id = Math.floor(Math.random() * 1001);
+                    // createRoom(id, user, time)
+                    // socket.emit("room-created", id)
                     socket.emit("error", "The room does not exist")
                 }
             })
@@ -141,7 +139,6 @@ io.on("connection", (socket) => {
 
             let totalUsers = 0;
             let totalRooms = 0;
-            let numberOfRooms = [0, 0, 0, 0];
 
             if (reply) {
                 totalUsers = parseInt(reply);
@@ -158,71 +155,37 @@ io.on("connection", (socket) => {
         })
     })
 
-    socket.on("create-room", (roomId, time, user, password = null) => {
-        redisClient.get(roomId, (err, reply) => {
-            if (err) throw err;
-
-            if (reply) {
-                socket.emit("error", `Room with id '${roomId}' already exists!`)
-            } else {
-                if (password) {
-                    createRoom(roomId, user, time, password)
-                } else {
-                    createRoom(roomId, user, time)
-                }
-
-                socket.emit("room-created")
-            }
-        })
-    })
-
-    socket.on("join-room", (roomId, user, password = null) => {
-        redisClient.get(roomId, (err, reply) => {
-            if (err) throw err;
-
-            if (reply) {
-                let room = JSON.parse(reply);
-
-                if (room.players[1] === null) {
-                    if (room.password && (!password || room.password !== password)) {
-                        socket.emit("error", "To join the room you need the correct password!")
-
-                        return
-                    }
-
-                    joinRoom(roomId, user);
-
-                    if (room.password && password !== "") {
-                        socket.emit("room-joined", roomId, password);
-                    } else {
-                        socket.emit("room-joined", roomId);
-                    }
-                } else {
-                    socket.emit("error", "The room is full!")
-                }
-            } else {
-                socket.emit("error", `Room with id '${roomId}' does not exist!`)
-            }
-        })
-    })
-
-    socket.on("join-random", (user) => {
+    socket.on("join-random", (user, time) => {
         redisClient.get("rooms", (err, reply) => {
             if (err) throw err;
 
             if (reply) {
                 let rooms = JSON.parse(reply);
 
-                let room = rooms.find(room => room.players[1] === null && !room.password);
+                let room = rooms.find(room => room.players[1] === null
+                    && room.time === time);
 
+                //MEXI NISSO==============================
+                if (room && room.players[0].username === user.username) {
+                    let id = Math.floor(Math.random() * 1001);
+                    createRoom(id, user, time)
+                    socket.emit("room-created", id)
+                    return;
+                }
+                //========================================
                 if (room) {
                     joinRoom(room.id, user);
                     socket.emit("room-joined", room.id);
                 } else {
-                    socket.emit("error", "No room found!")
+                    let id = Math.floor(Math.random() * 1001);
+                    createRoom(id, user, time)
+                    socket.emit("room-created", id)
+
                 }
             } else {
-                socket.emit("error", "No room found!")
+                let id = Math.floor(Math.random() * 1001);
+                createRoom(id, user, time)
+                socket.emit("room-created", id)
             }
         })
     })

@@ -20,14 +20,10 @@ let numberOfRoomIndices = {
     'expert': 3
 }
 
-const createRoom = (roomId, user, time, password = null) => {
+const createRoom = (roomId, user, time) => {
     let room = { id: roomId, players: [null, null], moves: [], time, gameStarted: false }
     
     room.players[0] = user
-
-    if (password) {
-        room.password = password;
-    }
 
     redisClient.set(roomId, JSON.stringify(room));
 
