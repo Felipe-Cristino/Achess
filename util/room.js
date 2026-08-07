@@ -114,7 +114,7 @@ const joinRoom = (roomId, user) => {
     })
 }
 
-const removeRoom = (roomId, userRank) => {
+const removeRoom = (roomId) => {
     redisClient.del(roomId);
 
     redisClient.get('roomIndices', (err, reply) => {

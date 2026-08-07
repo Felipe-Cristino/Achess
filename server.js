@@ -41,13 +41,6 @@ app.use("/", viewRoutes)
 app.use("/api", userRoutes)
 app.use("/api", gamesRoutes)
 
-let numberOfRoomIndices = {
-    'beginner': 0,
-    'intermediate': 1,
-    'advanced': 2,
-    'expert': 3
-}
-
 const io = socketIO(server);
 
 io.on("connection", (socket) => {
@@ -109,9 +102,6 @@ io.on("connection", (socket) => {
                         }
                     })
                 } else {
-                    // let id = Math.floor(Math.random() * 1001);
-                    // createRoom(id, user, time)
-                    // socket.emit("room-created", id)
                     socket.emit("error", "The room does not exist")
                 }
             })
@@ -165,25 +155,25 @@ io.on("connection", (socket) => {
                 let room = rooms.find(room => room.players[1] === null
                     && room.time === time);
 
-                //MEXI NISSO==============================
                 if (room && room.players[0].username === user.username) {
-                    let id = Math.floor(Math.random() * 1001);
+                    removeRoom(room.id)
+                    let id = Math.floor(Math.random() * 10001);
                     createRoom(id, user, time)
                     socket.emit("room-created", id)
-                    return;
                 }
-                //========================================
-                if (room) {
+
+                if (room && room.players[0] && 
+                    room.players[0].username !== user.username) {
                     joinRoom(room.id, user);
                     socket.emit("room-joined", room.id);
                 } else {
-                    let id = Math.floor(Math.random() * 1001);
+                    let id = Math.floor(Math.random() * 10001);
                     createRoom(id, user, time)
                     socket.emit("room-created", id)
 
                 }
             } else {
-                let id = Math.floor(Math.random() * 1001);
+                let id = Math.floor(Math.random() * 10001);
                 createRoom(id, user, time)
                 socket.emit("room-created", id)
             }
@@ -265,10 +255,6 @@ io.on("connection", (socket) => {
                 room.gameFinished = true;
 
                 redisClient.set(roomId, JSON.stringify(room))
-
-                //MEXI NISSO =================================
-                // socket.to(roomId).emit("you-lost", winner, score);
-                //===========================================
 
                 let query = `
                     INSERT INTO games(timer, moves, user_id_light, user_id_black, if_draw, started_at)
@@ -428,7 +414,7 @@ io.on("connection", (socket) => {
                             }
                         }
                     })
-                    removeRoom(user.room, user.user_rank)
+                    removeRoom(user.room)
                 }
             }
         })

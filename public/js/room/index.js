@@ -44,12 +44,7 @@ let enemyScore = 0;
 
 let gameStartedAtTimestamp = null
 
-if (search.length > 1) {
-    roomId = search[0].split("=")[1]
-    password = search[1].split("=")[1]
-} else {
-    roomId = search[0].split("=")[1]
-}
+roomId = search[0].split("=")[1]
 
 // =====================
 // Functions
@@ -1212,6 +1207,7 @@ socket.on("draw-points", (playerOne, playerTwo) => {
 })
 
 window.addEventListener("beforeunload", (event) => {
+
     if (!gameOver) {
         event.preventDefault();
         event.returnValue = "";
