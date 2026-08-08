@@ -23,7 +23,7 @@ const intervals = [0, 3, 5, 10, 15, 30, 45, 60]
 const fetchUserCallback = (data) => {
     user = data;
 
-    socket.emit("user-connected", user, null, null);
+    socket.emit("user-connected", user);
     socket.emit('get-rooms', "all")
 
     gamesDivElement.classList.remove("hidden")

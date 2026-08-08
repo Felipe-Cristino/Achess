@@ -44,7 +44,7 @@ app.use("/api", gamesRoutes)
 const io = socketIO(server);
 
 io.on("connection", (socket) => {
-    socket.on('user-connected', (user, roomId = null, time = null) => {
+    socket.on('user-connected', (user, roomId = null) => {
         if (roomId) {
             redisClient.get(roomId, (err, reply) => {
                 if (err) throw err
@@ -332,7 +332,7 @@ io.on("connection", (socket) => {
                 db.query(query, (err) => {
                     if (err) throw err;
                 })
-                
+
                 socket.emit("time-ended", winner, room.players[0], room.players[1], ifDraw)
             }
         })
@@ -425,8 +425,7 @@ io.on("connection", (socket) => {
                             }
                         }
                     })
-
-                    removeRoom(user.room, user.user_rank)
+                    removeRoom(user.room)
                 }
             }
             removeUser(socketId);
