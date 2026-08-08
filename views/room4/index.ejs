@@ -3,13 +3,13 @@
     <div class="container">
         <%- include('../include/partials/spinner') %>
             <div class="game-room hidden" id="game-room">
-                <div class="board-and-users">
-                    <div class="user" id="player-light">
+                <div class="board-and-users b-a-u2">
+                    <div class="user user2" id="player-light">
                         <span class="username"></span>
                         <span class="timer"></span>
                     </div>
 
-                    <div class="chess-board">
+                    <div class="chess-board chess-board2">
                         <div class="box display-position-left-room2" id="H-1"></div>
                         <div class="box" id="G-1"></div>
                         <div class="box" id="F-1"></div>
@@ -82,15 +82,47 @@
                     <p class="waiting-message" id="waiting-message">Waiting for someone to connect...</p>
                 </div>
 
-                <div class="captured-pieces">
+                <div class="captured-pieces c-p2">
+                    <div></div>
                     <div class="captured-container">
                         <h4>Pieces Captured:</h4>
                         <ul class="pieces" id="black-captured-pieces"></ul>
                     </div>
-
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
                     <div class="captured-container">
                         <h4>Pieces Captured:</h4>
                         <ul class="pieces" id="light-captured-pieces"></ul>
+                    </div>
+                    <div></div>
+                </div>
+
+                <div id="cards">
+                    <div class="black-cards">
+                        <div class="special-cards">
+                            <div class="card">
+                                <img class="img-card" src="../../assets/cartas/carta-especial-costas.jpeg"
+                                    alt="carta04">
+                            </div>
+                            <div class="card">
+                                <img class="img-card" src="../../assets/cartas/carta-especial-costas.jpeg"
+                                    alt="carta05">
+                            </div>
+                        </div>
+                        <div class="common-cards">
+                            <div class="card">
+                                <img class="img-card" src="../../assets/cartas/carta-comum-costas.jpeg" alt="carta01">
+                            </div>
+                            <div class="card">
+                                <img class="img-card" src="../../assets/cartas/carta-comum-costas.jpeg" alt="carta02">
+                            </div>
+                            <div class="card">
+                                <img class="img-card" src="../../assets/cartas/carta-comum-costas.jpeg" alt="carta03">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

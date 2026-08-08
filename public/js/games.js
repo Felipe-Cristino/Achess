@@ -58,7 +58,7 @@ const displayRooms = rooms => {
                 <div class="users-in-room">${numberOfPlayersInRoom} / 2</div>
 
                 <button ${numberOfPlayersInRoom === 2 ? "class='disabled'" : ""}>Join</button>
-                <div>${room.id} | ${room.time}</div>
+                <div>Normal Game | ${room.id} | ${room.time}</div>
             </li>
         `
     })
