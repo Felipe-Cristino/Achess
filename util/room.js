@@ -1,25 +1,5 @@
 const redisClient = require("../config/redis");
 
-/*
-    roomObj = { 
-        'room_id': {
-            'id': 'room_id',
-            'players': [user1, user2], 
-            'moves': [], 
-            'time': 60 (in minutes), 
-            'password': 'password', 
-            gameStarted: false 
-        } 
-    }
-*/
-
-let numberOfRoomIndices = {
-    'beginner': 0,
-    'intermediate': 1,
-    'advanced': 2,
-    'expert': 3
-}
-
 const createRoom = (roomId, user, time) => {
     let room = { id: roomId, players: [null, null], moves: [], time, gameStarted: false }
     

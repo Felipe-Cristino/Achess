@@ -1406,9 +1406,37 @@ tbody td img{
     cursor: pointer;
 }
 
-/* .aguardando {
-    margin-top: 50px;
-    margin-left: auto;
-    margin-right: auto;
-} */
+/* ===========CARTAS=========== */
+
+#cards {
+    height: 700px;
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: -80px;
+}
+
+.black-cards, .light-cards {
+    display: flex;
+    gap: 15px;
+}
+
+.card {
+    width: 110px;
+    height: 200px;
+    background-color: black;
+    border-radius: 5px;
+    padding: 5px;
+    border: 2px solid white;
+}
+
+.img-card {
+    width: 100%;
+    height: 100%;
+}
 /* ================================================================================= */

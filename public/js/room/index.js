@@ -15,7 +15,6 @@ const piecesToPromote = document.getElementById("pieces-to-promote")
 const gameOverMessageContainer = document.getElementById("game-over-message-container")
 const myScoreElement = document.getElementById("my-score")
 const enemyScoreElement = document.getElementById("enemy-score")
-// const aguardando = document.querySelector(".aguardando")
 let draggedPiece = null;
 
 // =====================
@@ -45,7 +44,7 @@ let enemyScore = 0;
 let gameStartedAtTimestamp = null
 
 roomId = search[0].split("=")[1]
-
+// const aguardando = document.querySelector(".aguardando")
 // =====================
 // Functions
 // =====================
@@ -287,7 +286,14 @@ const updateTimer = (currentPlayer, minutes, seconds) => {
 }
 
 const timerEndedCallback = () => {
-    socket.emit('timer-ended', roomId, user.username, gameStartedAtTimestamp)
+    let ifDraw = false;
+    if (myScore === 41) {
+        ifDraw = true;
+    }
+    else {
+        ifDraw = false;
+    }
+    socket.emit('timer-ended', roomId, user.username, gameStartedAtTimestamp, ifDraw)
 }
 // --------------------------------------
 
@@ -1204,6 +1210,16 @@ socket.on("king-is-attacked", () => {
 
 socket.on("draw-points", (playerOne, playerTwo) => {
     endGame(null, playerOne, playerTwo);
+})
+
+socket.on("time-ended", (winner, playerOne, playerTwo, ifDraw) => {
+    setTimeout(() => {
+        if (ifDraw) {
+            endGame(null, playerOne, playerTwo);
+        } else {
+            endGame(winner, playerOne, playerTwo);
+        }
+    }, 300)
 })
 
 window.addEventListener("beforeunload", (event) => {

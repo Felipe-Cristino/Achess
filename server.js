@@ -294,7 +294,7 @@ io.on("connection", (socket) => {
         })
     })
 
-    socket.on("timer-ended", (roomId, loser, startedAt) => {
+    socket.on("timer-ended", (roomId, loser, startedAt, ifDraw) => {
         redisClient.get(roomId, (err, reply) => {
             if (err) throw err
 
@@ -316,14 +316,24 @@ io.on("connection", (socket) => {
                     winner = room.players[0].username
                 }
 
-                let query = `
-                    INSERT INTO games(timer, moves, user_id_light, user_id_black, started_at)
-                    VALUES('${room.time + ''}', '${JSON.stringify(room.moves)}', ${room.players[0].id}, ${room.players[1].id}, '${startedAt + ''}')
+                let query;
+                if (ifDraw) {
+                    query = `
+                    INSERT INTO games(timer, moves, user_id_light, user_id_black, if_draw, started_at)
+                    VALUES('${room.time + ''}', '${JSON.stringify(room.moves)}', ${room.players[0].id}, ${room.players[1].id}, true, '${startedAt + ''}')
                 `
+                } else {
+                    query = `
+                    INSERT INTO games(timer, moves, user_id_light, user_id_black, if_draw, started_at)
+                    VALUES('${room.time + ''}', '${JSON.stringify(room.moves)}', ${room.players[0].id}, ${room.players[1].id}, false, '${startedAt + ''}')
+                `
+                }
 
                 db.query(query, (err) => {
                     if (err) throw err;
                 })
+                
+                socket.emit("time-ended", winner, room.players[0], room.players[1], ifDraw)
             }
         })
     })
@@ -374,6 +384,7 @@ io.on("connection", (socket) => {
                 })
             }
         })
+        removeRoom(roomId);
     })
 
     socket.on("checkmate-room", (roomId, winner) => {
@@ -392,39 +403,35 @@ io.on("connection", (socket) => {
         })
     })
 
-    socket.on("disconnect", async () => {
-        const socketId = socket.id;
+    socket.on("disconnect", () => {
+        let socketId = socket.id;
 
-        try {
-            const userData = await redisClient.get(socketId);
+        redisClient.get(socketId, (err, reply) => {
+            if (err) throw err;
 
-            if (!userData) {
-                return;
-            }
+            if (reply) {
+                let user = JSON.parse(reply);
 
-            const user = JSON.parse(userData);
+                if (user.room) {
+                    redisClient.get(user.room, (err, reply) => {
+                        if (err) throw err;
 
-            if (user.room) {
+                        if (reply) {
 
-                const roomData = await redisClient.get(user.room);
+                            let room = JSON.parse(reply);
 
-                if (roomData) {
-                    const room = JSON.parse(roomData);
+                            if (!room.gameFinished) {
+                                io.to(user.room).emit("error", "The other player left the game")
+                            }
+                        }
+                    })
 
-                    if (!room.gameFinished) {
-                        io.to(user.room).emit("error", "The other player left the game");
-                    }
+                    removeRoom(user.room, user.user_rank)
                 }
-
-                await removeRoom(user.room);
             }
-
-            await removeUser(socketId);
-
-        } catch (err) {
-            console.error(err);
-        }
-    });
+            removeUser(socketId);
+        })
+    })
 })
 
 const PORT = process.env.PORT || 5000
