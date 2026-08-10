@@ -152,6 +152,13 @@ io.on("connection", (socket) => {
             if (reply) {
                 let rooms = JSON.parse(reply);
 
+                let roomFull = rooms.find(room => room.players[0] !== null 
+                    && room.players[1] !== null && room.gameFinished === true
+                )
+                if(roomFull) {
+                    removeRoom(roomFull.id);
+                }
+
                 let room = rooms.find(room => room.players[1] === null
                     && room.time === time);
 

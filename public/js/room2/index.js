@@ -17,6 +17,30 @@ const myScoreElement = document.getElementById("my-score")
 const enemyScoreElement = document.getElementById("enemy-score")
 let draggedPiece = null;
 
+let carta01LightImg;
+let carta02LightImg;
+let carta03LightImg;
+let carta04LightImg;
+let carta05LightImg;
+
+let carta01BlackImg;
+let carta02BlackImg;
+let carta03BlackImg;
+let carta04BlackImg;
+let carta05BlackImg;
+
+const carta01LightCard = document.getElementById("carta01-light")
+const carta02LightCard = document.getElementById("carta02-light")
+const carta03LightCard = document.getElementById("carta03-light")
+const carta04LightCard = document.getElementById("carta04-light")
+const carta05LightCard = document.getElementById("carta05-light")
+
+const carta01BlackCard = document.getElementById("carta01-black")
+const carta02BlackCard = document.getElementById("carta02-black")
+const carta03BlackCard = document.getElementById("carta03-black")
+const carta04BlackCard = document.getElementById("carta04-black")
+const carta05BlackCard = document.getElementById("carta05-black")
+
 // =====================
 // Game Variables
 // =====================
@@ -316,6 +340,10 @@ const startGame = (playerTwo) => {
     displayChessPieces();
 
     setPiecesToPromote();
+
+    sortearCartas();
+
+    listenersCartas();
 }
 
 const setKingIsAttacked = (isAttacked) => {
@@ -1104,28 +1132,111 @@ const endGame = (winner = null, playerOne = null, playerTwo = null) => {
     } else {
         if (playerOne.user_points > playerTwo.user_points) {
             winningPoints = parseInt((playerTwo.user_points - playerOne.user_points) * 1.4 / 100)
-            myScoreElement.innerText = playerTwo.username + " += "
-                + winningPoints + " pts";
-            enemyScoreElement.innerText = playerOne.username + " -="
-                + winningPoints + " pts";
-            myScoreElement.classList.add("positive-score")
-            socket.emit("update-score", roomId, -Math.abs(winningPoints), winningPoints, winner, loser);
-        } else {
-            winningPoints = parseInt((playerTwo.user_points - playerOne.user_points) * 1.4 / 100)
             myScoreElement.innerText = playerOne.username + " += "
                 + winningPoints + " pts";
-            enemyScoreElement.innerText = playerTwo.username + " -="
+            enemyScoreElement.innerText = playerTwo.username + " -= "
                 + winningPoints + " pts";
             myScoreElement.classList.add("positive-score")
             socket.emit("update-score", roomId, winningPoints, -Math.abs(winningPoints), winner, loser);
+        } else {
+            winningPoints = parseInt((playerTwo.user_points - playerOne.user_points) * 1.4 / 100)
+            myScoreElement.innerText = playerTwo.username + " += "
+                + winningPoints + " pts";
+            enemyScoreElement.innerText = playerOne.username + " -= "
+                + winningPoints + " pts";
+            myScoreElement.classList.add("positive-score")
+            socket.emit("update-score", roomId, -Math.abs(winningPoints), winningPoints, winner, loser);
         }
     }
     gameOverMessageContainer.classList.remove("hidden")
 }
 // --------------------------------------
+const sortearCartas = () => {
+    const carta01LightNum = Math.floor(Math.random() * 4) + 1;
+    const carta02LightNum = Math.floor(Math.random() * 4) + 1;
+    const carta03LightNum = Math.floor(Math.random() * 10) + 1;
+    const carta04LightNum = Math.floor(Math.random() * 10) + 1;
+    const carta05LightNum = Math.floor(Math.random() * 10) + 1;
+
+    carta01LightImg = "../../assets/cartas/esp-carta" + carta01LightNum + ".jpeg";
+    carta02LightImg = "../../assets/cartas/esp-carta" + carta02LightNum + ".jpeg";
+    carta03LightImg = "../../assets/cartas/carta" + carta03LightNum + ".jpeg";
+    carta04LightImg = "../../assets/cartas/carta" + carta04LightNum + ".jpeg";
+    carta05LightImg = "../../assets/cartas/carta" + carta05LightNum + ".jpeg";
+
+    const carta01BlackNum = Math.floor(Math.random() * 4) + 1;
+    const carta02BlackNum = Math.floor(Math.random() * 4) + 1;
+    const carta03BlackNum = Math.floor(Math.random() * 10) + 1;
+    const carta04BlackNum = Math.floor(Math.random() * 10) + 1;
+    const carta05BlackNum = Math.floor(Math.random() * 10) + 1;
+
+    carta01BlackImg = "../../assets/cartas/esp-carta" + carta01LightNum + ".jpeg";
+    carta02BlackImg = "../../assets/cartas/esp-carta" + carta02LightNum + ".jpeg";
+    carta03BlackImg = "../../assets/cartas/carta" + carta03LightNum + ".jpeg";
+    carta04BlackImg = "../../assets/cartas/carta" + carta04LightNum + ".jpeg";
+    carta05BlackImg = "../../assets/cartas/carta" + carta05LightNum + ".jpeg";
+}
 
 displayChessPieces()
 
+const consoleCartas = () => {
+    console.log(carta01LightImg)
+    console.log(carta02LightImg)
+    console.log(carta03LightImg)
+    console.log(carta04LightImg)
+    console.log(carta05LightImg)
+
+    console.log(carta01BlackImg)
+    console.log(carta02BlackImg)
+    console.log(carta03BlackImg)
+    console.log(carta04BlackImg)
+    console.log(carta05BlackImg)
+}
+
+const listenersCartas = () => {
+
+    carta01LightCard.addEventListener("click", () => {
+        carta01LightCard.children[0].src = carta01LightImg;
+    })
+
+    carta02LightCard.addEventListener("click", () => {
+        carta02LightCard.children[0].src = carta02LightImg;
+    })
+
+    carta03LightCard.addEventListener("click", () => {
+        carta03LightCard.children[0].src = carta03LightImg;
+    })
+
+    carta04LightCard.addEventListener("click", () => {
+        carta04LightCard.children[0].src = carta04LightImg;
+    })
+
+    carta05LightCard.addEventListener("click", () => {
+        carta05LightCard.children[0].src = carta05LightImg;
+    })
+
+    //======================================================
+
+    carta01BlackCard.addEventListener("click", () => {
+        carta01BlackCard.children[0].src = carta01BlackImg;
+    })
+
+    carta02BlackCard.addEventListener("click", () => {
+        carta02BlackCard.children[0].src = carta02BlackImg;
+    })
+
+    carta03BlackCard.addEventListener("click", () => {
+        carta03BlackCard.children[0].src = carta03BlackImg;
+    })
+
+    carta04BlackCard.addEventListener("click", () => {
+        carta04BlackCard.children[0].src = carta04BlackImg;
+    })
+
+    carta05BlackCard.addEventListener("click", () => {
+        carta05BlackCard.children[0].src = carta05BlackImg;
+    })
+}
 // =====================
 // Socket Listeners
 // =====================
