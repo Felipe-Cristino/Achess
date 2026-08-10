@@ -36,7 +36,7 @@ const handleCreateRoomFormSubmit = e => {
 
     let time = intervals[+gameTime.value]
 
-    socket.emit("join-random", user, time)
+    socket.emit("join-random", user, time, "funny")
 
     createRoomFormContainer.classList.add("hidden")
 }

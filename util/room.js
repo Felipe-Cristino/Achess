@@ -1,7 +1,7 @@
 const redisClient = require("../config/redis");
 
-const createRoom = (roomId, user, time) => {
-    let room = { id: roomId, players: [null, null], moves: [], time, gameStarted: false }
+const createRoom = (roomId, user, time, mode) => {
+    let room = { id: roomId, players: [null, null], moves: [], time, gameStarted: false, mode: mode}
     
     room.players[0] = user
 
@@ -58,7 +58,7 @@ const createRoom = (roomId, user, time) => {
     })
 }
 
-const joinRoom = (roomId, user) => {
+const joinRoom = (roomId, user, mode) => {
     redisClient.get(roomId, (err, reply) => {
         if (err) throw err;
 
@@ -66,7 +66,9 @@ const joinRoom = (roomId, user) => {
             let room = JSON.parse(reply);
 
             room.players[1] = user;
-
+            if(room.mode !== mode) {
+                return;
+            }
             redisClient.set(roomId, JSON.stringify(room));
 
             redisClient.get('roomIndices', (err, reply) => {

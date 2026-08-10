@@ -145,7 +145,7 @@ io.on("connection", (socket) => {
         })
     })
 
-    socket.on("join-random", (user, time) => {
+    socket.on("join-random", (user, time, mode) => {
         redisClient.get("rooms", (err, reply) => {
             if (err) throw err;
 
@@ -165,23 +165,23 @@ io.on("connection", (socket) => {
                 if (room && room.players[0].username === user.username) {
                     removeRoom(room.id)
                     let id = Math.floor(Math.random() * 10001);
-                    createRoom(id, user, time)
+                    createRoom(id, user, time, mode)
                     socket.emit("room-created", id)
                 }
 
                 if (room && room.players[0] &&
                     room.players[0].username !== user.username) {
-                    joinRoom(room.id, user);
+                    joinRoom(room.id, user, mode);
                     socket.emit("room-joined", room.id);
                 } else {
                     let id = Math.floor(Math.random() * 10001);
-                    createRoom(id, user, time)
+                    createRoom(id, user, time, mode)
                     socket.emit("room-created", id)
 
                 }
             } else {
                 let id = Math.floor(Math.random() * 10001);
-                createRoom(id, user, time)
+                createRoom(id, user, time, mode)
                 socket.emit("room-created", id)
             }
         })
