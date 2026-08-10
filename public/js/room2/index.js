@@ -41,6 +41,23 @@ const carta03BlackCard = document.getElementById("carta03-black")
 const carta04BlackCard = document.getElementById("carta04-black")
 const carta05BlackCard = document.getElementById("carta05-black")
 
+let lance = 1;
+let waitLanceEspLight = 7;
+let waitLanceCommonLight = 3;
+let waitLanceEspBlack = 7;
+let waitLanceCommonBlack = 3;
+
+let estagioCarta01Light = 1;
+let estagioCarta02Light = 1;
+let estagioCarta03Light = 1;
+let estagioCarta04Light = 1;
+let estagioCarta05Light = 1;
+
+let estagioCarta01Black = 1;
+let estagioCarta02Black = 1;
+let estagioCarta03Black = 1;
+let estagioCarta04Black = 1;
+let estagioCarta05Black = 1;
 // =====================
 // Game Variables
 // =====================
@@ -380,6 +397,7 @@ const endMyTurn = (newPieceBox, pawnPromoted = false, castlingPerformed = false,
         checkIfKingIsAttacked(enemy);
     }, 300);
 
+    lance += 1;
 }
 // --------------------------------------
 
@@ -1187,7 +1205,7 @@ const sortearCartas = () => {
         let j = Math.floor(Math.random() * (i + 1));
         [numeros[i], numeros[j]] = [numeros[j], numeros[i]];
     }
-    
+
     const carta03LightNum = numeros[0];
     const carta04LightNum = numeros[1];
     const carta05LightNum = numeros[2];
@@ -1214,7 +1232,7 @@ const sortearCartas = () => {
         let j = Math.floor(Math.random() * (i + 1));
         [numeros[i], numeros[j]] = [numeros[j], numeros[i]];
     }
-    
+
     const carta03BlackNum = numeros[0];
     const carta04BlackNum = numeros[1];
     const carta05BlackNum = numeros[2];
@@ -1228,62 +1246,128 @@ const sortearCartas = () => {
 
 displayChessPieces()
 
-// const consoleCartas = () => {
-//     console.log(carta01LightImg)
-//     console.log(carta02LightImg)
-//     console.log(carta03LightImg)
-//     console.log(carta04LightImg)
-//     console.log(carta05LightImg)
-
-//     console.log(carta01BlackImg)
-//     console.log(carta02BlackImg)
-//     console.log(carta03BlackImg)
-//     console.log(carta04BlackImg)
-//     console.log(carta05BlackImg)
-// }
-
 const listenersCartas = () => {
 
     carta01LightCard.addEventListener("click", () => {
-        carta01LightCard.children[0].src = carta01LightImg;
+        if (lance >= waitLanceEspLight && estagioCarta01Light === 1) {
+            carta01LightCard.children[0].src = carta01LightImg;
+            estagioCarta01Light += 1;
+            waitLanceEspLight += 4;
+        }
+        if (lance >= waitLanceEspLight && estagioCarta01Light === 2) {
+            console.log("CARTA 01 LIGHT USADA");
+            carta01LightCard.remove();
+        }
     })
 
     carta02LightCard.addEventListener("click", () => {
-        carta02LightCard.children[0].src = carta02LightImg;
+        if (lance >= waitLanceEspLight && estagioCarta02Light === 1) {
+            carta02LightCard.children[0].src = carta02LightImg;
+            estagioCarta02Light += 1;
+            waitLanceEspLight += 4;
+        }
+        if (lance >= waitLanceEspLight && estagioCarta02Light === 2) {
+            console.log("CARTA 02 LIGHT USADA");
+            carta02LightCard.remove();
+        }
     })
 
     carta03LightCard.addEventListener("click", () => {
-        carta03LightCard.children[0].src = carta03LightImg;
+        if (lance >= waitLanceCommonLight && estagioCarta03Light === 1) {
+            carta03LightCard.children[0].src = carta03LightImg;
+            estagioCarta03Light += 1;
+            waitLanceCommonLight += 2;
+        }
+        if (lance >= waitLanceCommonLight && estagioCarta03Light === 2) {
+            console.log("CARTA 03 LIGHT USADA");
+            carta03LightCard.remove();
+        }
     })
 
     carta04LightCard.addEventListener("click", () => {
-        carta04LightCard.children[0].src = carta04LightImg;
+        if (lance >= waitLanceCommonLight && estagioCarta04Light === 1) {
+            carta04LightCard.children[0].src = carta04LightImg;
+            estagioCarta04Light += 1;
+            waitLanceCommonLight += 2;
+        }
+        if (lance >= waitLanceCommonLight && estagioCarta04Light === 2) {
+            console.log("CARTA 04 LIGHT USADA");
+            carta04LightCard.remove();
+        }
     })
 
     carta05LightCard.addEventListener("click", () => {
-        carta05LightCard.children[0].src = carta05LightImg;
+        if (lance >= waitLanceCommonLight && estagioCarta05Light === 1) {
+            carta05LightCard.children[0].src = carta05LightImg;
+            estagioCarta05Light += 1;
+            waitLanceCommonLight += 2;
+        }
+        if (lance >= waitLanceCommonLight && estagioCarta05Light === 2) {
+            console.log("CARTA 05 LIGHT USADA");
+            carta05LightCard.remove();
+        }
     })
 
     //======================================================
 
     carta01BlackCard.addEventListener("click", () => {
-        carta01BlackCard.children[0].src = carta01BlackImg;
+        if (lance >= waitLanceEspBlack && estagioCarta01Black === 1) {
+            carta01BlackCard.children[0].src = carta01BlackImg;
+            estagioCarta01Black += 1;
+            waitLanceEspBlack += 4;
+        }
+        if (lance >= waitLanceEspBlack && estagioCarta01Black === 2) {
+            console.log("CARTA 01 BLACK USADA");
+            carta01BlackCard.remove();
+        }
     })
 
     carta02BlackCard.addEventListener("click", () => {
-        carta02BlackCard.children[0].src = carta02BlackImg;
+        if (lance >= waitLanceEspBlack && estagioCarta02Black === 1) {
+            carta02BlackCard.children[0].src = carta02BlackImg;
+            estagioCarta02Black += 1;
+            waitLanceEspBlack += 4;
+        }
+        if (lance >= waitLanceEspBlack && estagioCarta02Black === 2) {
+            console.log("CARTA 02 BLACK USADA");
+            carta02BlackCard.remove();
+        }
     })
 
     carta03BlackCard.addEventListener("click", () => {
-        carta03BlackCard.children[0].src = carta03BlackImg;
+        if (lance >= waitLanceCommonBlack && estagioCarta03Black === 1) {
+            carta03BlackCard.children[0].src = carta03BlackImg;
+            estagioCarta03Black += 1;
+            waitLanceCommonBlack += 2;
+        }
+        if (lance >= waitLanceCommonBlack && estagioCarta03Black === 2) {
+            console.log("CARTA 03 BLACK USADA");
+            carta03BlackCard.remove();
+        }
     })
 
     carta04BlackCard.addEventListener("click", () => {
-        carta04BlackCard.children[0].src = carta04BlackImg;
+        if (lance >= waitLanceCommonBlack && estagioCarta04Black === 1) {
+            carta04BlackCard.children[0].src = carta04BlackImg;
+            estagioCarta04Black += 1;
+            waitLanceCommonBlack += 2;
+        }
+        if (lance >= waitLanceCommonBlack && estagioCarta04Black === 2) {
+            console.log("CARTA 04 BLACK USADA");
+            carta04BlackCard.remove();
+        }
     })
 
     carta05BlackCard.addEventListener("click", () => {
-        carta05BlackCard.children[0].src = carta05BlackImg;
+        if (lance >= waitLanceCommonBlack && estagioCarta05Black === 1) {
+            carta05BlackCard.children[0].src = carta05BlackImg;
+            estagioCarta05Black += 1;
+            waitLanceCommonBlack += 2;
+        }
+        if (lance >= waitLanceCommonBlack && estagioCarta05Black === 2) {
+            console.log("CARTA 05 BLACK USADA");
+            carta05BlackCard.remove();
+        }
     })
 }
 // =====================
