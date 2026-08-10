@@ -1079,6 +1079,9 @@ const endGame = (winner = null, playerOne = null, playerTwo = null) => {
             if (winningPoints > 19) {
                 winningPoints = 19;
             }
+            if (winningPoints < 0) {
+                winningPoints = 0;
+            }
             myScoreElement.innerText = playerOne.username + " += "
                 + winningPoints + " pts";
             enemyScoreElement.innerText = playerTwo.username + " -= "
@@ -1094,6 +1097,9 @@ const endGame = (winner = null, playerOne = null, playerTwo = null) => {
             if (winningPoints > 19) {
                 winningPoints = 19;
             }
+            if (winningPoints < 0) {
+                winningPoints = 0;
+            }
             myScoreElement.innerText = playerTwo.username + " += "
                 + winningPoints + " pts";
             enemyScoreElement.innerText = playerOne.username + " -= "
@@ -1103,7 +1109,13 @@ const endGame = (winner = null, playerOne = null, playerTwo = null) => {
         }
     } else {
         if (playerOne.user_points > playerTwo.user_points) {
-            winningPoints = parseInt((playerTwo.user_points - playerOne.user_points) * 1.4 / 100)
+            winningPoints = parseInt((playerOne.user_points - playerTwo.user_points) * 1.4 / 100)
+            if(winningPoints >= 9) {
+                winningPoints = 9;
+            }
+            if (winningPoints < 0) {
+                winningPoints = 0;
+            }
             myScoreElement.innerText = playerTwo.username + " += "
                 + winningPoints + " pts";
             enemyScoreElement.innerText = playerOne.username + " -="
@@ -1112,6 +1124,12 @@ const endGame = (winner = null, playerOne = null, playerTwo = null) => {
             socket.emit("update-score", roomId, -Math.abs(winningPoints), winningPoints, winner, loser);
         } else {
             winningPoints = parseInt((playerTwo.user_points - playerOne.user_points) * 1.4 / 100)
+            if(winningPoints >= 9) {
+                winningPoints = 9;
+            }
+            if (winningPoints < 0) {
+                winningPoints = 0;
+            }
             myScoreElement.innerText = playerOne.username + " += "
                 + winningPoints + " pts";
             enemyScoreElement.innerText = playerTwo.username + " -="

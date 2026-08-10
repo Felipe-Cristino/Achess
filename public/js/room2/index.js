@@ -317,7 +317,7 @@ const timerEndedCallback = () => {
     else {
         ifDraw = false;
     }
-    socket.emit('timer-ended', roomId, user.username, gameStartedAtTimestamp, ifDraw)
+    socket.emit('timer-ended2', roomId, user.username, gameStartedAtTimestamp, ifDraw)
 }
 // --------------------------------------
 
@@ -372,7 +372,7 @@ const endMyTurn = (newPieceBox, pawnPromoted = false, castlingPerformed = false,
     const afogado = checkIfReiAfogado(player);
 
     if (afogado) {
-        socket.emit("draw", roomId, gameStartedAtTimestamp)
+        socket.emit("draw2", roomId, gameStartedAtTimestamp)
         socket.emit("draw-room", roomId)
     }
 
@@ -576,7 +576,7 @@ const move = (e) => {
     }
 
     if (checkForDraw()) {
-        socket.emit("draw", roomId, gameStartedAtTimestamp)
+        socket.emit("draw2", roomId, gameStartedAtTimestamp)
         socket.emit("draw-room", roomId)
     }
 
@@ -596,7 +596,7 @@ function savePosition() {
     positionHistory.set(key, repetitions);
 
     if (repetitions >= 3) {
-        socket.emit("draw", roomId, gameStartedAtTimestamp)
+        socket.emit("draw2", roomId, gameStartedAtTimestamp)
         socket.emit("draw-room", roomId)
     }
 
@@ -697,7 +697,7 @@ const checkIfKingIsAttacked = (playerToCheck) => {
     if (check) {
         if (player !== playerToCheck) {
             if (isCheckmate(kingPosition)) {
-                socket.emit('checkmate', roomId, gameStartedAtTimestamp)
+                socket.emit('checkmate2', roomId, gameStartedAtTimestamp)
                 socket.emit("checkmate-room", roomId, user.username);
             } else {
                 socket.emit('check', roomId);
@@ -1107,6 +1107,9 @@ const endGame = (winner = null, playerOne = null, playerTwo = null) => {
             if (winningPoints > 19) {
                 winningPoints = 19;
             }
+            if (winningPoints < 0) {
+                winningPoints = 0;
+            }
             myScoreElement.innerText = playerOne.username + " += "
                 + winningPoints + " pts";
             enemyScoreElement.innerText = playerTwo.username + " -= "
@@ -1122,6 +1125,9 @@ const endGame = (winner = null, playerOne = null, playerTwo = null) => {
             if (winningPoints > 19) {
                 winningPoints = 19;
             }
+            if (winningPoints < 0) {
+                winningPoints = 0;
+            }
             myScoreElement.innerText = playerTwo.username + " += "
                 + winningPoints + " pts";
             enemyScoreElement.innerText = playerOne.username + " -= "
@@ -1131,32 +1137,60 @@ const endGame = (winner = null, playerOne = null, playerTwo = null) => {
         }
     } else {
         if (playerOne.user_points > playerTwo.user_points) {
-            winningPoints = parseInt((playerTwo.user_points - playerOne.user_points) * 1.4 / 100)
-            myScoreElement.innerText = playerOne.username + " += "
-                + winningPoints + " pts";
-            enemyScoreElement.innerText = playerTwo.username + " -= "
-                + winningPoints + " pts";
-            myScoreElement.classList.add("positive-score")
-            socket.emit("update-score", roomId, winningPoints, -Math.abs(winningPoints), winner, loser);
-        } else {
-            winningPoints = parseInt((playerTwo.user_points - playerOne.user_points) * 1.4 / 100)
+            winningPoints = parseInt((playerOne.user_points - playerTwo.user_points) * 1.4 / 100)
+            if (winningPoints >= 9) {
+                winningPoints = 9;
+            }
+            if (winningPoints < 0) {
+                winningPoints = 0;
+            }
             myScoreElement.innerText = playerTwo.username + " += "
                 + winningPoints + " pts";
-            enemyScoreElement.innerText = playerOne.username + " -= "
+            enemyScoreElement.innerText = playerOne.username + " -="
                 + winningPoints + " pts";
             myScoreElement.classList.add("positive-score")
             socket.emit("update-score", roomId, -Math.abs(winningPoints), winningPoints, winner, loser);
+        } else {
+            winningPoints = parseInt((playerTwo.user_points - playerOne.user_points) * 1.4 / 100)
+            if (winningPoints >= 9) {
+                winningPoints = 9;
+            }
+            if (winningPoints < 0) {
+                winningPoints = 0;
+            }
+            myScoreElement.innerText = playerOne.username + " += "
+                + winningPoints + " pts";
+            enemyScoreElement.innerText = playerTwo.username + " -="
+                + winningPoints + " pts";
+            myScoreElement.classList.add("positive-score")
+            socket.emit("update-score", roomId, winningPoints, -Math.abs(winningPoints), winner, loser);
         }
     }
     gameOverMessageContainer.classList.remove("hidden")
 }
 // --------------------------------------
 const sortearCartas = () => {
-    const carta01LightNum = Math.floor(Math.random() * 4) + 1;
-    const carta02LightNum = Math.floor(Math.random() * 4) + 1;
-    const carta03LightNum = Math.floor(Math.random() * 10) + 1;
-    const carta04LightNum = Math.floor(Math.random() * 10) + 1;
-    const carta05LightNum = Math.floor(Math.random() * 10) + 1;
+
+    let numeros = [1, 2, 3, 4];
+
+    for (let i = numeros.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [numeros[i], numeros[j]] = [numeros[j], numeros[i]];
+    }
+
+    const carta01LightNum = numeros[0];
+    const carta02LightNum = numeros[1];
+
+    numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+    for (let i = numeros.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [numeros[i], numeros[j]] = [numeros[j], numeros[i]];
+    }
+    
+    const carta03LightNum = numeros[0];
+    const carta04LightNum = numeros[1];
+    const carta05LightNum = numeros[2];
 
     carta01LightImg = "../../assets/cartas/esp-carta" + carta01LightNum + ".jpeg";
     carta02LightImg = "../../assets/cartas/esp-carta" + carta02LightNum + ".jpeg";
@@ -1164,11 +1198,26 @@ const sortearCartas = () => {
     carta04LightImg = "../../assets/cartas/carta" + carta04LightNum + ".jpeg";
     carta05LightImg = "../../assets/cartas/carta" + carta05LightNum + ".jpeg";
 
-    const carta01BlackNum = Math.floor(Math.random() * 4) + 1;
-    const carta02BlackNum = Math.floor(Math.random() * 4) + 1;
-    const carta03BlackNum = Math.floor(Math.random() * 10) + 1;
-    const carta04BlackNum = Math.floor(Math.random() * 10) + 1;
-    const carta05BlackNum = Math.floor(Math.random() * 10) + 1;
+    numeros = [1, 2, 3, 4];
+
+    for (let i = numeros.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [numeros[i], numeros[j]] = [numeros[j], numeros[i]];
+    }
+
+    const carta01BlackNum = numeros[0];
+    const carta02BlackNum = numeros[1];
+
+    numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+    for (let i = numeros.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [numeros[i], numeros[j]] = [numeros[j], numeros[i]];
+    }
+    
+    const carta03BlackNum = numeros[0];
+    const carta04BlackNum = numeros[1];
+    const carta05BlackNum = numeros[2];
 
     carta01BlackImg = "../../assets/cartas/esp-carta" + carta01LightNum + ".jpeg";
     carta02BlackImg = "../../assets/cartas/esp-carta" + carta02LightNum + ".jpeg";
@@ -1179,19 +1228,19 @@ const sortearCartas = () => {
 
 displayChessPieces()
 
-const consoleCartas = () => {
-    console.log(carta01LightImg)
-    console.log(carta02LightImg)
-    console.log(carta03LightImg)
-    console.log(carta04LightImg)
-    console.log(carta05LightImg)
+// const consoleCartas = () => {
+//     console.log(carta01LightImg)
+//     console.log(carta02LightImg)
+//     console.log(carta03LightImg)
+//     console.log(carta04LightImg)
+//     console.log(carta05LightImg)
 
-    console.log(carta01BlackImg)
-    console.log(carta02BlackImg)
-    console.log(carta03BlackImg)
-    console.log(carta04BlackImg)
-    console.log(carta05BlackImg)
-}
+//     console.log(carta01BlackImg)
+//     console.log(carta02BlackImg)
+//     console.log(carta03BlackImg)
+//     console.log(carta04BlackImg)
+//     console.log(carta05BlackImg)
+// }
 
 const listenersCartas = () => {
 
@@ -1317,7 +1366,6 @@ socket.on("enemy-timer-updated", (minutes, seconds) => {
 socket.on("king-is-attacked", () => {
     setKingIsAttacked(true);
 })
-
 
 socket.on("draw-points", (playerOne, playerTwo) => {
     endGame(null, playerOne, playerTwo);

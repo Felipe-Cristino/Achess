@@ -275,6 +275,23 @@ io.on("connection", (socket) => {
         })
     })
 
+    socket.on("checkmate2", (roomId, startedAt) => {
+        redisClient.get(roomId, (err, reply) => {
+            if (err) throw err;
+
+            if (reply) {
+                let room = JSON.parse(reply);
+
+                redisClient.del(`${room.players[0].id}-played-games`);
+                redisClient.del(`${room.players[1].id}-played-games`);
+
+                room.gameFinished = true;
+
+                redisClient.set(roomId, JSON.stringify(room))
+            }
+        })
+    })
+
     socket.on("draw", (roomId, startedAt) => {
         redisClient.get(roomId, (err, reply) => {
             if (err) throw err;
@@ -297,6 +314,23 @@ io.on("connection", (socket) => {
                 db.query(query, (err) => {
                     if (err) throw err;
                 })
+            }
+        })
+    })
+
+    socket.on("draw2", (roomId, startedAt) => {
+        redisClient.get(roomId, (err, reply) => {
+            if (err) throw err;
+
+            if (reply) {
+                let room = JSON.parse(reply);
+
+                redisClient.del(`${room.players[0].id}-played-games`);
+                redisClient.del(`${room.players[1].id}-played-games`);
+
+                room.gameFinished = true;
+
+                redisClient.set(roomId, JSON.stringify(room))
             }
         })
     })
@@ -339,6 +373,33 @@ io.on("connection", (socket) => {
                 db.query(query, (err) => {
                     if (err) throw err;
                 })
+
+                socket.emit("time-ended", winner, room.players[0], room.players[1], ifDraw)
+            }
+        })
+    })
+
+    socket.on("timer-ended2", (roomId, loser, startedAt, ifDraw) => {
+        redisClient.get(roomId, (err, reply) => {
+            if (err) throw err
+
+            if (reply) {
+                let room = JSON.parse(reply);
+
+                redisClient.del(`${room.players[0].id}-played-games`);
+                redisClient.del(`${room.players[1].id}-played-games`);
+
+                room.gameFinished = true;
+
+                redisClient.set(roomId, JSON.stringify(room))
+
+                let winner;
+
+                if (room.players[0].username === loser) {
+                    winner = room.players[1].username
+                } else {
+                    winner = room.players[0].username
+                }
 
                 socket.emit("time-ended", winner, room.players[0], room.players[1], ifDraw)
             }
