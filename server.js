@@ -170,7 +170,8 @@ io.on("connection", (socket) => {
                 }
 
                 if (room && room.players[0] &&
-                    room.players[0].username !== user.username) {
+                    room.players[0].username !== user.username 
+                && room.mode === mode) {
                     joinRoom(room.id, user, mode);
                     socket.emit("room-joined", room.id);
                 } else {

@@ -66,9 +66,7 @@ const joinRoom = (roomId, user, mode) => {
             let room = JSON.parse(reply);
 
             room.players[1] = user;
-            if(room.mode !== mode) {
-                return;
-            }
+            
             redisClient.set(roomId, JSON.stringify(room));
 
             redisClient.get('roomIndices', (err, reply) => {

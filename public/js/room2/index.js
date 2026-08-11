@@ -41,11 +41,15 @@ const carta03BlackCard = document.getElementById("carta03-black")
 const carta04BlackCard = document.getElementById("carta04-black")
 const carta05BlackCard = document.getElementById("carta05-black")
 
-let lance = 1;
+let lance = 0;
 let waitLanceEspLight = 7;
 let waitLanceCommonLight = 3;
 let waitLanceEspBlack = 7;
 let waitLanceCommonBlack = 3;
+let podeDesvirarEspLight = true;
+let podeDesvirarCommonLight = true;
+let podeDesvirarEspBlack = true;
+let podeDesvirarCommonBlack = true;
 
 let estagioCarta01Light = 1;
 let estagioCarta02Light = 1;
@@ -1248,125 +1252,207 @@ displayChessPieces()
 
 const listenersCartas = () => {
 
+    if(estagioCarta01Light === 2 && lance >= waitLanceEspLight) {
+        carta01LightCard.classList.add("card-brilhante");
+    }
+
     carta01LightCard.addEventListener("click", () => {
-        if (lance >= waitLanceEspLight && estagioCarta01Light === 1) {
+        if (lance >= waitLanceEspLight && estagioCarta01Light === 1
+            && podeDesvirarEspLight) {
             carta01LightCard.children[0].src = carta01LightImg;
+            carta01LightCard.classList.add("card-brilhante2");
             estagioCarta01Light += 1;
             waitLanceEspLight += 4;
+            podeDesvirarEspLight = false;
         }
         if (lance >= waitLanceEspLight && estagioCarta01Light === 2) {
             console.log("CARTA 01 LIGHT USADA");
             carta01LightCard.remove();
+            podeDesvirarEspLight = true;
         }
     })
 
+    if(estagioCarta02Light === 2 && lance >= waitLanceEspLight) {
+        carta02LightCard.classList.add("card-brilhante2");
+    }
+
     carta02LightCard.addEventListener("click", () => {
-        if (lance >= waitLanceEspLight && estagioCarta02Light === 1) {
+        if (lance >= waitLanceEspLight && estagioCarta02Light === 1
+            && podeDesvirarEspLight) {
             carta02LightCard.children[0].src = carta02LightImg;
+            carta02LightCard.classList.add("card-brilhante");
             estagioCarta02Light += 1;
             waitLanceEspLight += 4;
+            podeDesvirarEspLight = false;
         }
         if (lance >= waitLanceEspLight && estagioCarta02Light === 2) {
             console.log("CARTA 02 LIGHT USADA");
             carta02LightCard.remove();
+            podeDesvirarEspLight = true;
         }
     })
 
+    if(estagioCarta03Light === 2 && lance >= waitLanceCommonLight) {
+        carta03LightCard.classList.add("card-brilhante");
+    }
+
     carta03LightCard.addEventListener("click", () => {
-        if (lance >= waitLanceCommonLight && estagioCarta03Light === 1) {
+        if (lance >= waitLanceCommonLight && estagioCarta03Light === 1 
+            && podeDesvirarCommonLight
+        ) {
             carta03LightCard.children[0].src = carta03LightImg;
+            carta03LightCard.classList.add("card-brilhante");
             estagioCarta03Light += 1;
             waitLanceCommonLight += 2;
+            podeDesvirarCommonLight = false;
         }
         if (lance >= waitLanceCommonLight && estagioCarta03Light === 2) {
             console.log("CARTA 03 LIGHT USADA");
             carta03LightCard.remove();
+            podeDesvirarCommonLight = true;
         }
     })
 
+    if(estagioCarta04Light === 2 && lance >= waitLanceCommonLight) {
+        carta04LightCard.classList.add("card-brilhante");
+    }
+
     carta04LightCard.addEventListener("click", () => {
-        if (lance >= waitLanceCommonLight && estagioCarta04Light === 1) {
+        if (lance >= waitLanceCommonLight && estagioCarta04Light === 1
+            && podeDesvirarCommonLight
+        ) {
             carta04LightCard.children[0].src = carta04LightImg;
+            carta04LightCard.classList.add("card-brilhante");
             estagioCarta04Light += 1;
             waitLanceCommonLight += 2;
+            podeDesvirarCommonLight = false;
         }
         if (lance >= waitLanceCommonLight && estagioCarta04Light === 2) {
             console.log("CARTA 04 LIGHT USADA");
             carta04LightCard.remove();
+            podeDesvirarCommonlight = true;
         }
     })
 
+    if(estagioCarta05Light === 2 && lance >= waitLanceCommonLight) {
+        carta05LightCard.classList.add("card-brilhante");
+    }
+
     carta05LightCard.addEventListener("click", () => {
-        if (lance >= waitLanceCommonLight && estagioCarta05Light === 1) {
+        if (lance >= waitLanceCommonLight && estagioCarta05Light === 1
+            && podeDesvirarCommonLight
+        ) {
             carta05LightCard.children[0].src = carta05LightImg;
             estagioCarta05Light += 1;
             waitLanceCommonLight += 2;
+            podeDesvirarCommonLight = false;
         }
         if (lance >= waitLanceCommonLight && estagioCarta05Light === 2) {
             console.log("CARTA 05 LIGHT USADA");
             carta05LightCard.remove();
+            podeDesvirarCommonLight = true;
         }
     })
 
     //======================================================
 
+    if(estagioCarta01Black === 2 && lance >= waitLanceEspBlack) {
+        carta01BlackCard.classList.add("card-brilhante2");
+    }
+
     carta01BlackCard.addEventListener("click", () => {
-        if (lance >= waitLanceEspBlack && estagioCarta01Black === 1) {
+        if (lance >= waitLanceEspBlack && estagioCarta01Black === 1
+            && podeDesvirarEspBlack
+        ) {
             carta01BlackCard.children[0].src = carta01BlackImg;
             estagioCarta01Black += 1;
             waitLanceEspBlack += 4;
+            podeDesvirarEspBlack = false;
         }
         if (lance >= waitLanceEspBlack && estagioCarta01Black === 2) {
             console.log("CARTA 01 BLACK USADA");
             carta01BlackCard.remove();
+            podeDesvirarEspBlack = true;
         }
     })
 
+    if(estagioCarta02Black === 2 && lance >= waitLanceEspBlack) {
+        carta02BlackCard.classList.add("card-brilhante2");
+    }
+
     carta02BlackCard.addEventListener("click", () => {
-        if (lance >= waitLanceEspBlack && estagioCarta02Black === 1) {
+        if (lance >= waitLanceEspBlack && estagioCarta02Black === 1
+            && podeDesvirarEspBlack
+        ) {
             carta02BlackCard.children[0].src = carta02BlackImg;
             estagioCarta02Black += 1;
             waitLanceEspBlack += 4;
+            podeDesvirarEspBlack = false;
         }
         if (lance >= waitLanceEspBlack && estagioCarta02Black === 2) {
             console.log("CARTA 02 BLACK USADA");
             carta02BlackCard.remove();
+            podeDesvirarEspBlack = true;
         }
     })
 
+    if(estagioCarta03Black === 2 && lance >= waitLanceCommonBlack) {
+        carta03BlackCard.classList.add("card-brilhante");
+    }
+
     carta03BlackCard.addEventListener("click", () => {
-        if (lance >= waitLanceCommonBlack && estagioCarta03Black === 1) {
+        if (lance >= waitLanceCommonBlack && estagioCarta03Black === 1
+            && podeDesvirarCommonBlack
+        ) {
             carta03BlackCard.children[0].src = carta03BlackImg;
             estagioCarta03Black += 1;
             waitLanceCommonBlack += 2;
+            podeDesvirarCommonBlack = false;
         }
         if (lance >= waitLanceCommonBlack && estagioCarta03Black === 2) {
             console.log("CARTA 03 BLACK USADA");
             carta03BlackCard.remove();
+            podeDesvirarCommonBlack = true;
         }
     })
 
+    if(estagioCarta04Black === 2 && lance >= waitLanceCommonBlack) {
+        carta04BlackCard.classList.add("card-brilhante");
+    }
+
     carta04BlackCard.addEventListener("click", () => {
-        if (lance >= waitLanceCommonBlack && estagioCarta04Black === 1) {
+        if (lance >= waitLanceCommonBlack && estagioCarta04Black === 1
+            && podeDesvirarCommonBlack
+        ) {
             carta04BlackCard.children[0].src = carta04BlackImg;
             estagioCarta04Black += 1;
             waitLanceCommonBlack += 2;
+            podeDesvirarCommonBlack = false;
         }
         if (lance >= waitLanceCommonBlack && estagioCarta04Black === 2) {
             console.log("CARTA 04 BLACK USADA");
             carta04BlackCard.remove();
+            podeDesvirarCommonBlack = true;
         }
     })
 
+    if(estagioCarta05Black === 2 && lance >= waitLanceCommonBlack) {
+        carta05BlackCard.classList.add("card-brilhante");
+    }
+
     carta05BlackCard.addEventListener("click", () => {
-        if (lance >= waitLanceCommonBlack && estagioCarta05Black === 1) {
+        if (lance >= waitLanceCommonBlack && estagioCarta05Black === 1
+            && podeDesvirarCommonBlack
+        ) {
             carta05BlackCard.children[0].src = carta05BlackImg;
             estagioCarta05Black += 1;
             waitLanceCommonBlack += 2;
+            podeDesvirarCommonBlack = false;
         }
         if (lance >= waitLanceCommonBlack && estagioCarta05Black === 2) {
             console.log("CARTA 05 BLACK USADA");
             carta05BlackCard.remove();
+            podeDesvirarCommonBlack = true;
         }
     })
 }

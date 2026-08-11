@@ -1456,4 +1456,21 @@ tbody td img{
 .c-p2 {
     margin-left: -20px !important;
 }
+
+.card-brilhante {
+    border: 2px solid #00ffff !important;
+    box-shadow:
+        0 0 5px #00ffff,
+        0 0 10px #00ffff,
+        0 0 20px #00ffff,
+        0 0 40px #00ffff;
+}
+
+.card-brilhante2 {
+    border: 2px solid gold !important;
+    box-shadow:
+        0 0 5px gold,
+        0 0 10px gold,
+        0 0 20px gold;
+}
 /* ================================================================================= */
