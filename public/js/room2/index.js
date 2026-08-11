@@ -42,9 +42,9 @@ const carta04BlackCard = document.getElementById("carta04-black")
 const carta05BlackCard = document.getElementById("carta05-black")
 
 let lance = 0;
-let waitLanceEspLight = 7;
+let waitLanceEspLight = 6;
 let waitLanceCommonLight = 3;
-let waitLanceEspBlack = 7;
+let waitLanceEspBlack = 6;
 let waitLanceCommonBlack = 3;
 let podeDesvirarEspLight = true;
 let podeDesvirarCommonLight = true;
@@ -402,6 +402,8 @@ const endMyTurn = (newPieceBox, pawnPromoted = false, castlingPerformed = false,
     }, 300);
 
     lance += 1;
+
+    addBrilhoCards();
 }
 // --------------------------------------
 
@@ -1241,26 +1243,21 @@ const sortearCartas = () => {
     const carta04BlackNum = numeros[1];
     const carta05BlackNum = numeros[2];
 
-    carta01BlackImg = "../../assets/cartas/esp-carta" + carta01LightNum + ".jpeg";
-    carta02BlackImg = "../../assets/cartas/esp-carta" + carta02LightNum + ".jpeg";
-    carta03BlackImg = "../../assets/cartas/carta" + carta03LightNum + ".jpeg";
-    carta04BlackImg = "../../assets/cartas/carta" + carta04LightNum + ".jpeg";
-    carta05BlackImg = "../../assets/cartas/carta" + carta05LightNum + ".jpeg";
+    carta01BlackImg = "../../assets/cartas/esp-carta" + carta01BlackNum + ".jpeg";
+    carta02BlackImg = "../../assets/cartas/esp-carta" + carta02BlackNum + ".jpeg";
+    carta03BlackImg = "../../assets/cartas/carta" + carta03BlackNum + ".jpeg";
+    carta04BlackImg = "../../assets/cartas/carta" + carta04BlackNum + ".jpeg";
+    carta05BlackImg = "../../assets/cartas/carta" + carta05BlackNum + ".jpeg";
 }
 
 displayChessPieces()
 
 const listenersCartas = () => {
 
-    if(estagioCarta01Light === 2 && lance >= waitLanceEspLight) {
-        carta01LightCard.classList.add("card-brilhante");
-    }
-
     carta01LightCard.addEventListener("click", () => {
         if (lance >= waitLanceEspLight && estagioCarta01Light === 1
             && podeDesvirarEspLight) {
             carta01LightCard.children[0].src = carta01LightImg;
-            carta01LightCard.classList.add("card-brilhante2");
             estagioCarta01Light += 1;
             waitLanceEspLight += 4;
             podeDesvirarEspLight = false;
@@ -1272,15 +1269,10 @@ const listenersCartas = () => {
         }
     })
 
-    if(estagioCarta02Light === 2 && lance >= waitLanceEspLight) {
-        carta02LightCard.classList.add("card-brilhante2");
-    }
-
     carta02LightCard.addEventListener("click", () => {
         if (lance >= waitLanceEspLight && estagioCarta02Light === 1
             && podeDesvirarEspLight) {
             carta02LightCard.children[0].src = carta02LightImg;
-            carta02LightCard.classList.add("card-brilhante");
             estagioCarta02Light += 1;
             waitLanceEspLight += 4;
             podeDesvirarEspLight = false;
@@ -1292,16 +1284,11 @@ const listenersCartas = () => {
         }
     })
 
-    if(estagioCarta03Light === 2 && lance >= waitLanceCommonLight) {
-        carta03LightCard.classList.add("card-brilhante");
-    }
-
     carta03LightCard.addEventListener("click", () => {
         if (lance >= waitLanceCommonLight && estagioCarta03Light === 1 
             && podeDesvirarCommonLight
         ) {
             carta03LightCard.children[0].src = carta03LightImg;
-            carta03LightCard.classList.add("card-brilhante");
             estagioCarta03Light += 1;
             waitLanceCommonLight += 2;
             podeDesvirarCommonLight = false;
@@ -1313,16 +1300,11 @@ const listenersCartas = () => {
         }
     })
 
-    if(estagioCarta04Light === 2 && lance >= waitLanceCommonLight) {
-        carta04LightCard.classList.add("card-brilhante");
-    }
-
     carta04LightCard.addEventListener("click", () => {
         if (lance >= waitLanceCommonLight && estagioCarta04Light === 1
             && podeDesvirarCommonLight
         ) {
             carta04LightCard.children[0].src = carta04LightImg;
-            carta04LightCard.classList.add("card-brilhante");
             estagioCarta04Light += 1;
             waitLanceCommonLight += 2;
             podeDesvirarCommonLight = false;
@@ -1330,13 +1312,9 @@ const listenersCartas = () => {
         if (lance >= waitLanceCommonLight && estagioCarta04Light === 2) {
             console.log("CARTA 04 LIGHT USADA");
             carta04LightCard.remove();
-            podeDesvirarCommonlight = true;
+            podeDesvirarCommonLight = true;
         }
     })
-
-    if(estagioCarta05Light === 2 && lance >= waitLanceCommonLight) {
-        carta05LightCard.classList.add("card-brilhante");
-    }
 
     carta05LightCard.addEventListener("click", () => {
         if (lance >= waitLanceCommonLight && estagioCarta05Light === 1
@@ -1356,10 +1334,6 @@ const listenersCartas = () => {
 
     //======================================================
 
-    if(estagioCarta01Black === 2 && lance >= waitLanceEspBlack) {
-        carta01BlackCard.classList.add("card-brilhante2");
-    }
-
     carta01BlackCard.addEventListener("click", () => {
         if (lance >= waitLanceEspBlack && estagioCarta01Black === 1
             && podeDesvirarEspBlack
@@ -1375,10 +1349,6 @@ const listenersCartas = () => {
             podeDesvirarEspBlack = true;
         }
     })
-
-    if(estagioCarta02Black === 2 && lance >= waitLanceEspBlack) {
-        carta02BlackCard.classList.add("card-brilhante2");
-    }
 
     carta02BlackCard.addEventListener("click", () => {
         if (lance >= waitLanceEspBlack && estagioCarta02Black === 1
@@ -1396,10 +1366,6 @@ const listenersCartas = () => {
         }
     })
 
-    if(estagioCarta03Black === 2 && lance >= waitLanceCommonBlack) {
-        carta03BlackCard.classList.add("card-brilhante");
-    }
-
     carta03BlackCard.addEventListener("click", () => {
         if (lance >= waitLanceCommonBlack && estagioCarta03Black === 1
             && podeDesvirarCommonBlack
@@ -1415,10 +1381,6 @@ const listenersCartas = () => {
             podeDesvirarCommonBlack = true;
         }
     })
-
-    if(estagioCarta04Black === 2 && lance >= waitLanceCommonBlack) {
-        carta04BlackCard.classList.add("card-brilhante");
-    }
 
     carta04BlackCard.addEventListener("click", () => {
         if (lance >= waitLanceCommonBlack && estagioCarta04Black === 1
@@ -1436,10 +1398,6 @@ const listenersCartas = () => {
         }
     })
 
-    if(estagioCarta05Black === 2 && lance >= waitLanceCommonBlack) {
-        carta05BlackCard.classList.add("card-brilhante");
-    }
-
     carta05BlackCard.addEventListener("click", () => {
         if (lance >= waitLanceCommonBlack && estagioCarta05Black === 1
             && podeDesvirarCommonBlack
@@ -1455,6 +1413,49 @@ const listenersCartas = () => {
             podeDesvirarCommonBlack = true;
         }
     })
+}
+
+const addBrilhoCards = () => {
+
+    if(lance >= waitLanceEspLight && estagioCarta01Light === 2) {
+        carta01LightCard.classList.add("card-brilhante2");
+    }
+
+    if(lance >= waitLanceEspLight && estagioCarta02Light === 2) {
+        carta02LightCard.classList.add("card-brilhante2");
+    }
+
+    if(lance >= waitLanceCommonLight && estagioCarta03Light === 2) {
+        carta03LightCard.classList.add("card-brilhante");
+    }
+
+    if(lance >= waitLanceCommonLight && estagioCarta04Light === 2) {
+        carta04LightCard.classList.add("card-brilhante");
+    }
+
+    if(lance >= waitLanceCommonLight && estagioCarta05Light === 2) {
+        carta05LightCard.classList.add("card-brilhante");
+    }
+
+    if(lance >= waitLanceEspBlack && estagioCarta01Black === 2) {
+        carta01BlackCard.classList.add("card-brilhante2");
+    }
+
+    if(lance >= waitLanceEspBlack && estagioCarta02Black === 2) {
+        carta02BlackCard.classList.add("card-brilhante2");
+    }
+
+    if(lance >= waitLanceCommonBlack && estagioCarta03Black === 2) {
+        carta03BlackCard.classList.add("card-brilhante");
+    }
+
+    if(lance >= waitLanceCommonBlack && estagioCarta04Black === 2) {
+        carta04BlackCard.classList.add("card-brilhante");
+    }
+
+    if(lance >= waitLanceCommonBlack && estagioCarta05Black === 2) {
+        carta05BlackCard.classList.add("card-brilhante");
+    }
 }
 // =====================
 // Socket Listeners
