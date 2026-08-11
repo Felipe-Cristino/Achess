@@ -41,7 +41,7 @@ const carta03BlackCard = document.getElementById("carta03-black")
 const carta04BlackCard = document.getElementById("carta04-black")
 const carta05BlackCard = document.getElementById("carta05-black")
 
-let lance = 0;
+let lance = 1;
 let waitLanceEspLight = 6;
 let waitLanceCommonLight = 3;
 let waitLanceEspBlack = 6;
@@ -1256,13 +1256,15 @@ const listenersCartas = () => {
 
     carta01LightCard.addEventListener("click", () => {
         if (lance >= waitLanceEspLight && estagioCarta01Light === 1
-            && podeDesvirarEspLight) {
+            && podeDesvirarEspLight && myTurn && lance % 2 === 0) {
             carta01LightCard.children[0].src = carta01LightImg;
             estagioCarta01Light += 1;
             waitLanceEspLight += 4;
             podeDesvirarEspLight = false;
         }
-        if (lance >= waitLanceEspLight && estagioCarta01Light === 2) {
+        if (lance >= waitLanceEspLight && estagioCarta01Light === 2
+            && myTurn && lance % 2 === 0
+        ) {
             console.log("CARTA 01 LIGHT USADA");
             carta01LightCard.remove();
             podeDesvirarEspLight = true;
@@ -1271,13 +1273,15 @@ const listenersCartas = () => {
 
     carta02LightCard.addEventListener("click", () => {
         if (lance >= waitLanceEspLight && estagioCarta02Light === 1
-            && podeDesvirarEspLight) {
+            && podeDesvirarEspLight && myTurn && lance % 2 === 0) {
             carta02LightCard.children[0].src = carta02LightImg;
             estagioCarta02Light += 1;
             waitLanceEspLight += 4;
             podeDesvirarEspLight = false;
         }
-        if (lance >= waitLanceEspLight && estagioCarta02Light === 2) {
+        if (lance >= waitLanceEspLight && estagioCarta02Light === 2
+            && myTurn && lance % 2 === 0
+        ) {
             console.log("CARTA 02 LIGHT USADA");
             carta02LightCard.remove();
             podeDesvirarEspLight = true;
@@ -1286,14 +1290,16 @@ const listenersCartas = () => {
 
     carta03LightCard.addEventListener("click", () => {
         if (lance >= waitLanceCommonLight && estagioCarta03Light === 1 
-            && podeDesvirarCommonLight
+            && podeDesvirarCommonLight && myTurn && lance % 2 === 1
         ) {
             carta03LightCard.children[0].src = carta03LightImg;
             estagioCarta03Light += 1;
             waitLanceCommonLight += 2;
             podeDesvirarCommonLight = false;
         }
-        if (lance >= waitLanceCommonLight && estagioCarta03Light === 2) {
+        if (lance >= waitLanceCommonLight && estagioCarta03Light === 2
+            && myTurn && lance % 2 === 1
+        ) {
             console.log("CARTA 03 LIGHT USADA");
             carta03LightCard.remove();
             podeDesvirarCommonLight = true;
@@ -1302,14 +1308,16 @@ const listenersCartas = () => {
 
     carta04LightCard.addEventListener("click", () => {
         if (lance >= waitLanceCommonLight && estagioCarta04Light === 1
-            && podeDesvirarCommonLight
+            && podeDesvirarCommonLight && myTurn && lance % 2 === 1
         ) {
             carta04LightCard.children[0].src = carta04LightImg;
             estagioCarta04Light += 1;
             waitLanceCommonLight += 2;
             podeDesvirarCommonLight = false;
         }
-        if (lance >= waitLanceCommonLight && estagioCarta04Light === 2) {
+        if (lance >= waitLanceCommonLight && estagioCarta04Light === 2
+            && myTurn && lance % 2 === 1
+        ) {
             console.log("CARTA 04 LIGHT USADA");
             carta04LightCard.remove();
             podeDesvirarCommonLight = true;
@@ -1318,14 +1326,16 @@ const listenersCartas = () => {
 
     carta05LightCard.addEventListener("click", () => {
         if (lance >= waitLanceCommonLight && estagioCarta05Light === 1
-            && podeDesvirarCommonLight
+            && podeDesvirarCommonLight && myTurn && lance % 2 === 1
         ) {
             carta05LightCard.children[0].src = carta05LightImg;
             estagioCarta05Light += 1;
             waitLanceCommonLight += 2;
             podeDesvirarCommonLight = false;
         }
-        if (lance >= waitLanceCommonLight && estagioCarta05Light === 2) {
+        if (lance >= waitLanceCommonLight && estagioCarta05Light === 2
+            && myTurn && lance % 2 === 1
+        ) {
             console.log("CARTA 05 LIGHT USADA");
             carta05LightCard.remove();
             podeDesvirarCommonLight = true;
@@ -1336,14 +1346,16 @@ const listenersCartas = () => {
 
     carta01BlackCard.addEventListener("click", () => {
         if (lance >= waitLanceEspBlack && estagioCarta01Black === 1
-            && podeDesvirarEspBlack
+            && podeDesvirarEspBlack && myTurn && lance % 2 === 0
         ) {
             carta01BlackCard.children[0].src = carta01BlackImg;
             estagioCarta01Black += 1;
             waitLanceEspBlack += 4;
             podeDesvirarEspBlack = false;
         }
-        if (lance >= waitLanceEspBlack && estagioCarta01Black === 2) {
+        if (lance >= waitLanceEspBlack && estagioCarta01Black === 2
+            && myTurn && lance % 2 === 0
+        ) {
             console.log("CARTA 01 BLACK USADA");
             carta01BlackCard.remove();
             podeDesvirarEspBlack = true;
@@ -1352,14 +1364,16 @@ const listenersCartas = () => {
 
     carta02BlackCard.addEventListener("click", () => {
         if (lance >= waitLanceEspBlack && estagioCarta02Black === 1
-            && podeDesvirarEspBlack
+            && podeDesvirarEspBlack && myTurn && lance % 2 === 0
         ) {
             carta02BlackCard.children[0].src = carta02BlackImg;
             estagioCarta02Black += 1;
             waitLanceEspBlack += 4;
             podeDesvirarEspBlack = false;
         }
-        if (lance >= waitLanceEspBlack && estagioCarta02Black === 2) {
+        if (lance >= waitLanceEspBlack && estagioCarta02Black === 2
+            && myTurn && lance % 2 === 0
+        ) {
             console.log("CARTA 02 BLACK USADA");
             carta02BlackCard.remove();
             podeDesvirarEspBlack = true;
@@ -1368,14 +1382,16 @@ const listenersCartas = () => {
 
     carta03BlackCard.addEventListener("click", () => {
         if (lance >= waitLanceCommonBlack && estagioCarta03Black === 1
-            && podeDesvirarCommonBlack
+            && podeDesvirarCommonBlack && myTurn && lance % 2 === 1
         ) {
             carta03BlackCard.children[0].src = carta03BlackImg;
             estagioCarta03Black += 1;
             waitLanceCommonBlack += 2;
             podeDesvirarCommonBlack = false;
         }
-        if (lance >= waitLanceCommonBlack && estagioCarta03Black === 2) {
+        if (lance >= waitLanceCommonBlack && estagioCarta03Black === 2
+            && myTurn && lance % 2 === 1
+        ) {
             console.log("CARTA 03 BLACK USADA");
             carta03BlackCard.remove();
             podeDesvirarCommonBlack = true;
@@ -1384,14 +1400,16 @@ const listenersCartas = () => {
 
     carta04BlackCard.addEventListener("click", () => {
         if (lance >= waitLanceCommonBlack && estagioCarta04Black === 1
-            && podeDesvirarCommonBlack
+            && podeDesvirarCommonBlack && myTurn && lance % 2 === 1
         ) {
             carta04BlackCard.children[0].src = carta04BlackImg;
             estagioCarta04Black += 1;
             waitLanceCommonBlack += 2;
             podeDesvirarCommonBlack = false;
         }
-        if (lance >= waitLanceCommonBlack && estagioCarta04Black === 2) {
+        if (lance >= waitLanceCommonBlack && estagioCarta04Black === 2
+            && myTurn && lance % 2 === 1
+        ) {
             console.log("CARTA 04 BLACK USADA");
             carta04BlackCard.remove();
             podeDesvirarCommonBlack = true;
@@ -1400,14 +1418,16 @@ const listenersCartas = () => {
 
     carta05BlackCard.addEventListener("click", () => {
         if (lance >= waitLanceCommonBlack && estagioCarta05Black === 1
-            && podeDesvirarCommonBlack
+            && podeDesvirarCommonBlack && myTurn && lance % 2 === 1
         ) {
             carta05BlackCard.children[0].src = carta05BlackImg;
             estagioCarta05Black += 1;
             waitLanceCommonBlack += 2;
             podeDesvirarCommonBlack = false;
         }
-        if (lance >= waitLanceCommonBlack && estagioCarta05Black === 2) {
+        if (lance >= waitLanceCommonBlack && estagioCarta05Black === 2
+            && myTurn && lance % 2 === 1
+        ) {
             console.log("CARTA 05 BLACK USADA");
             carta05BlackCard.remove();
             podeDesvirarCommonBlack = true;
