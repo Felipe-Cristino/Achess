@@ -1457,7 +1457,16 @@ tbody td img{
     margin-left: -20px !important;
 }
 
-.card-brilhante {
+.card-brilhante1 {
+    border: 2px solid #00ff00 !important;
+    box-shadow:
+        0 0 5px #00ff00,
+        0 0 10px #00ff00,
+        0 0 20px #00ff00,
+        0 0 40px #00ff00;
+}
+
+.card-brilhante2 {
     border: 2px solid #00ffff !important;
     box-shadow:
         0 0 5px #00ffff,
@@ -1466,11 +1475,5 @@ tbody td img{
         0 0 40px #00ffff;
 }
 
-.card-brilhante2 {
-    border: 2px solid gold !important;
-    box-shadow:
-        0 0 5px gold,
-        0 0 10px gold,
-        0 0 20px gold;
-}
+
 /* ================================================================================= */
