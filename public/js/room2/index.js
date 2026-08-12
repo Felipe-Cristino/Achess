@@ -58,6 +58,8 @@ let estagioCarta02Black = 1;
 let estagioCarta03Black = 1;
 let estagioCarta04Black = 1;
 let estagioCarta05Black = 1;
+
+const showCard = document.getElementById("show-card");
 // =====================
 // Game Variables
 // =====================
@@ -1261,7 +1263,11 @@ const listenersCartas = () => {
         if (lance >= waitLanceEspLight && estagioCarta01Light === 2
             && myTurn && lance % 2 === 0
         ) {
-            console.log("CARTA 01 LIGHT USADA");
+            showCard.children[0].src = carta01LightImg;
+            showCard.classList.remove("hidden");
+            setTimeout(() => {
+                showCard.classList.add("hidden")
+            }, 2000)
             carta01LightCard.remove();
 
             carta02LightCard.children[0].src = carta02LightImg;
@@ -1274,13 +1280,17 @@ const listenersCartas = () => {
         if (lance >= waitLanceEspLight && estagioCarta02Light === 2
             && myTurn && lance % 2 === 0
         ) {
-            console.log("CARTA 02 LIGHT USADA");
+            showCard.children[0].src = carta02LightImg;
+            showCard.classList.remove("hidden");
+            setTimeout(() => {
+                showCard.classList.add("hidden")
+            }, 2000)
             carta02LightCard.remove();
         }
     })
 
     carta03LightCard.addEventListener("click", () => {
-        if (lance === waitLanceCommonLight && estagioCarta03Light === 1
+        if (lance >= waitLanceCommonLight && estagioCarta03Light === 1
             && myTurn && lance % 2 === 1
         ) {
             carta03LightCard.children[0].src = carta03LightImg;
@@ -1290,7 +1300,12 @@ const listenersCartas = () => {
         if (lance >= waitLanceCommonLight && estagioCarta03Light === 2
             && myTurn && lance % 2 === 1
         ) {
-            console.log("CARTA 03 LIGHT USADA");
+            showCard.children[0].src = carta03LightImg;
+            showCard.classList.remove("hidden");
+            setTimeout(() => {
+                showCard.classList.add("hidden")
+            }, 2000)
+
             carta03LightCard.remove();
 
             carta04LightCard.children[0].src = carta04LightImg;
@@ -1304,6 +1319,11 @@ const listenersCartas = () => {
             && myTurn && lance % 2 === 1
         ) {
             console.log("CARTA 04 LIGHT USADA");
+            showCard.children[0].src = carta04LightImg;
+            showCard.classList.remove("hidden");
+            setTimeout(() => {
+                showCard.classList.add("hidden")
+            }, 2000)
             carta04LightCard.remove();
 
             carta05LightCard.children[0].src = carta05LightImg;
@@ -1316,7 +1336,12 @@ const listenersCartas = () => {
         if (lance >= waitLanceCommonLight && estagioCarta05Light === 2
             && myTurn && lance % 2 === 1
         ) {
-            console.log("CARTA 05 LIGHT USADA");
+            showCard.children[0].src = carta05LightImg;
+            showCard.classList.remove("hidden");
+            setTimeout(() => {
+                showCard.classList.add("hidden")
+            }, 2000)
+
             carta05LightCard.remove();
         }
     })
@@ -1334,7 +1359,12 @@ const listenersCartas = () => {
         if (lance >= waitLanceEspBlack && estagioCarta01Black === 2
             && myTurn && lance % 2 === 0
         ) {
-            console.log("CARTA 01 BLACK USADA");
+            showCard.children[0].src = carta01BlackImg;
+            showCard.classList.remove("hidden");
+            setTimeout(() => {
+                showCard.classList.add("hidden")
+            }, 2000)
+
             carta01BlackCard.remove();
 
             carta02BlackCard.children[0].src = carta02BlackImg;
@@ -1347,7 +1377,12 @@ const listenersCartas = () => {
         if (lance >= waitLanceEspBlack && estagioCarta02Black === 2
             && myTurn && lance % 2 === 0
         ) {
-            console.log("CARTA 02 BLACK USADA");
+            showCard.children[0].src = carta02BlackImg;
+            showCard.classList.remove("hidden");
+            setTimeout(() => {
+                showCard.classList.add("hidden")
+            }, 2000)
+
             carta02BlackCard.remove();
         }
     })
@@ -1363,7 +1398,12 @@ const listenersCartas = () => {
         if (lance >= waitLanceCommonBlack && estagioCarta03Black === 2
             && myTurn && lance % 2 === 1
         ) {
-            console.log("CARTA 03 BLACK USADA");
+            showCard.children[0].src = carta03BlackImg;
+            showCard.classList.remove("hidden");
+            setTimeout(() => {
+                showCard.classList.add("hidden")
+            }, 2000)
+
             carta03BlackCard.remove();
 
             carta04BlackCard.children[0].src = carta04BlackImg;
@@ -1376,7 +1416,12 @@ const listenersCartas = () => {
         if (lance >= waitLanceCommonBlack && estagioCarta04Black === 2
             && myTurn && lance % 2 === 1
         ) {
-            console.log("CARTA 04 BLACK USADA");
+            showCard.children[0].src = carta04BlackImg;
+            showCard.classList.remove("hidden");
+            setTimeout(() => {
+                showCard.classList.add("hidden")
+            }, 2000)
+
             carta04BlackCard.remove();
 
             carta05BlackCard.children[0].src = carta05BlackImg;
@@ -1389,7 +1434,12 @@ const listenersCartas = () => {
         if (lance >= waitLanceCommonBlack && estagioCarta05Black === 2
             && myTurn && lance % 2 === 1
         ) {
-            console.log("CARTA 05 BLACK USADA");
+            showCard.children[0].src = carta05BlackImg;
+            showCard.classList.remove("hidden");
+            setTimeout(() => {
+                showCard.classList.add("hidden")
+            }, 2000)
+
             carta05BlackCard.remove();
         }
     })
@@ -1397,52 +1447,41 @@ const listenersCartas = () => {
 
 const addBrilhoCards = () => {
 
-    // if (lance === waitLanceEspLight
-    //     && estagioCarta01Light === 1) {
-    //     carta01LightCard.children[0].src = carta01LightImg;
-    //     estagioCarta01Light += 1;
-    //     waitLanceEspLight += 4;
-    // }
-
-    // if (lance === waitLanceCommonLight
-    //     && estagioCarta03Light === 1) {
-    //     carta03LightCard.children[0].src = carta03LightImg;
-    //     estagioCarta03Light += 1;
-    //     waitLanceCommonLight += 2;
-    // }
-
-    // if (lance === waitLanceEspBlack
-    //     && estagioCarta01Black === 1) {
-    //     carta01BlackCard.children[0].src = carta01BlackImg;
-    //     estagioCarta01Black += 1;
-    //     waitLanceEspBlack += 4;
-    // }
-
-    // if (lance === waitLanceCommonBlack
-    //     && estagioCarta03Black === 1) {
-    //     carta03BlackCard.children[0].src = carta03BlackImg;
-    //     estagioCarta03Black += 1;
-    //     waitLanceCommonBlack += 2;
-    // }
-
-     if (lance >= waitLanceEspLight && estagioCarta01Light === 1) {
+    if (lance >= waitLanceEspLight && estagioCarta01Light === 1) {
         carta01LightCard.classList.add("card-brilhante1");
+    }
+
+    if (lance >= waitLanceEspLight - 3 && estagioCarta01Light === 2) {
+        carta01LightCard.classList.remove("card-brilhante1");
     }
 
     if (lance >= waitLanceCommonLight && estagioCarta03Light === 1) {
         carta03LightCard.classList.add("card-brilhante1");
     }
 
+    if (lance >= waitLanceCommonLight - 1 && estagioCarta03Light === 2) {
+        carta03LightCard.classList.remove("card-brilhante1");
+    }
+
     if (lance >= waitLanceEspBlack && estagioCarta01Black === 1) {
         carta01BlackCard.classList.add("card-brilhante1");
+    }
+
+    if (lance >= waitLanceEspBlack - 3 && estagioCarta01Black === 2) {
+        carta01BlackCard.classList.remove("card-brilhante1");
     }
 
     if (lance >= waitLanceCommonBlack && estagioCarta03Black === 1) {
         carta03BlackCard.classList.add("card-brilhante1");
     }
 
+    if (lance >= waitLanceCommonBlack - 1 && estagioCarta03Black === 2) {
+        carta03BlackCard.classList.remove("card-brilhante1");
+    }
+
+    //=============================================================
+
     if (lance >= waitLanceEspLight && estagioCarta01Light === 2) {
-        carta01LightCard.classList.remove("card-brilhante1");
         carta01LightCard.classList.add("card-brilhante2");
     }
 
@@ -1451,7 +1490,6 @@ const addBrilhoCards = () => {
     }
 
     if (lance >= waitLanceCommonLight && estagioCarta03Light === 2) {
-        carta03LightCard.classList.remove("card-brilhante1");
         carta03LightCard.classList.add("card-brilhante2");
     }
 
@@ -1464,7 +1502,6 @@ const addBrilhoCards = () => {
     }
 
     if (lance >= waitLanceEspBlack && estagioCarta01Black === 2) {
-        carta01BlackCard.classList.remove("card-brilhante1");
         carta01BlackCard.classList.add("card-brilhante2");
     }
 
@@ -1473,7 +1510,6 @@ const addBrilhoCards = () => {
     }
 
     if (lance >= waitLanceCommonBlack && estagioCarta03Black === 2) {
-        carta03BlackCard.classList.remove("card-brilhante1");
         carta03BlackCard.classList.add("card-brilhante2");
     }
 

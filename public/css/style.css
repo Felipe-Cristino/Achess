@@ -1475,5 +1475,17 @@ tbody td img{
         0 0 40px #00ffff;
 }
 
+#show-card {
+    position: absolute;
+    top: 85%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 700px;
+}
 
+#show-card > img {
+    filter: grayscale(100%);
+    opacity: 0.9;
+}
 /* ================================================================================= */
