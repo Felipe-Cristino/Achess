@@ -152,10 +152,10 @@ io.on("connection", (socket) => {
             if (reply) {
                 let rooms = JSON.parse(reply);
 
-                let roomFull = rooms.find(room => room.players[0] !== null 
+                let roomFull = rooms.find(room => room.players[0] !== null
                     && room.players[1] !== null && room.gameFinished === true
                 )
-                if(roomFull) {
+                if (roomFull) {
                     removeRoom(roomFull.id);
                 }
 
@@ -170,8 +170,8 @@ io.on("connection", (socket) => {
                 }
 
                 if (room && room.players[0] &&
-                    room.players[0].username !== user.username 
-                && room.mode === mode) {
+                    room.players[0].username !== user.username
+                    && room.mode === mode) {
                     joinRoom(room.id, user, mode);
                     socket.emit("room-joined", room.id);
                 } else {
@@ -423,20 +423,15 @@ io.on("connection", (socket) => {
         })
     })
 
-    socket.on("update-score", (roomId, playerOneScore, playerTwoScore, winner) => {
-        redisClient.get(roomId, (err, reply) => {
-            if (err) throw err;
+    socket.on("update-score", (roomId, playerOneScore, playerTwoScore, playerOne, playerTwo) => {
+        
+        let userOne = playerOne
+        let userTwo = playerTwo
 
-            if (reply) {
-                let room = JSON.parse(reply)
+        userOne.user_points += playerOneScore
+        userTwo.user_points += playerTwoScore
 
-                let userOne = room.players[0]
-                let userTwo = room.players[1]
-
-                userOne.user_points += playerOneScore
-                userTwo.user_points += playerTwoScore
-
-                let query = `
+        let query = `
                     CALL updateScores(
                         '${userOne.username}',
                         ${Math.max(userOne.user_points, 0)},
@@ -445,14 +440,13 @@ io.on("connection", (socket) => {
                     )
                 `
 
-                db.query(query, (err) => {
-                    if (err) throw err;
+        db.query(query, (err) => {
+            if (err) throw err;
 
-                    redisClient.set(userOne.username + "-score-updated", 'true')
-                    redisClient.set(userTwo.username + "-score-updated", 'true')
-                })
-            }
+            redisClient.set(userOne.username + "-score-updated", 'true')
+            redisClient.set(userTwo.username + "-score-updated", 'true')
         })
+
         removeRoom(roomId);
     })
 
@@ -490,7 +484,20 @@ io.on("connection", (socket) => {
                             let room = JSON.parse(reply);
 
                             if (!room.gameFinished) {
-                                io.to(user.room).emit("error", "The other player left the game")
+                                let jogador1;
+                                let jogador2;
+                                let winner;
+
+                                jogador1 = room.players[0];
+                                jogador2 = room.players[1];
+                                if (user.username === jogador1.username) {
+                                    winner = jogador2.username
+                                } else {
+                                    winner = jogador1.username
+                                }
+
+                                io.to(user.room).emit("desconectado", winner,
+                                    jogador1, jogador2);
                             }
                         }
                     })

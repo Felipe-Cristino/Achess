@@ -1115,10 +1115,9 @@ const endGame = (winner = null, playerOne = null, playerTwo = null) => {
     let loser;
     let winnerScore;
     let loserScore;
+    let winningPoints = 0;
 
     if (winner) {
-
-        let winningPoints = 0;
 
         if (winner === playerOne.username) {
             loser = playerTwo.username;
@@ -1137,7 +1136,7 @@ const endGame = (winner = null, playerOne = null, playerTwo = null) => {
             enemyScoreElement.innerText = playerTwo.username + " -= "
                 + winningPoints + " pts";
             myScoreElement.classList.add("positive-score")
-            socket.emit("update-score", roomId, winningPoints, -Math.abs(winningPoints), winner, loser);
+            socket.emit("update-score", roomId, winningPoints, -Math.abs(winningPoints), playerOne, playerTwo);
         } else {
             loser = playerOne.username;
             winnerScore = playerTwo.user_points;
@@ -1155,7 +1154,7 @@ const endGame = (winner = null, playerOne = null, playerTwo = null) => {
             enemyScoreElement.innerText = playerOne.username + " -= "
                 + winningPoints + " pts";
             myScoreElement.classList.add("positive-score")
-            socket.emit("update-score", roomId, -Math.abs(winningPoints), winningPoints, winner, loser);
+            socket.emit("update-score", roomId, -Math.abs(winningPoints), winningPoints, playerOne, playerTwo);
         }
     } else {
         if (playerOne.user_points > playerTwo.user_points) {
@@ -1171,7 +1170,7 @@ const endGame = (winner = null, playerOne = null, playerTwo = null) => {
             enemyScoreElement.innerText = playerOne.username + " -="
                 + winningPoints + " pts";
             myScoreElement.classList.add("positive-score")
-            socket.emit("update-score", roomId, -Math.abs(winningPoints), winningPoints, winner, loser);
+            socket.emit("update-score", roomId, -Math.abs(winningPoints), winningPoints, playerOne, playerTwo);
         } else {
             winningPoints = parseInt((playerTwo.user_points - playerOne.user_points) * 1.4 / 100)
             if (winningPoints >= 9) {
@@ -1185,7 +1184,7 @@ const endGame = (winner = null, playerOne = null, playerTwo = null) => {
             enemyScoreElement.innerText = playerTwo.username + " -="
                 + winningPoints + " pts";
             myScoreElement.classList.add("positive-score")
-            socket.emit("update-score", roomId, winningPoints, -Math.abs(winningPoints), winner, loser);
+            socket.emit("update-score", roomId, winningPoints, -Math.abs(winningPoints), playerOne, playerTwo);
         }
     }
     gameOverMessageContainer.classList.remove("hidden")
@@ -1318,7 +1317,6 @@ const listenersCartas = () => {
         if (lance >= waitLanceCommonLight && estagioCarta04Light === 2
             && myTurn && lance % 2 === 1
         ) {
-            console.log("CARTA 04 LIGHT USADA");
             showCard.children[0].src = carta04LightImg;
             showCard.classList.remove("hidden");
             setTimeout(() => {
@@ -1607,13 +1605,15 @@ socket.on("draw-points", (playerOne, playerTwo) => {
 })
 
 socket.on("time-ended", (winner, playerOne, playerTwo, ifDraw) => {
-    setTimeout(() => {
-        if (ifDraw) {
-            endGame(null, playerOne, playerTwo);
-        } else {
-            endGame(winner, playerOne, playerTwo);
-        }
-    }, 300)
+    if (ifDraw) {
+        endGame(null, playerOne, playerTwo);
+    } else {
+        endGame(winner, playerOne, playerTwo);
+    }
+})
+
+socket.on("desconectado", (winner, playerOne, playerTwo) => {
+    endGame(winner, playerOne, playerTwo);
 })
 
 window.addEventListener("beforeunload", (event) => {
