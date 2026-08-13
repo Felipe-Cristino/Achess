@@ -29,6 +29,18 @@ let carta03BlackImg;
 let carta04BlackImg;
 let carta05BlackImg;
 
+let carta01LightNum;
+let carta02LightNum;
+let carta03LightNum;
+let carta04LightNum;
+let carta05LightNum;
+
+let carta01BlackNum;
+let carta02BlackNum;
+let carta03BlackNum;
+let carta04BlackNum;
+let carta05BlackNum;
+
 const carta01LightCard = document.getElementById("carta01-light")
 const carta02LightCard = document.getElementById("carta02-light")
 const carta03LightCard = document.getElementById("carta03-light")
@@ -1103,7 +1115,7 @@ const checkForDraw = () => {
 // --------------------------------------
 
 // Game Over Logic
-const endGame = (winner = null, playerOne = null, playerTwo = null) => {
+const endGame = (playerOne, playerTwo, winner = null) => {
     gameOver = true
     myTurn = false
     setCursor("default")
@@ -1199,8 +1211,8 @@ const sortearCartas = () => {
         [numeros[i], numeros[j]] = [numeros[j], numeros[i]];
     }
 
-    const carta01LightNum = numeros[0];
-    const carta02LightNum = numeros[1];
+    carta01LightNum = numeros[0];
+    carta02LightNum = numeros[1];
 
     numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -1209,9 +1221,9 @@ const sortearCartas = () => {
         [numeros[i], numeros[j]] = [numeros[j], numeros[i]];
     }
 
-    const carta03LightNum = numeros[0];
-    const carta04LightNum = numeros[1];
-    const carta05LightNum = numeros[2];
+    carta03LightNum = numeros[0];
+    carta04LightNum = numeros[1];
+    carta05LightNum = numeros[2];
 
     carta01LightImg = "../../assets/cartas/esp-carta" + carta01LightNum + ".jpeg";
     carta02LightImg = "../../assets/cartas/esp-carta" + carta02LightNum + ".jpeg";
@@ -1226,8 +1238,8 @@ const sortearCartas = () => {
         [numeros[i], numeros[j]] = [numeros[j], numeros[i]];
     }
 
-    const carta01BlackNum = numeros[0];
-    const carta02BlackNum = numeros[1];
+    carta01BlackNum = numeros[0];
+    carta02BlackNum = numeros[1];
 
     numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -1236,9 +1248,9 @@ const sortearCartas = () => {
         [numeros[i], numeros[j]] = [numeros[j], numeros[i]];
     }
 
-    const carta03BlackNum = numeros[0];
-    const carta04BlackNum = numeros[1];
-    const carta05BlackNum = numeros[2];
+    carta03BlackNum = numeros[0];
+    carta04BlackNum = numeros[1];
+    carta05BlackNum = numeros[2];
 
     carta01BlackImg = "../../assets/cartas/esp-carta" + carta01BlackNum + ".jpeg";
     carta02BlackImg = "../../assets/cartas/esp-carta" + carta02BlackNum + ".jpeg";
@@ -1248,6 +1260,80 @@ const sortearCartas = () => {
 }
 
 displayChessPieces()
+
+const switchCartasEsp = (cartaNum) => {
+    let poderCarta;
+    switch (cartaNum) {
+        case 1:
+            poderCarta = "Adiciona peça menor no tabuleiro";
+            break;
+
+        case 2:
+            poderCarta = "Impede carta do adversario";
+            break;
+
+        case 3:
+            poderCarta = "Ganha 1/4 de tempo";
+            break;
+
+        case 4:
+            poderCarta = "Tira 1/4 de tempo do adversario";
+            break;
+
+        default:
+            poderCarta = "Carta desconhecida";
+            break;
+    }
+
+    return poderCarta;
+}
+
+const switchCartas = (cartaNum) => {
+    let poderCarta;
+    switch (cartaNum) {
+        case 1:
+            poderCarta = "Rei move igual dama por 1 lance";
+            break;
+
+        case 2:
+            poderCarta = "Ganha 30 seg";
+            break;
+
+        case 3:
+            poderCarta = "Ganha 10 seg";
+            break;
+
+        case 4:
+            poderCarta = "Remover peça menor do adversário";
+            break;
+
+        case 5:
+            poderCarta = "2 lances sem ver o tabuleiro";
+            break;
+
+        case 6:
+            poderCarta = "Impede captura de peça por 1 lance";
+            break;
+
+        case 7:
+            poderCarta = "Trocar peça do tabuleiro por uma capturada"
+            break;
+
+        case 8:
+            poderCarta = "Impede carta do adversário";
+            break;
+
+        case 9:
+            poderCarta = "Mover peça adversária por 1 lance";
+            break;
+
+        default:
+            poderCarta = "Carta desconhecida";
+            break;
+    }
+
+    return poderCarta;
+}
 
 const listenersCartas = () => {
 
@@ -1267,6 +1353,7 @@ const listenersCartas = () => {
             setTimeout(() => {
                 showCard.classList.add("hidden")
             }, 2000)
+            console.log(switchCartasEsp(carta01LightNum));
             carta01LightCard.remove();
 
             carta02LightCard.children[0].src = carta02LightImg;
@@ -1284,6 +1371,7 @@ const listenersCartas = () => {
             setTimeout(() => {
                 showCard.classList.add("hidden")
             }, 2000)
+            console.log(switchCartasEsp(carta02LightNum));
             carta02LightCard.remove();
         }
     })
@@ -1304,7 +1392,7 @@ const listenersCartas = () => {
             setTimeout(() => {
                 showCard.classList.add("hidden")
             }, 2000)
-
+            console.log(switchCartas(carta03LightNum));
             carta03LightCard.remove();
 
             carta04LightCard.children[0].src = carta04LightImg;
@@ -1322,6 +1410,7 @@ const listenersCartas = () => {
             setTimeout(() => {
                 showCard.classList.add("hidden")
             }, 2000)
+            console.log(switchCartas(carta04LightNum));
             carta04LightCard.remove();
 
             carta05LightCard.children[0].src = carta05LightImg;
@@ -1339,7 +1428,7 @@ const listenersCartas = () => {
             setTimeout(() => {
                 showCard.classList.add("hidden")
             }, 2000)
-
+            console.log(switchCartas(carta05LightNum));
             carta05LightCard.remove();
         }
     })
@@ -1362,7 +1451,7 @@ const listenersCartas = () => {
             setTimeout(() => {
                 showCard.classList.add("hidden")
             }, 2000)
-
+            console.log(switchCartasEsp(carta01BlackNum));
             carta01BlackCard.remove();
 
             carta02BlackCard.children[0].src = carta02BlackImg;
@@ -1380,7 +1469,7 @@ const listenersCartas = () => {
             setTimeout(() => {
                 showCard.classList.add("hidden")
             }, 2000)
-
+            console.log(switchCartasEsp(carta02BlackNum));
             carta02BlackCard.remove();
         }
     })
@@ -1401,7 +1490,7 @@ const listenersCartas = () => {
             setTimeout(() => {
                 showCard.classList.add("hidden")
             }, 2000)
-
+            console.log(switchCartas(carta03BlackNum));
             carta03BlackCard.remove();
 
             carta04BlackCard.children[0].src = carta04BlackImg;
@@ -1419,7 +1508,7 @@ const listenersCartas = () => {
             setTimeout(() => {
                 showCard.classList.add("hidden")
             }, 2000)
-
+            console.log(switchCartas(carta04BlackNum));
             carta04BlackCard.remove();
 
             carta05BlackCard.children[0].src = carta05BlackImg;
@@ -1437,7 +1526,7 @@ const listenersCartas = () => {
             setTimeout(() => {
                 showCard.classList.add("hidden")
             }, 2000)
-
+            console.log(switchCartas(carta05BlackNum));
             carta05BlackCard.remove();
         }
     })
@@ -1524,7 +1613,7 @@ const addBrilhoCards = () => {
 // =====================
 
 socket.on("users-points", (winner, playerOne, playerTwo) => {
-    endGame(winner, playerOne, playerTwo);
+    endGame(playerOne, playerTwo, winner);
 });
 
 socket.on("receive-game-details", (details) => {
@@ -1601,19 +1690,19 @@ socket.on("king-is-attacked", () => {
 })
 
 socket.on("draw-points", (playerOne, playerTwo) => {
-    endGame(null, playerOne, playerTwo);
+    endGame(playerOne, playerTwo, null);
 })
 
 socket.on("time-ended", (winner, playerOne, playerTwo, ifDraw) => {
     if (ifDraw) {
-        endGame(null, playerOne, playerTwo);
+        endGame(playerOne, playerTwo, null);
     } else {
-        endGame(winner, playerOne, playerTwo);
+        endGame(playerOne, playerTwo, winner);
     }
 })
 
 socket.on("desconectado", (winner, playerOne, playerTwo) => {
-    endGame(winner, playerOne, playerTwo);
+    endGame(playerOne, playerTwo, winner);
 })
 
 window.addEventListener("beforeunload", (event) => {

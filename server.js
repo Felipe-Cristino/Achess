@@ -165,6 +165,10 @@ io.on("connection", (socket) => {
                 if (room && room.players[0].username === user.username) {
                     removeRoom(room.id)
                     let id = Math.floor(Math.random() * 10001);
+                    let room2 = rooms.find(room => room.id === id)
+                    if (room2) {
+                        window.location.href = window.location.origin + "/lobby";
+                    }
                     createRoom(id, user, time, mode)
                     socket.emit("room-created", id)
                 }
@@ -176,12 +180,20 @@ io.on("connection", (socket) => {
                     socket.emit("room-joined", room.id);
                 } else {
                     let id = Math.floor(Math.random() * 10001);
+                    let room2 = rooms.find(room => room.id === id)
+                    if (room2) {
+                        window.location.href = window.location.origin + "/lobby";
+                    }
                     createRoom(id, user, time, mode)
                     socket.emit("room-created", id)
 
                 }
             } else {
                 let id = Math.floor(Math.random() * 10001);
+                let room2 = rooms.find(room => room.id === id)
+                if (room2) {
+                    window.location.href = window.location.origin + "/lobby";
+                }
                 createRoom(id, user, time, mode)
                 socket.emit("room-created", id)
             }
@@ -424,7 +436,7 @@ io.on("connection", (socket) => {
     })
 
     socket.on("update-score", (roomId, playerOneScore, playerTwoScore, playerOne, playerTwo) => {
-        
+
         let userOne = playerOne
         let userTwo = playerTwo
 
@@ -490,14 +502,19 @@ io.on("connection", (socket) => {
 
                                 jogador1 = room.players[0];
                                 jogador2 = room.players[1];
-                                if (user.username === jogador1.username) {
-                                    winner = jogador2.username
-                                } else {
-                                    winner = jogador1.username
-                                }
 
-                                io.to(user.room).emit("desconectado", winner,
-                                    jogador1, jogador2);
+                                if (jogador1 && jogador2) {
+                                    if (user.username === jogador1.username) {
+                                        winner = jogador2.username
+                                    } else {
+                                        winner = jogador1.username
+                                    }
+
+                                    io.to(user.room).emit("desconectado", winner,
+                                        jogador1, jogador2);
+                                } else {
+                                    io.to(user.room).emit("error", "The other player left the game")
+                                }
                             }
                         }
                     })

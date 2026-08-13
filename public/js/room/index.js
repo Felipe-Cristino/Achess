@@ -1053,7 +1053,7 @@ const checkForDraw = () => {
 // --------------------------------------
 
 // Game Over Logic
-const endGame = (winner = null, playerOne = null, playerTwo = null) => {
+const endGame = (playerOne, playerTwo, winner = null) => {
     gameOver = true
     myTurn = false
     setCursor("default")
@@ -1148,7 +1148,7 @@ displayChessPieces()
 // =====================
 
 socket.on("users-points", (winner, playerOne, playerTwo) => {
-    endGame(winner, playerOne, playerTwo);
+    endGame(playerOne, playerTwo, winner);
 });
 
 socket.on("receive-game-details", (details) => {
@@ -1226,19 +1226,19 @@ socket.on("king-is-attacked", () => {
 
 
 socket.on("draw-points", (playerOne, playerTwo) => {
-    endGame(null, playerOne, playerTwo);
+    endGame(playerOne, playerTwo, null);
 })
 
 socket.on("time-ended", (winner, playerOne, playerTwo, ifDraw) => {
     if (ifDraw) {
-        endGame(null, playerOne, playerTwo);
+        endGame(playerOne, playerTwo, null);
     } else {
-        endGame(winner, playerOne, playerTwo);
+        endGame(playerOne, playerTwo, winner);
     }
 })
 
 socket.on("desconectado", (winner, playerOne, playerTwo)=>{
-    endGame(winner, playerOne, playerTwo);
+    endGame(playerOne, playerTwo, winner);
 })
 
 window.addEventListener("beforeunload", (event) => {
