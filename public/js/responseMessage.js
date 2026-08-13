@@ -10,9 +10,9 @@ if(window.location.search){
     let value = search.split("=")[1];
 
     if(key === 'error'){
-        responseMessage.classList.add("bg-danger");
+        responseMessage.classList.add("bground-danger");
     }else{
-        responseMessage.classList.add("bg-success");
+        responseMessage.classList.add("bground-success");
     }
 
     responseMessage.classList.remove("hidden");

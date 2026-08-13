@@ -17,30 +17,6 @@ const myScoreElement = document.getElementById("my-score")
 const enemyScoreElement = document.getElementById("enemy-score")
 let draggedPiece = null;
 
-let carta01LightImg;
-let carta02LightImg;
-let carta03LightImg;
-let carta04LightImg;
-let carta05LightImg;
-
-let carta01BlackImg;
-let carta02BlackImg;
-let carta03BlackImg;
-let carta04BlackImg;
-let carta05BlackImg;
-
-let carta01LightNum;
-let carta02LightNum;
-let carta03LightNum;
-let carta04LightNum;
-let carta05LightNum;
-
-let carta01BlackNum;
-let carta02BlackNum;
-let carta03BlackNum;
-let carta04BlackNum;
-let carta05BlackNum;
-
 const carta01LightCard = document.getElementById("carta01-light")
 const carta02LightCard = document.getElementById("carta02-light")
 const carta03LightCard = document.getElementById("carta03-light")
@@ -373,8 +349,6 @@ const startGame = (playerTwo) => {
     setPiecesToPromote();
 
     sortearCartas();
-
-    listenersCartas();
 }
 
 const setKingIsAttacked = (isAttacked) => {
@@ -1211,8 +1185,8 @@ const sortearCartas = () => {
         [numeros[i], numeros[j]] = [numeros[j], numeros[i]];
     }
 
-    carta01LightNum = numeros[0];
-    carta02LightNum = numeros[1];
+    const carta01LightNum = numeros[0];
+    const carta02LightNum = numeros[1];
 
     numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -1221,15 +1195,15 @@ const sortearCartas = () => {
         [numeros[i], numeros[j]] = [numeros[j], numeros[i]];
     }
 
-    carta03LightNum = numeros[0];
-    carta04LightNum = numeros[1];
-    carta05LightNum = numeros[2];
+    const carta03LightNum = numeros[0];
+    const carta04LightNum = numeros[1];
+    const carta05LightNum = numeros[2];
 
-    carta01LightImg = "../../assets/cartas/esp-carta" + carta01LightNum + ".jpeg";
-    carta02LightImg = "../../assets/cartas/esp-carta" + carta02LightNum + ".jpeg";
-    carta03LightImg = "../../assets/cartas/carta" + carta03LightNum + ".jpeg";
-    carta04LightImg = "../../assets/cartas/carta" + carta04LightNum + ".jpeg";
-    carta05LightImg = "../../assets/cartas/carta" + carta05LightNum + ".jpeg";
+    const carta01LightImg = "../../assets/cartas/esp-carta" + carta01LightNum + ".jpeg";
+    const carta02LightImg = "../../assets/cartas/esp-carta" + carta02LightNum + ".jpeg";
+    const carta03LightImg = "../../assets/cartas/carta" + carta03LightNum + ".jpeg";
+    const carta04LightImg = "../../assets/cartas/carta" + carta04LightNum + ".jpeg";
+    const carta05LightImg = "../../assets/cartas/carta" + carta05LightNum + ".jpeg";
 
     numeros = [1, 2, 3, 4];
 
@@ -1238,8 +1212,8 @@ const sortearCartas = () => {
         [numeros[i], numeros[j]] = [numeros[j], numeros[i]];
     }
 
-    carta01BlackNum = numeros[0];
-    carta02BlackNum = numeros[1];
+    const carta01BlackNum = numeros[0];
+    const carta02BlackNum = numeros[1];
 
     numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -1248,15 +1222,32 @@ const sortearCartas = () => {
         [numeros[i], numeros[j]] = [numeros[j], numeros[i]];
     }
 
-    carta03BlackNum = numeros[0];
-    carta04BlackNum = numeros[1];
-    carta05BlackNum = numeros[2];
+    const carta03BlackNum = numeros[0];
+    const carta04BlackNum = numeros[1];
+    const carta05BlackNum = numeros[2];
 
-    carta01BlackImg = "../../assets/cartas/esp-carta" + carta01BlackNum + ".jpeg";
-    carta02BlackImg = "../../assets/cartas/esp-carta" + carta02BlackNum + ".jpeg";
-    carta03BlackImg = "../../assets/cartas/carta" + carta03BlackNum + ".jpeg";
-    carta04BlackImg = "../../assets/cartas/carta" + carta04BlackNum + ".jpeg";
-    carta05BlackImg = "../../assets/cartas/carta" + carta05BlackNum + ".jpeg";
+    const carta01BlackImg = "../../assets/cartas/esp-carta" + carta01BlackNum + ".jpeg";
+    const carta02BlackImg = "../../assets/cartas/esp-carta" + carta02BlackNum + ".jpeg";
+    const carta03BlackImg = "../../assets/cartas/carta" + carta03BlackNum + ".jpeg";
+    const carta04BlackImg = "../../assets/cartas/carta" + carta04BlackNum + ".jpeg";
+    const carta05BlackImg = "../../assets/cartas/carta" + carta05BlackNum + ".jpeg";
+
+    const lightCards = 
+    [carta01LightImg, carta02LightImg, 
+    carta03LightImg, carta04LightImg, carta05LightImg];
+
+    const blackCards = [carta01BlackImg, carta02BlackImg, 
+    carta03BlackImg, carta04BlackImg, carta05BlackImg];
+
+    const lightCardsNum = 
+    [carta01LightNum, carta02LightNum, 
+    carta03LightNum, carta04LightNum, carta05LightNum];
+
+    const blackCardsNum = [carta01BlackNum, carta02BlackNum, 
+    carta03BlackNum, carta04BlackNum, carta05BlackNum];
+
+    listenersCartas(lightCards, blackCards,
+         lightCardsNum, blackCardsNum);
 }
 
 displayChessPieces()
@@ -1335,7 +1326,39 @@ const switchCartas = (cartaNum) => {
     return poderCarta;
 }
 
-const listenersCartas = () => {
+const popUp = (div, texto) => {
+    const div1 = document.createElement("div")
+    div1.classList.add("pop-up")
+    div1.textContent = texto;
+    div.appendChild(div1);
+}
+
+const listenersCartas = (lightCards, blackCards, 
+    lightCardsNum, blackCardsNum) => {
+
+    let carta01LightImg = lightCards[0];
+    let carta02LightImg = lightCards[1];
+    let carta03LightImg = lightCards[2];
+    let carta04LightImg = lightCards[3];
+    let carta05LightImg = lightCards[4];
+
+    let carta01BlackImg = blackCards[0];
+    let carta02BlackImg = blackCards[1];
+    let carta03BlackImg = blackCards[2];
+    let carta04BlackImg = blackCards[3];
+    let carta05BlackImg = blackCards[4];
+
+    let carta01LightNum = lightCardsNum[0];
+    let carta02LightNum = lightCardsNum[1];
+    let carta03LightNum = lightCardsNum[2];
+    let carta04LightNum = lightCardsNum[3];
+    let carta05LightNum = lightCardsNum[4];
+
+    let carta01BlackNum = blackCardsNum[0];
+    let carta02BlackNum = blackCardsNum[1];
+    let carta03BlackNum = blackCardsNum[2];
+    let carta04BlackNum = blackCardsNum[3];
+    let carta05BlackNum = blackCardsNum[4];
 
     carta01LightCard.addEventListener("click", () => {
         if (lance >= waitLanceEspLight && estagioCarta01Light === 1
@@ -1344,6 +1367,7 @@ const listenersCartas = () => {
             carta01LightCard.children[0].src = carta01LightImg;
             estagioCarta01Light += 1;
             waitLanceEspLight += 4;
+            popUp(carta01LightCard, switchCartasEsp(carta01LightNum));
         }
         if (lance >= waitLanceEspLight && estagioCarta01Light === 2
             && myTurn && lance % 2 === 0
@@ -1359,6 +1383,7 @@ const listenersCartas = () => {
             carta02LightCard.children[0].src = carta02LightImg;
             estagioCarta02Light += 1;
             waitLanceEspLight += 4;
+            popUp(carta02LightCard, switchCartasEsp(carta02LightNum));
         }
     })
 
@@ -1383,6 +1408,7 @@ const listenersCartas = () => {
             carta03LightCard.children[0].src = carta03LightImg;
             estagioCarta03Light += 1;
             waitLanceCommonLight += 2;
+            popUp(carta03LightCard, switchCartas(carta03LightNum));
         }
         if (lance >= waitLanceCommonLight && estagioCarta03Light === 2
             && myTurn && lance % 2 === 1
@@ -1398,6 +1424,7 @@ const listenersCartas = () => {
             carta04LightCard.children[0].src = carta04LightImg;
             estagioCarta04Light += 1;
             waitLanceCommonLight += 2;
+            popUp(carta04LightCard, switchCartas(carta04LightNum));
         }
     })
 
@@ -1416,6 +1443,7 @@ const listenersCartas = () => {
             carta05LightCard.children[0].src = carta05LightImg;
             estagioCarta05Light += 1;
             waitLanceCommonLight += 2;
+            popUp(carta05LightCard, switchCartas(carta05LightNum));
         }
     })
 
@@ -1442,6 +1470,7 @@ const listenersCartas = () => {
             carta01BlackCard.children[0].src = carta01BlackImg;
             estagioCarta01Black += 1;
             waitLanceEspBlack += 4;
+            popUp(carta01BlackCard, switchCartasEsp(carta01BlackNum));
         }
         if (lance >= waitLanceEspBlack && estagioCarta01Black === 2
             && myTurn && lance % 2 === 0
@@ -1457,6 +1486,7 @@ const listenersCartas = () => {
             carta02BlackCard.children[0].src = carta02BlackImg;
             estagioCarta02Black += 1;
             waitLanceEspBlack += 4;
+            popUp(carta02BlackCard, switchCartasEsp(carta02BlackNum));
         }
     })
 
@@ -1481,6 +1511,7 @@ const listenersCartas = () => {
             carta03BlackCard.children[0].src = carta03BlackImg;
             estagioCarta03Black += 1;
             waitLanceCommonBlack += 2;
+            popUp(carta03BlackCard, switchCartas(carta03BlackNum));
         }
         if (lance >= waitLanceCommonBlack && estagioCarta03Black === 2
             && myTurn && lance % 2 === 1
@@ -1496,6 +1527,7 @@ const listenersCartas = () => {
             carta04BlackCard.children[0].src = carta04BlackImg;
             estagioCarta04Black += 1;
             waitLanceCommonBlack += 2;
+            popUp(carta04BlackCard, switchCartas(carta04BlackNum));
         }
     })
 
@@ -1514,6 +1546,7 @@ const listenersCartas = () => {
             carta05BlackCard.children[0].src = carta05BlackImg;
             estagioCarta05Black += 1;
             waitLanceCommonBlack += 2;
+            popUp(carta05BlackCard, switchCartas(carta05BlackNum));
         }
     })
 

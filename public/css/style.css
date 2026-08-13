@@ -85,12 +85,12 @@ a{
     transform: translateY(-50%);
 }
 
-.bg-danger{
+.bground-danger{
     background: var(--bg-danger);
     color: white;
 }
 
-.bg-success{
+.bground-success{
     background: var(--bg-success);
     color: white;
 }
@@ -165,6 +165,7 @@ nav{
     font-size: 1.3rem;
     font-weight: 400;
     padding: 10px;
+    color: white;
 }
 
 .nav-link:hover{
@@ -1444,6 +1445,13 @@ tbody td img{
     cursor: pointer;
 }
 
+#carta01-light, #carta02-light, 
+#carta03-light, #carta04-light, #carta05-light,
+#carta01-black, #carta02-black,
+#carta03-black, #carta04-black, #carta05-black {
+    position: relative;
+}
+
 .img-card {
     width: 100%;
     height: 100%;
@@ -1487,5 +1495,18 @@ tbody td img{
 #show-card > img {
     filter: grayscale(100%);
     opacity: 0.9;
+}
+
+.pop-up {
+    color: white;
+    background-color: black;
+    border-radius: 3px;
+    margin-top: -200px;
+    width: fit-content;
+    font-size: 1.1rem;
+    position: absolute;
+    top: 160px;
+    left: -80px;
+    white-space: nowrap;
 }
 /* ================================================================================= */
