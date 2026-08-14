@@ -1500,13 +1500,14 @@ tbody td img{
 .pop-up {
     color: white;
     background-color: black;
+    padding: 5px;
     border-radius: 3px;
-    margin-top: -200px;
     width: fit-content;
     font-size: 1.1rem;
-    position: absolute;
-    top: 160px;
-    left: -80px;
     white-space: nowrap;
+    position: absolute;
+    top: -30px;
+    left: 0px;
+    z-index: 1;
 }
 /* ================================================================================= */

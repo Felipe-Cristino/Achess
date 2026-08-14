@@ -1188,7 +1188,7 @@ const sortearCartas = () => {
     const carta01LightNum = numeros[0];
     const carta02LightNum = numeros[1];
 
-    numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
     for (let i = numeros.length - 1; i > 0; i--) {
         let j = Math.floor(Math.random() * (i + 1));
@@ -1215,7 +1215,7 @@ const sortearCartas = () => {
     const carta01BlackNum = numeros[0];
     const carta02BlackNum = numeros[1];
 
-    numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
     for (let i = numeros.length - 1; i > 0; i--) {
         let j = Math.floor(Math.random() * (i + 1));
@@ -1232,22 +1232,22 @@ const sortearCartas = () => {
     const carta04BlackImg = "../../assets/cartas/carta" + carta04BlackNum + ".jpeg";
     const carta05BlackImg = "../../assets/cartas/carta" + carta05BlackNum + ".jpeg";
 
-    const lightCards = 
-    [carta01LightImg, carta02LightImg, 
-    carta03LightImg, carta04LightImg, carta05LightImg];
+    const lightCards =
+        [carta01LightImg, carta02LightImg,
+            carta03LightImg, carta04LightImg, carta05LightImg];
 
-    const blackCards = [carta01BlackImg, carta02BlackImg, 
-    carta03BlackImg, carta04BlackImg, carta05BlackImg];
+    const blackCards = [carta01BlackImg, carta02BlackImg,
+        carta03BlackImg, carta04BlackImg, carta05BlackImg];
 
-    const lightCardsNum = 
-    [carta01LightNum, carta02LightNum, 
-    carta03LightNum, carta04LightNum, carta05LightNum];
+    const lightCardsNum =
+        [carta01LightNum, carta02LightNum,
+            carta03LightNum, carta04LightNum, carta05LightNum];
 
-    const blackCardsNum = [carta01BlackNum, carta02BlackNum, 
-    carta03BlackNum, carta04BlackNum, carta05BlackNum];
+    const blackCardsNum = [carta01BlackNum, carta02BlackNum,
+        carta03BlackNum, carta04BlackNum, carta05BlackNum];
 
     listenersCartas(lightCards, blackCards,
-         lightCardsNum, blackCardsNum);
+        lightCardsNum, blackCardsNum);
 }
 
 displayChessPieces()
@@ -1256,23 +1256,23 @@ const switchCartasEsp = (cartaNum) => {
     let poderCarta;
     switch (cartaNum) {
         case 1:
-            poderCarta = "Adiciona peça menor no tabuleiro";
+            poderCarta = "Add peça tab";
             break;
 
         case 2:
-            poderCarta = "Impede carta do adversario";
+            poderCarta = "Impede card";
             break;
 
         case 3:
-            poderCarta = "Ganha 1/4 de tempo";
+            poderCarta = "Win 1/4 time";
             break;
 
         case 4:
-            poderCarta = "Tira 1/4 de tempo do adversario";
+            poderCarta = "Tira 1/4 time";
             break;
 
         default:
-            poderCarta = "Carta desconhecida";
+            poderCarta = "Carta errada";
             break;
     }
 
@@ -1283,7 +1283,7 @@ const switchCartas = (cartaNum) => {
     let poderCarta;
     switch (cartaNum) {
         case 1:
-            poderCarta = "Rei move igual dama por 1 lance";
+            poderCarta = "Rei = dama";
             break;
 
         case 2:
@@ -1295,31 +1295,31 @@ const switchCartas = (cartaNum) => {
             break;
 
         case 4:
-            poderCarta = "Remover peça menor do adversário";
+            poderCarta = "Remove piece";
             break;
 
         case 5:
-            poderCarta = "2 lances sem ver o tabuleiro";
+            poderCarta = "2 move blind";
             break;
 
         case 6:
-            poderCarta = "Impede captura de peça por 1 lance";
+            poderCarta = "Impede captura";
             break;
 
         case 7:
-            poderCarta = "Trocar peça do tabuleiro por uma capturada"
+            poderCarta = "Trocar peça"
             break;
 
         case 8:
-            poderCarta = "Impede carta do adversário";
+            poderCarta = "Impede carta";
             break;
 
         case 9:
-            poderCarta = "Mover peça adversária por 1 lance";
+            poderCarta = "Move enemy";
             break;
 
         default:
-            poderCarta = "Carta desconhecida";
+            poderCarta = "Carta errada";
             break;
     }
 
@@ -1333,7 +1333,7 @@ const popUp = (div, texto) => {
     div.appendChild(div1);
 }
 
-const listenersCartas = (lightCards, blackCards, 
+const listenersCartas = (lightCards, blackCards,
     lightCardsNum, blackCardsNum) => {
 
     let carta01LightImg = lightCards[0];
@@ -1377,7 +1377,6 @@ const listenersCartas = (lightCards, blackCards,
             setTimeout(() => {
                 showCard.classList.add("hidden")
             }, 2000)
-            console.log(switchCartasEsp(carta01LightNum));
             carta01LightCard.remove();
 
             carta02LightCard.children[0].src = carta02LightImg;
@@ -1396,7 +1395,6 @@ const listenersCartas = (lightCards, blackCards,
             setTimeout(() => {
                 showCard.classList.add("hidden")
             }, 2000)
-            console.log(switchCartasEsp(carta02LightNum));
             carta02LightCard.remove();
         }
     })
@@ -1418,7 +1416,6 @@ const listenersCartas = (lightCards, blackCards,
             setTimeout(() => {
                 showCard.classList.add("hidden")
             }, 2000)
-            console.log(switchCartas(carta03LightNum));
             carta03LightCard.remove();
 
             carta04LightCard.children[0].src = carta04LightImg;
@@ -1437,7 +1434,6 @@ const listenersCartas = (lightCards, blackCards,
             setTimeout(() => {
                 showCard.classList.add("hidden")
             }, 2000)
-            console.log(switchCartas(carta04LightNum));
             carta04LightCard.remove();
 
             carta05LightCard.children[0].src = carta05LightImg;
@@ -1456,7 +1452,6 @@ const listenersCartas = (lightCards, blackCards,
             setTimeout(() => {
                 showCard.classList.add("hidden")
             }, 2000)
-            console.log(switchCartas(carta05LightNum));
             carta05LightCard.remove();
         }
     })
@@ -1480,7 +1475,6 @@ const listenersCartas = (lightCards, blackCards,
             setTimeout(() => {
                 showCard.classList.add("hidden")
             }, 2000)
-            console.log(switchCartasEsp(carta01BlackNum));
             carta01BlackCard.remove();
 
             carta02BlackCard.children[0].src = carta02BlackImg;
@@ -1499,7 +1493,6 @@ const listenersCartas = (lightCards, blackCards,
             setTimeout(() => {
                 showCard.classList.add("hidden")
             }, 2000)
-            console.log(switchCartasEsp(carta02BlackNum));
             carta02BlackCard.remove();
         }
     })
@@ -1521,7 +1514,6 @@ const listenersCartas = (lightCards, blackCards,
             setTimeout(() => {
                 showCard.classList.add("hidden")
             }, 2000)
-            console.log(switchCartas(carta03BlackNum));
             carta03BlackCard.remove();
 
             carta04BlackCard.children[0].src = carta04BlackImg;
@@ -1540,7 +1532,6 @@ const listenersCartas = (lightCards, blackCards,
             setTimeout(() => {
                 showCard.classList.add("hidden")
             }, 2000)
-            console.log(switchCartas(carta04BlackNum));
             carta04BlackCard.remove();
 
             carta05BlackCard.children[0].src = carta05BlackImg;
@@ -1559,7 +1550,6 @@ const listenersCartas = (lightCards, blackCards,
             setTimeout(() => {
                 showCard.classList.add("hidden")
             }, 2000)
-            console.log(switchCartas(carta05BlackNum));
             carta05BlackCard.remove();
         }
     })
