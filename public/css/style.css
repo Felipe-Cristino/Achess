@@ -849,11 +849,12 @@ nav{
     text-align: center;
 }
 
-.board-and-users .waiting-message{
+.waiting-message{
     font-weight: 300;
     width: 100%;
     text-align: center;
-    font-size: 1.2rem;
+    font-size: 1.8rem;
+    margin-top: 30px;
 }
 
 .chess-board{
@@ -1056,12 +1057,17 @@ nav{
 }
 
 .captured-pieces{
-    width: 300px;
+    width: 340px;
     min-height: 600px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     margin-left: 30px;
+}
+
+.captured-container {
+    display: flex;
+    gap: 20px;
 }
 
 .captured-container h4{
@@ -1416,7 +1422,7 @@ tbody td img{
     justify-content: center;
     align-items: center;  
     height: 100vh;
-    margin-left: -80px;
+    margin-left: -290px;
     margin-top: 25px;
 }
 
@@ -1461,8 +1467,23 @@ tbody td img{
     margin-left: 80px !important;
 }
 
+.gr-1 {
+    position: relative;
+}
+
+.c-p1 {
+    position: absolute;
+    top: 120px;
+    right: -60px;
+}
+
+.b-a-u1 {
+    margin-left: -180px !important;
+}
+
 .c-p2 {
     margin-left: -20px !important;
+    flex-shrink: 0;
 }
 
 .card-brilhante1 {

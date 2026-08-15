@@ -1178,7 +1178,7 @@ const endGame = (playerOne, playerTwo, winner = null) => {
 // --------------------------------------
 const sortearCartas = () => {
 
-    let numeros = [1, 2, 3, 4];
+    let numeros = [1, 2, 3];
 
     for (let i = numeros.length - 1; i > 0; i--) {
         let j = Math.floor(Math.random() * (i + 1));
@@ -1205,7 +1205,7 @@ const sortearCartas = () => {
     const carta04LightImg = "../../assets/cartas/carta" + carta04LightNum + ".jpeg";
     const carta05LightImg = "../../assets/cartas/carta" + carta05LightNum + ".jpeg";
 
-    numeros = [1, 2, 3, 4];
+    numeros = [1, 2, 3];
 
     for (let i = numeros.length - 1; i > 0; i--) {
         let j = Math.floor(Math.random() * (i + 1));
@@ -1265,10 +1265,6 @@ const switchCartasEsp = (cartaNum) => {
 
         case 3:
             poderCarta = "Win 1/4 time";
-            break;
-
-        case 4:
-            poderCarta = "Tira 1/4 time";
             break;
 
         default:
@@ -1338,7 +1334,6 @@ const efeitoCartasEsp = (cartaNum) => {
         case 1:
         case 2:
         case 3:
-        case 4:
             timer.multiplyTime(5/4);   
     }
 

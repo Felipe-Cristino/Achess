@@ -2,8 +2,9 @@
 
     <div class="container">
         <%- include('../include/partials/spinner') %>
-            <div class="game-room hidden" id="game-room">
-                <div class="board-and-users">
+            <p class="waiting-message" id="waiting-message">Waiting for someone to connect...</p>
+            <div class="game-room gr-1 hidden" id="game-room">
+                <div class="board-and-users b-a-u1">
                     <div class="user" id="player-black">
                         <span class="username"></span>
                         <span class="timer"></span>
@@ -80,18 +81,14 @@
                         <span class="username"></span>
                         <span class="timer"></span>
                     </div>
-
-                    <p class="waiting-message" id="waiting-message">Waiting for someone to connect...</p>
                 </div>
 
-                <div class="captured-pieces">
+                <div class="captured-pieces c-p1">
                     <div class="captured-container">
-                        <h4>Pieces Captured:</h4>
                         <ul class="pieces" id="light-captured-pieces"></ul>
                     </div>
 
                     <div class="captured-container">
-                        <h4>Pieces Captured:</h4>
                         <ul class="pieces" id="black-captured-pieces"></ul>
                     </div>
                 </div>
