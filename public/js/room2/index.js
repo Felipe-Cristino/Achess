@@ -1326,6 +1326,67 @@ const switchCartas = (cartaNum) => {
     return poderCarta;
 }
 
+const efeitoCartasEsp = (cartaNum) => {
+    switch (cartaNum) {
+
+        // "Add peça tab"
+
+
+
+        // "Impede card"
+
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+            timer.multiplyTime(5/4);   
+    }
+
+    return;
+}
+
+const efeitoCartas = (cartaNum) => {
+    switch (cartaNum) {
+        case 1:
+            // "Rei = dama";
+            break;
+
+        case 2:
+            // "Ganha 30 seg"
+            break;
+
+        case 3:
+            // "Ganha 10 seg"
+            break;
+
+        case 4:
+            // "Remove piece"
+            break;
+
+        case 5:
+            // "2 move blind"
+            break;
+
+        case 6:
+            // "Impede captura"
+            break;
+
+        case 7:
+            // "Trocar peça"
+            break;
+
+        case 8:
+            // "Impede carta"
+            break;
+
+        case 9:
+            // "Move enemy"
+            break;
+    }
+
+    return;
+}
+
 const popUp = (div, texto) => {
     const div1 = document.createElement("div")
     div1.classList.add("pop-up")
@@ -1378,6 +1439,7 @@ const listenersCartas = (lightCards, blackCards,
                 showCard.classList.add("hidden")
             }, 2000)
             carta01LightCard.remove();
+            efeitoCartasEsp(carta01LightNum);
 
             carta02LightCard.children[0].src = carta02LightImg;
             estagioCarta02Light += 1;
@@ -1396,6 +1458,7 @@ const listenersCartas = (lightCards, blackCards,
                 showCard.classList.add("hidden")
             }, 2000)
             carta02LightCard.remove();
+            efeitoCartasEsp(carta02LightNum);
         }
     })
 
@@ -1417,6 +1480,7 @@ const listenersCartas = (lightCards, blackCards,
                 showCard.classList.add("hidden")
             }, 2000)
             carta03LightCard.remove();
+            efeitoCartasEsp(carta02LightNum);
 
             carta04LightCard.children[0].src = carta04LightImg;
             estagioCarta04Light += 1;
@@ -1435,6 +1499,7 @@ const listenersCartas = (lightCards, blackCards,
                 showCard.classList.add("hidden")
             }, 2000)
             carta04LightCard.remove();
+            efeitoCartasEsp(carta02LightNum);
 
             carta05LightCard.children[0].src = carta05LightImg;
             estagioCarta05Light += 1;
@@ -1453,6 +1518,7 @@ const listenersCartas = (lightCards, blackCards,
                 showCard.classList.add("hidden")
             }, 2000)
             carta05LightCard.remove();
+            efeitoCartasEsp(carta02LightNum);
         }
     })
 
@@ -1476,6 +1542,7 @@ const listenersCartas = (lightCards, blackCards,
                 showCard.classList.add("hidden")
             }, 2000)
             carta01BlackCard.remove();
+            efeitoCartasEsp(carta01BlackNum);
 
             carta02BlackCard.children[0].src = carta02BlackImg;
             estagioCarta02Black += 1;
@@ -1494,6 +1561,7 @@ const listenersCartas = (lightCards, blackCards,
                 showCard.classList.add("hidden")
             }, 2000)
             carta02BlackCard.remove();
+            efeitoCartasEsp(carta02BlackNum);
         }
     })
 
@@ -1515,6 +1583,7 @@ const listenersCartas = (lightCards, blackCards,
                 showCard.classList.add("hidden")
             }, 2000)
             carta03BlackCard.remove();
+            efeitoCartasEsp(carta02BlackNum);
 
             carta04BlackCard.children[0].src = carta04BlackImg;
             estagioCarta04Black += 1;
@@ -1533,6 +1602,7 @@ const listenersCartas = (lightCards, blackCards,
                 showCard.classList.add("hidden")
             }, 2000)
             carta04BlackCard.remove();
+            efeitoCartasEsp(carta02BlackNum);
 
             carta05BlackCard.children[0].src = carta05BlackImg;
             estagioCarta05Black += 1;
@@ -1551,6 +1621,7 @@ const listenersCartas = (lightCards, blackCards,
                 showCard.classList.add("hidden")
             }, 2000)
             carta05BlackCard.remove();
+            efeitoCartasEsp(carta02BlackNum);
         }
     })
 }

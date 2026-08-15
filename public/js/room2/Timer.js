@@ -1,5 +1,5 @@
-class Timer{
-    constructor(player, roomId, minutes, seconds, updateTimerCallback, timerEndedCallback){
+class Timer {
+    constructor(player, roomId, minutes, seconds, updateTimerCallback, timerEndedCallback) {
         this.player = player;
         this.roomId = roomId;
         this.minutes = minutes;
@@ -9,17 +9,17 @@ class Timer{
         this.timerEndedCallback = timerEndedCallback
     }
 
-    start(){
+    start() {
         this.interval = setInterval(() => {
             this.seconds--;
 
-            if(this.minutes === 0 && this.seconds === 0){
+            if (this.minutes === 0 && this.seconds === 0) {
                 this.stop()
                 this.timerEndedCallback();
                 return;
             }
 
-            if(this.seconds < 0){
+            if (this.seconds < 0) {
                 this.minutes--;
 
                 this.seconds = 59;
@@ -30,8 +30,18 @@ class Timer{
         }, 1000)
     }
 
-    stop(){
+    stop() {
         clearInterval(this.interval)
         this.interval = null
+    }    
+
+    multiplyTime(factor) {
+        let totalSeconds = Math.round((this.minutes * 60 + this.seconds) * factor);
+
+        this.minutes = Math.floor(totalSeconds / 60);
+        this.seconds = totalSeconds % 60;
+
+        socket.emit('update-timer', this.roomId, this.minutes, this.seconds);
+        this.updateTimerCallback(this.player, this.minutes, this.seconds);
     }
 }
