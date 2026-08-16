@@ -15,6 +15,8 @@ const piecesToPromote = document.getElementById("pieces-to-promote")
 const gameOverMessageContainer = document.getElementById("game-over-message-container")
 const myScoreElement = document.getElementById("my-score")
 const enemyScoreElement = document.getElementById("enemy-score")
+const addPecaContainer = document.getElementById("addPeca-container");
+const addPecaPecas = document.getElementById("addPeca-pecas");
 let draggedPiece = null;
 
 const carta01LightCard = document.getElementById("carta01-light")
@@ -52,6 +54,7 @@ const showCard = document.getElementById("show-card");
 // Game Variables
 // =====================
 let user = null;
+let increment = 1;
 
 let search = window.location.search.split("&")
 let positionHistory = new Map();
@@ -175,6 +178,16 @@ const addPieceListeners = () => {
 
     document.querySelectorAll(`.piece.${enemy}`).forEach(piece => {
         piece.style.cursor = "default"
+    })
+}
+
+const cartaImpedido = (player, peca) => {
+    document.querySelectorAll(`.piece.${player}`).forEach(piece => {
+        if (piece.dataset.piece === peca) {
+            console.log("Oi1")
+            piece.removeEventListener("click", onClickPiece);
+            piece.removeEventListener("dragstart", onClickPiece);
+        }
     })
 }
 
@@ -983,6 +996,100 @@ const addListenerToPiecesToPromote = () => {
 }
 // --------------------------------------
 
+const setAddPieces = () => {
+    if (player === 'light') {
+        let pieces = ["knight", "bishop", "rook"];
+        let icons = [
+            "../assets/chess-icons/light/chess-knight-light.svg",
+            "../assets/chess-icons/light/chess-bishop-light.svg",
+            "../assets/chess-icons/light/chess-rook-light.svg",
+        ];
+
+        let i = 0;
+        while (i <= 2) {
+            const li = document.createElement("li");
+            li.setAttribute("data-piece", pieces[i]);
+
+            const img = document.createElement("img");
+            img.src = icons[i];
+
+            li.appendChild(img);
+            addPecaPecas.appendChild(li);
+
+            i++;
+        }
+    } else {
+        let pieces = ["knight", "bishop", "rook"];
+        let icons = [
+            "../assets/chess-icons/black/chess-knight-black.svg",
+            "../assets/chess-icons/black/chess-bishop-black.svg",
+            "../assets/chess-icons/black/chess-rook-black.svg",
+        ];
+
+        let i = 0;
+        while (i <= 2) {
+            const li = document.createElement("li");
+            li.setAttribute("data-piece", pieces[i]);
+
+            const img = document.createElement("img");
+            img.src = icons[i];
+
+            li.appendChild(img);
+            addPecaPecas.appendChild(li);
+
+            i++;
+        }
+    }
+
+    addPiecesListener();
+}
+
+const addPiecesListener = () => {
+    addPecaContainer.classList.remove("hidden");
+
+    const selecionarPeca = (e) => {
+        const peca = e.target.closest("[data-piece]");
+
+        if (!peca || !addPecaPecas.contains(peca)) {
+            return;
+        }
+
+        const boxClick = (e) => {
+            const box = e.target.closest(".box");
+
+            if (!box) {
+                return;
+            }
+
+            // Se a box já possui uma peça, não adiciona
+            if (box.children.length > 0) {
+                return;
+            }
+
+            const elementoPeca = peca.children[0];
+
+            if (!elementoPeca) {
+                return;
+            }
+
+            box.appendChild(elementoPeca);
+            box.dataset.piece = peca.dataset.piece;
+
+            addPecaContainer.classList.add("hidden");
+
+            // Remove o listener depois que a box for escolhida
+            document.removeEventListener("click", boxClick);
+        };
+
+        addPecaContainer.classList.add("hidden");
+
+        // Espera o próximo clique para escolher a casa
+        document.addEventListener("click", boxClick);
+    };
+
+    addPecaPecas.addEventListener("click", selecionarPeca);
+}
+
 // El Passant Logic
 const checkForElPassant = (enemyMove) => {
     const { from, to, piece } = enemyMove;
@@ -1334,7 +1441,9 @@ const efeitoCartasEsp = (cartaNum) => {
         case 1:
         case 2:
         case 3:
-            timer.multiplyTime(5/4);   
+        // cartaImpedido(enemy, "bishop");
+        // setAddPieces();
+        timer.multiplyTime(5/4);   
     }
 
     return;
@@ -1432,6 +1541,7 @@ const listenersCartas = (lightCards, blackCards,
             showCard.classList.remove("hidden");
             setTimeout(() => {
                 showCard.classList.add("hidden")
+                showCard.children[0].src = "";
             }, 2000)
             carta01LightCard.remove();
             efeitoCartasEsp(carta01LightNum);
@@ -1451,6 +1561,7 @@ const listenersCartas = (lightCards, blackCards,
             showCard.classList.remove("hidden");
             setTimeout(() => {
                 showCard.classList.add("hidden")
+                showCard.children[0].src = "";
             }, 2000)
             carta02LightCard.remove();
             efeitoCartasEsp(carta02LightNum);
@@ -1473,6 +1584,7 @@ const listenersCartas = (lightCards, blackCards,
             showCard.classList.remove("hidden");
             setTimeout(() => {
                 showCard.classList.add("hidden")
+                showCard.children[0].src = "";
             }, 2000)
             carta03LightCard.remove();
             efeitoCartasEsp(carta02LightNum);
@@ -1492,6 +1604,7 @@ const listenersCartas = (lightCards, blackCards,
             showCard.classList.remove("hidden");
             setTimeout(() => {
                 showCard.classList.add("hidden")
+                showCard.children[0].src = "";
             }, 2000)
             carta04LightCard.remove();
             efeitoCartasEsp(carta02LightNum);
@@ -1511,6 +1624,7 @@ const listenersCartas = (lightCards, blackCards,
             showCard.classList.remove("hidden");
             setTimeout(() => {
                 showCard.classList.add("hidden")
+                showCard.children[0].src = "";
             }, 2000)
             carta05LightCard.remove();
             efeitoCartasEsp(carta02LightNum);
@@ -1535,6 +1649,7 @@ const listenersCartas = (lightCards, blackCards,
             showCard.classList.remove("hidden");
             setTimeout(() => {
                 showCard.classList.add("hidden")
+                showCard.children[0].src = "";
             }, 2000)
             carta01BlackCard.remove();
             efeitoCartasEsp(carta01BlackNum);
@@ -1554,6 +1669,7 @@ const listenersCartas = (lightCards, blackCards,
             showCard.classList.remove("hidden");
             setTimeout(() => {
                 showCard.classList.add("hidden")
+                showCard.children[0].src = "";
             }, 2000)
             carta02BlackCard.remove();
             efeitoCartasEsp(carta02BlackNum);
@@ -1576,6 +1692,7 @@ const listenersCartas = (lightCards, blackCards,
             showCard.classList.remove("hidden");
             setTimeout(() => {
                 showCard.classList.add("hidden")
+                showCard.children[0].src = "";
             }, 2000)
             carta03BlackCard.remove();
             efeitoCartasEsp(carta02BlackNum);
@@ -1595,6 +1712,7 @@ const listenersCartas = (lightCards, blackCards,
             showCard.classList.remove("hidden");
             setTimeout(() => {
                 showCard.classList.add("hidden")
+                showCard.children[0].src = "";
             }, 2000)
             carta04BlackCard.remove();
             efeitoCartasEsp(carta02BlackNum);
@@ -1614,6 +1732,7 @@ const listenersCartas = (lightCards, blackCards,
             showCard.classList.remove("hidden");
             setTimeout(() => {
                 showCard.classList.add("hidden")
+                showCard.children[0].src = "";
             }, 2000)
             carta05BlackCard.remove();
             efeitoCartasEsp(carta02BlackNum);
