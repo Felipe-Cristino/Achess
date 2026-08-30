@@ -1024,9 +1024,6 @@ const performElPassant = (currentPlayer, prevPawnPosition, newPawnPosition) => {
 
 // Draw Logic
 const checkForDraw = () => {
-    let myTotalPieces = document.querySelectorAll(`.piece.${player}`).length
-    let enemyTotalPieces = document.querySelectorAll(`.piece.${enemy}`).length
-
     const pawnsBlack = blackCapturedPieces.querySelectorAll('li img[src*="pawn"]');
     const quantidadePeoesBlackCaptured = pawnsBlack.length;
     const rooksBlack = blackCapturedPieces.querySelectorAll('li img[src*="rook"]');

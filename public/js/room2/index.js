@@ -56,6 +56,9 @@ let cartaImpedidoPecaLight = null;
 let cartaImpedidoNumLight = 0;
 let cartaImpedidoPecaBlack = null;
 let cartaImpedidoNumBlack = 0;
+
+let addPieceImpedidoLight = false;
+let addPieceImpedidoBlack = false;
 // =====================
 // Game Variables
 // =====================
@@ -254,7 +257,7 @@ const hidePossibleMoves = () => {
     })
 }
 
-const findPossibleMoves = (position, piece, afogadoBool = false) => {
+const findPossibleMoves = (position, piece) => {
     let splittedPos = position.split("-");
     let yAxisPos = +splittedPos[1]
     let xAxisPos = splittedPos[0]
@@ -264,95 +267,23 @@ const findPossibleMoves = (position, piece, afogadoBool = false) => {
 
     switch (piece) {
         case "pawn":
-            return getPawnPossibleMoves(xAxisPos, yAxisPos, xAxisIndex, yAxisIndex, afogadoBool);
+            return getPawnPossibleMoves(xAxisPos, yAxisPos, xAxisIndex, yAxisIndex);
         case 'rook':
-            return getRookPossibleMoves(xAxisPos, yAxisPos, xAxisIndex, yAxisIndex, afogadoBool);
+            return getRookPossibleMoves(xAxisPos, yAxisPos, xAxisIndex, yAxisIndex);
         case 'bishop':
-            return getBishopPossibleMoves(xAxisIndex, yAxisIndex, afogadoBool)
+            return getBishopPossibleMoves(xAxisIndex, yAxisIndex)
         case 'knight':
-            return getKnightPossibleMoves(xAxisIndex, yAxisIndex, afogadoBool)
+            return getKnightPossibleMoves(xAxisIndex, yAxisIndex)
         case 'queen':
             return Array.prototype.concat(
-                getRookPossibleMoves(xAxisPos, yAxisPos, xAxisIndex, yAxisIndex, afogadoBool),
-                getBishopPossibleMoves(xAxisIndex, yAxisIndex, afogadoBool)
+                getRookPossibleMoves(xAxisPos, yAxisPos, xAxisIndex, yAxisIndex),
+                getBishopPossibleMoves(xAxisIndex, yAxisIndex)
             )
         case 'king':
-            return getKingPossibleMoves(xAxisPos, yAxisPos, xAxisIndex, yAxisIndex, afogadoBool)
+            return getKingPossibleMoves(xAxisPos, yAxisPos, xAxisIndex, yAxisIndex)
         default:
             return []
     }
-}
-
-const checkIfReiAfogado = (player) => {
-
-    let pecas = player === "light" ? "black" : "light";
-
-    const allPieces = document.querySelectorAll(`.piece.${pecas}`);
-    let possibleMoves2;
-    let arrayPossibleMoves = [];
-
-    allPieces.forEach(piece => {
-        possibleMoves2 = findPossibleMoves(piece.parentNode.id, piece.dataset.piece, true);
-        possibleMoves2.forEach(move => {
-            arrayPossibleMoves.push({
-                move: move,
-                piece: piece.dataset.piece,
-                currentSquare: piece.parentNode.id
-            });
-        });
-    });
-
-    let kingPosition = getKingPosition(pecas);
-    let reiEmXeque = isCheck(kingPosition, false);
-
-    arrayPossibleMoves = arrayPossibleMoves.filter(peca => {
-        if (peca.piece === "king") {
-            let kingBox = document.getElementById(kingPosition);
-            let kingPiece = kingBox.children[0];
-            kingBox.removeChild(kingPiece)
-            if (!isCheck(peca.move.id, false)) {
-                kingBox.appendChild(kingPiece);
-                return true;
-            }
-            else {
-                kingBox.appendChild(kingPiece);
-                return false;
-            }
-        }
-        else {
-            let idPecaRemover = peca.currentSquare;
-            let boxPecaRemover = document.getElementById(idPecaRemover);
-            let pecaCompleta = boxPecaRemover.children[0];
-            let casaFutura = document.getElementById(peca.move.id);
-            let casaFuturaImg = null;
-            let casaFuturaImgTemp = null;
-            if (casaFutura.children.length > 0) {
-                casaFuturaImg = casaFutura.children[0];
-                casaFuturaImgTemp = casaFuturaImg;
-                casaFutura.removeChild(casaFuturaImg);
-            }
-            casaFutura.appendChild(pecaCompleta);
-            if (!isCheck(kingPosition, false)) {
-                boxPecaRemover.appendChild(pecaCompleta);
-                if (casaFuturaImgTemp !== null) {
-                    casaFutura.appendChild(casaFuturaImgTemp)
-                }
-                return true;
-            } else {
-                boxPecaRemover.appendChild(pecaCompleta);
-                if (casaFuturaImgTemp !== null) {
-                    casaFutura.appendChild(casaFuturaImgTemp)
-                }
-                return false;
-            }
-        }
-    });
-
-    if (arrayPossibleMoves.length === 0 && !reiEmXeque) {
-        return true;
-    }
-
-    return false;
 }
 // --------------------------------------
 
@@ -402,20 +333,7 @@ const startGame = (playerTwo) => {
     sortearCartas();
 }
 
-const setKingIsAttacked = (isAttacked) => {
-    kingIsAttacked = isAttacked;
-
-    let myKing = document.getElementById(getKingPosition(player)).children[0];
-
-    if (isAttacked) {
-        myKing.classList.add('warning-block');
-        displayToast("Your king is under attack");
-    } else {
-        myKing.classList.remove('warning-block');
-    }
-}
-
-const endMyTurn = (newPieceBox, pawnPromoted = false, castlingPerformed = false, elPassantPerformed = false) => {
+const endMyTurn = (newPieceBox, pawnPromoted = false, elPassantPerformed = false) => {
     if (kingIsAttacked) {
         setKingIsAttacked(false);
     }
@@ -423,135 +341,11 @@ const endMyTurn = (newPieceBox, pawnPromoted = false, castlingPerformed = false,
     myTurn = false;
     setCursor("default")
 
-    saveMove(newPieceBox, pawnPromoted, castlingPerformed, elPassantPerformed);
-
-    const afogado = checkIfReiAfogado(player);
-
-    if (afogado) {
-        socket.emit("draw2", roomId, gameStartedAtTimestamp)
-        socket.emit("draw-room", roomId)
-    }
-
-    setTimeout(() => {
-        checkIfKingIsAttacked(enemy);
-    }, 300);
+    saveMove(newPieceBox, pawnPromoted, elPassantPerformed);
 
     lance += 1;
 
     addBrilhoCards();
-}
-// --------------------------------------
-
-const pecasMovidas = (currentBox, boxToMove) => {
-
-    if (currentBox === "A-1") {
-        torreA1Movido = true;
-    }
-
-    if (boxToMove === "A-1") {
-        torreA1Movido = true;
-    }
-
-    if (currentBox === "H-1") {
-        torreH1Movido = true;
-    }
-
-    if (boxToMove === "H-1") {
-        torreH1Movido = true;
-    }
-
-    if (currentBox === "A-8") {
-        torreA8Movido = true;
-    }
-
-    if (boxToMove === "A-8") {
-        torreA8Movido = true;
-    }
-
-    if (currentBox === "H-8") {
-        torreH8Movido = true;
-    }
-
-    if (boxToMove === "H-8") {
-        torreH8Movido = true;
-    }
-
-    if (currentBox === "E-1") {
-        reiE1Movido = true;
-    }
-
-    if (currentBox === "E-8") {
-        reiE8Movido = true;
-    }
-}
-
-const pecasVoltadas = (currentBox, boxToMove) => {
-
-    if (currentBox === "A-1") {
-        torreA1Movido = false;
-    }
-
-    if (boxToMove === "A-1") {
-        torreA1Movido = false;
-    }
-
-    if (currentBox === "H-1") {
-        torreH1Movido = false;
-    }
-
-    if (boxToMove === "H-1") {
-        torreH1Movido = false;
-    }
-
-    if (currentBox === "A-8") {
-        torreA8Movido = false;
-    }
-
-    if (boxToMove === "A-8") {
-        torreA8Movido = false;
-    }
-
-    if (currentBox === "H-8") {
-        torreH8Movido = false;
-    }
-
-    if (boxToMove === "H-8") {
-        torreH8Movido = false;
-    }
-
-    if (currentBox === "E-1") {
-        reiE1Movido = false;
-    }
-
-    if (currentBox === "E-8") {
-        reiE8Movido = false;
-    }
-}
-
-const castleVerified = () => {
-    if (torreA1Movido) {
-        torreEsquerdaBrancaNuncaMovido = false;
-    }
-
-    if (torreH1Movido) {
-        torreDireitaBrancaNuncaMovido = false;
-    }
-
-    if (torreA8Movido) {
-        torreEsquerdaPretaNuncaMovido = false;
-    }
-
-    if (torreH8Movido) {
-        torreDireitaPretaNuncaMovido = false;
-    }
-
-    if (reiE1Movido) {
-        reiBrancoNuncaMovido = false;
-    }
-
-    if (reiE8Movido) {
-        reiPretoNuncaMovido = false;
-    }
 }
 
 // Move Logic
@@ -566,18 +360,6 @@ const move = (e) => {
 
     let pieceToRemove = null;
     let pieceToRemovePieceImg = null;
-    let xAxis = ["A", "B", "C", "D", "E", "F", "G", "H"];
-    let boxToMoveIndex = xAxis.findIndex(x => x === boxToMove.id.split("-")[0])
-    let currentBoxIndex = xAxis.findIndex(x => x === currentBox.id.split("-")[0])
-
-    if (Math.abs(boxToMoveIndex - currentBoxIndex) === 2 &&
-        currentBox.children[0].dataset.piece === "king") {
-        performCastling(player, currentBox.id, boxToMove.id)
-
-        return;
-    }
-
-    pecasMovidas(currentBox.id, boxToMove.id);
 
     if (boxToMove.children.length > 0) {
         pieceToRemove = boxToMove.children[0];
@@ -600,15 +382,6 @@ const move = (e) => {
     let piecesNeededForCheck = {
         piece, pieceToRemove, pieceToRemovePieceImg
     }
-
-    let isMovePossible = canMakeMove(boxesNeededForCheck, piecesNeededForCheck);
-
-    if (!isMovePossible) {
-        pecasVoltadas(currentBox.id, boxToMove.id);
-        return;
-    }
-
-    castleVerified();
 
     if (piece.dataset.piece === 'pawn') {
         // Pawn promotion check
@@ -634,9 +407,8 @@ const move = (e) => {
         }
     }
 
-    if (checkForDraw()) {
-        socket.emit("draw2", roomId, gameStartedAtTimestamp)
-        socket.emit("draw-room", roomId)
+    if(checkForWin()) {
+        socket.emit("checkmate-room", roomId, user.username);
     }
 
     endMyTurn(boxToMove)
@@ -645,8 +417,10 @@ const move = (e) => {
 
     cartaImpedidoNumLight -= 1;
     cartaImpedidoNumBlack -= 1;
-    cartaImpedidoCorLight === true;
-    cartaImpedidoCorBlack === true;
+    cartaImpedidoCorLight = true;
+    cartaImpedidoCorBlack = true;
+    addPieceImpedidoLight = false;
+    addPieceImpedidoBlack = false;
 }
 
 function savePosition() {
@@ -694,36 +468,6 @@ function generatePositionKey() {
     return JSON.stringify({ pieces });
 }
 
-const canMakeMove = ({ currentBox, boxToMove }, { piece, pieceToRemove, pieceToRemovePieceImg }) => {
-    // TODO: Check if move is valid
-    let moveIsNotValid = checkIfKingIsAttacked(player);
-
-    if (moveIsNotValid) {
-        selectedPiece = null;
-
-        if (pieceToRemove) {
-            pieceToRemove.appendChild(pieceToRemovePieceImg)
-
-            boxToMove.removeChild(piece);
-            boxToMove.appendChild(pieceToRemove);
-
-            if (pieceToRemove.classList.contains("black")) {
-                blackCapturedPieces.removeChild(blackCapturedPieces.lastChild)
-            } else {
-                lightCapturedPieces.removeChild(lightCapturedPieces.lastChild)
-            }
-        }
-
-        currentBox.appendChild(piece);
-
-        displayToast("You can't make this move. Your king is under attack")
-
-        return false
-    }
-
-    return true
-}
-
 const capturePiece = (pieceToRemove) => {
     let pawnImg = pieceToRemove.children[0];
 
@@ -753,28 +497,7 @@ const capturePiece = (pieceToRemove) => {
     }
 }
 
-const checkIfKingIsAttacked = (playerToCheck) => {
-    let kingPosition = getKingPosition(playerToCheck);
-
-    let check = isCheck(kingPosition, playerToCheck === player);
-
-    if (check) {
-        if (player !== playerToCheck) {
-            if (isCheckmate(kingPosition)) {
-                socket.emit('checkmate2', roomId, gameStartedAtTimestamp)
-                socket.emit("checkmate-room", roomId, user.username);
-            } else {
-                socket.emit('check', roomId);
-            }
-        }
-
-        return true;
-    }
-
-    return false;
-}
-
-const saveMove = (newPieceBox, pawnPromoted, castlingPerformed, elPassantPerformed) => {
+const saveMove = (newPieceBox, pawnPromoted, elPassantPerformed) => {
     let move = { from: selectedPiece.position, to: newPieceBox.id, piece: selectedPiece.piece, pieceColor: player }
     selectedPiece = null
     pawnToPromotePosition = null;
@@ -802,8 +525,6 @@ const saveMove = (newPieceBox, pawnPromoted, castlingPerformed, elPassantPerform
         }
 
         socket.emit('move-made', roomId, move, pawnPromotion)
-    } else if (castlingPerformed) {
-        socket.emit('move-made', roomId, move, null, castling)
     } else if (elPassantPerformed) {
         socket.emit('move-made', roomId, move, null, null, true)
     } else {
@@ -870,99 +591,9 @@ const moveEnemy = (move, pawnPromotion = null, elPassantPerformed = false) => {
 }
 // --------------------------------------
 
-// Castling Logic
-const performCastling = (currentPlayer, kingPosition, kingToCastle) => {
-
-    let kingBox = document.getElementById(kingPosition)
-    let king = kingBox.children[0]
-    let newKingPosition = kingToCastle;
-    let rook;
-    let rookFuturePosition;
-    let rookBox;
-
-    if (currentPlayer === "light") {
-        if (kingToCastle.split("-")[0] === "C") {
-            rookBox = document.getElementById("A-1");
-            rook = rookBox.children[0];
-            rookFuturePosition = "D-1";
-        }
-        else {
-            rookBox = document.getElementById("H-1");
-            rook = rookBox.children[0];
-            rookFuturePosition = "F-1";
-        }
-    }
-    else {
-        if (kingToCastle.split("-")[0] === "C") {
-            rookBox = document.getElementById("A-8");
-            rook = rookBox.children[0];
-            rookFuturePosition = "D-8";
-        }
-        else {
-            rookBox = document.getElementById("H-8");
-            rook = rookBox.children[0];
-            rookFuturePosition = "F-8";
-        }
-    }
-
-    let newRookBox = document.getElementById(rookFuturePosition);
-    let newKingBox = document.getElementById(kingToCastle);
-
-    newRookBox.appendChild(rook)
-    newKingBox.appendChild(king)
-
-    if (currentPlayer === player) {
-        let check = isCheck(newKingPosition);
-        let check2 = isCheck(rookFuturePosition);
-        let check3 = isCheck(kingPosition);
-
-        if (check || check2 || check3) {
-            newRookBox.innerHTML = ""
-            newKingBox.innerHTML = ""
-
-            rookBox.appendChild(rook)
-            kingBox.appendChild(king)
-
-            displayToast("Your king is under attack")
-        } else {
-            if (rookBox.id.split("-")[0] === 'A') {
-                if (currentPlayer === "light") {
-                    isLeftCastlingPerformedWhite = true;
-                }
-                else {
-                    isLeftCastlingPerformedBlack = true;
-                }
-            } else {
-                if (currentPlayer === "light") {
-                    isRightCastlingPerformedWhite = true;
-                }
-                else {
-                    isRightCastlingPerformedBlack = true;
-                }
-            }
-
-            castling = {
-                kingPosition,
-                kingToCastle
-            }
-
-            endMyTurn(document.getElementById(kingPosition), false, true)
-        }
-    } else {
-        castling = null;
-
-        myTurn = true;
-        setCursor('pointer');
-
-        if (gameHasTimer) {
-            timer.start()
-        }
-    }
-}
-// --------------------------------------
-
 // Pawn Promotion Logic
 const setPiecesToPromote = () => {
+    piecesToPromote.innerHTML = "";
     if (player === 'light') {
         let pieces = ["knight", "bishop", "rook", "queen"];
         let icons = [
@@ -1040,6 +671,7 @@ const addListenerToPiecesToPromote = () => {
 // --------------------------------------
 
 const setAddPieces = () => {
+    addPecaPecas.innerHTML = "";
     if (player === 'light') {
         let pieces = ["knight", "bishop", "rook"];
         let icons = [
@@ -1123,13 +755,36 @@ const addPecasListener = () => {
             if (elementoPeca.getAttribute("src").includes("light")) {
                 div.classList.add("light");
                 corPeca = "light";
+                addPieceImpedidoLight = true;
             } else {
                 div.classList.add("black");
                 corPeca = "black";
+                addPieceImpedidoBlack = true;
             }
             box.appendChild(div);
-            box.addEventListener("click", onClickPiece);
-            box.addEventListener("dragstart", onClickPiece);
+
+            box.addEventListener("click", (e) => {
+                if (addPieceImpedidoLight) {
+                    return;
+                }
+
+                if (addPieceImpedidoBlack) {
+                    return;
+                }
+
+                onClickPiece(e)
+            });
+            box.addEventListener("dragstart", (e) => {
+                if (addPieceImpedidoLight) {
+                    return;
+                }
+
+                if (addPieceImpedidoBlack) {
+                    return;
+                }
+
+                onClickPiece(e)
+            });
 
             socket.emit("add-piece", {
                 roomId,
@@ -1216,7 +871,7 @@ const performElPassant = (currentPlayer, prevPawnPosition, newPawnPosition) => {
     capturePiece(capturedPawnBox.children[0])
 
     if (currentPlayer === player) {
-        endMyTurn(document.getElementById(newPawnPosition), false, false, true)
+        endMyTurn(document.getElementById(newPawnPosition), false, true)
 
         delete pawnsToPerformElPassant[capturedPawnPos]
         delete elPassantPositions[newPawnPosition]
@@ -1231,33 +886,12 @@ const performElPassant = (currentPlayer, prevPawnPosition, newPawnPosition) => {
 }
 // --------------------------------------
 
-// Draw Logic
-const checkForDraw = () => {
-    let myTotalPieces = document.querySelectorAll(`.piece.${player}`).length
-    let enemyTotalPieces = document.querySelectorAll(`.piece.${enemy}`).length
-
-    const pawnsBlack = blackCapturedPieces.querySelectorAll('li img[src*="pawn"]');
-    const quantidadePeoesBlackCaptured = pawnsBlack.length;
-    const rooksBlack = blackCapturedPieces.querySelectorAll('li img[src*="rook"]');
-    const quantidadeTorresBlackCaptured = rooksBlack.length;
-
-    const pawnsLight = lightCapturedPieces.querySelectorAll('li img[src*="pawn"]');
-    const quantidadePeoesLightCaptured = pawnsLight.length;
-    const rooksLight = lightCapturedPieces.querySelectorAll('li img[src*="rook"]');
-    const quantidadeTorresLightCaptured = rooksLight.length;
-
-    if (myScore > 34 && enemyScore > 34 &&
-        quantidadePeoesBlackCaptured === 8 &&
-        quantidadePeoesLightCaptured === 8 &&
-        quantidadeTorresBlackCaptured === 2 &&
-        quantidadeTorresLightCaptured === 2
-    ) {
+const checkForWin = () => {
+    if (myScore >= 41) {
         return true;
     }
-
     return false;
 }
-// --------------------------------------
 
 // Game Over Logic
 const endGame = (playerOne, playerTwo, winner = null) => {
@@ -1940,11 +1574,6 @@ socket.on("enemy-moved", (move) => {
     moveEnemy(move)
 })
 
-socket.on("enemy-moved_castling", (enemyCastling) => {
-    const { kingPosition, kingToCastle } = enemyCastling
-    performCastling(enemy, kingPosition, kingToCastle);
-})
-
 socket.on('enemy-moved_pawn-promotion', (move, pawnPromotion) => {
     moveEnemy(move, pawnPromotion)
 })
@@ -1955,14 +1584,6 @@ socket.on('enemy-moved_el-passant', (move) => {
 
 socket.on("enemy-timer-updated", (minutes, seconds) => {
     updateTimer(enemy, minutes, seconds)
-})
-
-socket.on("king-is-attacked", () => {
-    setKingIsAttacked(true);
-})
-
-socket.on("draw-points", (playerOne, playerTwo) => {
-    endGame(playerOne, playerTwo, null);
 })
 
 socket.on("time-ended", (winner, playerOne, playerTwo, ifDraw) => {
