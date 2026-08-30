@@ -26,14 +26,14 @@ class Timer {
             }
 
             socket.emit('update-timer', roomId, this.minutes, this.seconds);
-            this.updateTimerCallback(this.player, this.minutes, this.seconds)
+            this.updateTimerCallback(this.player, this.minutes, this.seconds);
         }, 1000)
     }
 
     stop() {
         clearInterval(this.interval)
         this.interval = null
-    }    
+    }
 
     multiplyTime(factor) {
         let totalSeconds = Math.round((this.minutes * 60 + this.seconds) * factor);
@@ -41,7 +41,7 @@ class Timer {
         this.minutes = Math.floor(totalSeconds / 60);
         this.seconds = totalSeconds % 60;
 
-        socket.emit('update-timer', this.roomId, this.minutes, this.seconds);
+        socket.emit('update-timer', roomId, this.minutes, this.seconds);
         this.updateTimerCallback(this.player, this.minutes, this.seconds);
     }
 }

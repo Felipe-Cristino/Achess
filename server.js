@@ -482,6 +482,17 @@ io.on("connection", (socket) => {
         io.to(roomId).emit("carta-impedida", cor, peca, num);
     });
 
+    socket.on("add-piece", ({ roomId, piece, img, corPeca, boxId }) => {
+
+        socket.to(roomId).emit("add-piece", {
+            piece,
+            img,
+            corPeca,
+            boxId
+        });
+
+    });
+
     socket.on("disconnect", () => {
         let socketId = socket.id;
 

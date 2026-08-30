@@ -177,26 +177,41 @@ const onClickPiece = (e) => {
 const addPieceListeners = () => {
     document.querySelectorAll(`.piece.${player}`).forEach(piece => {
 
-        piece.addEventListener("click", (e)=>{
-            if(cartaImpedidoCorLight === true &&
+        piece.addEventListener("click", (e) => {
+            if (cartaImpedidoCorLight === true &&
                 player === "light" &&
                 cartaImpedidoPecaLight === piece.dataset.piece
                 && cartaImpedidoNumLight === 2) {
-                    return;
-                }
+                return;
+            }
 
-            if(cartaImpedidoCorBlack === true &&
+            if (cartaImpedidoCorBlack === true &&
                 player === "black" &&
                 cartaImpedidoPecaBlack === piece.dataset.piece
                 && cartaImpedidoNumBlack === 2) {
-                    return;
-                }
+                return;
+            }
 
             onClickPiece(e)
         });
 
-        // piece.addEventListener("click", onClickPiece);
-        // piece.addEventListener("dragstart", onClickPiece);
+        piece.addEventListener("dragstart", (e) => {
+            if (cartaImpedidoCorLight === true &&
+                player === "light" &&
+                cartaImpedidoPecaLight === piece.dataset.piece
+                && cartaImpedidoNumLight === 2) {
+                return;
+            }
+
+            if (cartaImpedidoCorBlack === true &&
+                player === "black" &&
+                cartaImpedidoPecaBlack === piece.dataset.piece
+                && cartaImpedidoNumBlack === 2) {
+                return;
+            }
+
+            onClickPiece(e)
+        });
     })
 
     document.querySelectorAll(`.piece.${enemy}`).forEach(piece => {
@@ -205,7 +220,7 @@ const addPieceListeners = () => {
 }
 
 const cartaImpedido = (player, peca) => {
-    
+
     socket.emit("carta-impedida", {
         roomId: roomId,
         cor: player,
@@ -630,6 +645,8 @@ const move = (e) => {
 
     cartaImpedidoNumLight -= 1;
     cartaImpedidoNumBlack -= 1;
+    cartaImpedidoCorLight === true;
+    cartaImpedidoCorBlack === true;
 }
 
 function savePosition() {
@@ -1067,10 +1084,10 @@ const setAddPieces = () => {
         }
     }
 
-    addPiecesListener();
+    addPecasListener();
 }
 
-const addPiecesListener = () => {
+const addPecasListener = () => {
     addPecaContainer.classList.remove("hidden");
 
     const selecionarPeca = (e) => {
@@ -1098,8 +1115,29 @@ const addPiecesListener = () => {
                 return;
             }
 
-            box.appendChild(elementoPeca);
-            box.dataset.piece = peca.dataset.piece;
+            const div = document.createElement("div");
+            div.appendChild(elementoPeca);
+            div.dataset.piece = peca.dataset.piece;
+            div.classList.add("piece");
+            let corPeca = null;
+            if (elementoPeca.getAttribute("src").includes("light")) {
+                div.classList.add("light");
+                corPeca = "light";
+            } else {
+                div.classList.add("black");
+                corPeca = "black";
+            }
+            box.appendChild(div);
+            box.addEventListener("click", onClickPiece);
+            box.addEventListener("dragstart", onClickPiece);
+
+            socket.emit("add-piece", {
+                roomId,
+                piece: peca.dataset.piece,
+                img: div.children[0].getAttribute("src"),
+                corPeca: corPeca,
+                boxId: box.id
+            });
 
             addPecaContainer.classList.add("hidden");
 
@@ -1467,8 +1505,8 @@ const efeitoCartasEsp = (cartaNum) => {
         case 1:
         case 2:
         case 3:
-            cartaImpedido(enemy, "bishop");
-        // setAddPieces();
+            // cartaImpedido(enemy, "bishop");
+            setAddPieces();
         // timer.multiplyTime(5 / 4);
     }
 
@@ -1941,7 +1979,7 @@ socket.on("desconectado", (winner, playerOne, playerTwo) => {
 
 socket.on("carta-impedida", (cor, peca, num) => {
 
-    if(cor === "light") {
+    if (cor === "light") {
         cartaImpedidoCorLight = true;
         cartaImpedidoPecaLight = peca;
         cartaImpedidoNumLight = num;
@@ -1950,6 +1988,35 @@ socket.on("carta-impedida", (cor, peca, num) => {
         cartaImpedidoPecaBlack = peca;
         cartaImpedidoNumBlack = num;
     }
+});
+
+socket.on("add-piece", ({ piece, img, corPeca, boxId }) => {
+
+    const box = document.getElementById(boxId);
+
+    if (!box) {
+        return;
+    }
+
+    if (box.children.length > 0) {
+        return;
+    }
+
+    const elementoPeca = document.createElement("img");
+
+    elementoPeca.src = img;
+    const div = document.createElement("div");
+    div.appendChild(elementoPeca);
+    div.dataset.piece = piece;
+    div.classList.add("piece");
+    if (corPeca === "light") {
+        div.classList.add("light")
+    }
+    else {
+        div.classList.add("black")
+    }
+
+    box.appendChild(div);
 });
 
 window.addEventListener("beforeunload", (event) => {
