@@ -97,8 +97,6 @@ const onClickPiece = (e) => {
     hidePossibleMoves()
 
     let element = e.target.closest(".piece");
-    let playerIsLight = element.children[0].
-        getAttribute("src").includes("light");
     let position = element.parentNode.id;
     let piece = element.dataset.piece;
 

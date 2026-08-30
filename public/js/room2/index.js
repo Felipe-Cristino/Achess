@@ -50,6 +50,12 @@ let estagioCarta04Black = 1;
 let estagioCarta05Black = 1;
 
 const showCard = document.getElementById("show-card");
+let cartaImpedidoCorLight = false;
+let cartaImpedidoCorBlack = false;
+let cartaImpedidoPecaLight = null;
+let cartaImpedidoNumLight = 0;
+let cartaImpedidoPecaBlack = null;
+let cartaImpedidoNumBlack = 0;
 // =====================
 // Game Variables
 // =====================
@@ -131,8 +137,6 @@ const onClickPiece = (e) => {
     hidePossibleMoves()
 
     let element = e.target.closest(".piece");
-    let playerIsLight = element.children[0].
-        getAttribute("src").includes("light");
     let position = element.parentNode.id;
     let piece = element.dataset.piece;
 
@@ -172,8 +176,27 @@ const onClickPiece = (e) => {
 
 const addPieceListeners = () => {
     document.querySelectorAll(`.piece.${player}`).forEach(piece => {
-        piece.addEventListener("click", onClickPiece)
-        piece.addEventListener("dragstart", onClickPiece);
+
+        piece.addEventListener("click", (e)=>{
+            if(cartaImpedidoCorLight === true &&
+                player === "light" &&
+                cartaImpedidoPecaLight === piece.dataset.piece
+                && cartaImpedidoNumLight === 2) {
+                    return;
+                }
+
+            if(cartaImpedidoCorBlack === true &&
+                player === "black" &&
+                cartaImpedidoPecaBlack === piece.dataset.piece
+                && cartaImpedidoNumBlack === 2) {
+                    return;
+                }
+
+            onClickPiece(e)
+        });
+
+        // piece.addEventListener("click", onClickPiece);
+        // piece.addEventListener("dragstart", onClickPiece);
     })
 
     document.querySelectorAll(`.piece.${enemy}`).forEach(piece => {
@@ -182,13 +205,13 @@ const addPieceListeners = () => {
 }
 
 const cartaImpedido = (player, peca) => {
-    document.querySelectorAll(`.piece.${player}`).forEach(piece => {
-        if (piece.dataset.piece === peca) {
-            console.log("Oi1")
-            piece.removeEventListener("click", onClickPiece);
-            piece.removeEventListener("dragstart", onClickPiece);
-        }
-    })
+    
+    socket.emit("carta-impedida", {
+        roomId: roomId,
+        cor: player,
+        peca: peca,
+        num: 2
+    });
 }
 
 // --------------------------------------
@@ -604,6 +627,9 @@ const move = (e) => {
     endMyTurn(boxToMove)
 
     savePosition()
+
+    cartaImpedidoNumLight -= 1;
+    cartaImpedidoNumBlack -= 1;
 }
 
 function savePosition() {
@@ -1441,9 +1467,9 @@ const efeitoCartasEsp = (cartaNum) => {
         case 1:
         case 2:
         case 3:
-        // cartaImpedido(enemy, "bishop");
+            cartaImpedido(enemy, "bishop");
         // setAddPieces();
-        timer.multiplyTime(5/4);   
+        // timer.multiplyTime(5 / 4);
     }
 
     return;
@@ -1912,6 +1938,19 @@ socket.on("time-ended", (winner, playerOne, playerTwo, ifDraw) => {
 socket.on("desconectado", (winner, playerOne, playerTwo) => {
     endGame(playerOne, playerTwo, winner);
 })
+
+socket.on("carta-impedida", (cor, peca, num) => {
+
+    if(cor === "light") {
+        cartaImpedidoCorLight = true;
+        cartaImpedidoPecaLight = peca;
+        cartaImpedidoNumLight = num;
+    } else {
+        cartaImpedidoCorBlack = true;
+        cartaImpedidoPecaBlack = peca;
+        cartaImpedidoNumBlack = num;
+    }
+});
 
 window.addEventListener("beforeunload", (event) => {
 

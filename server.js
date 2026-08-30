@@ -387,7 +387,7 @@ io.on("connection", (socket) => {
                     if (err) throw err;
                 })
 
-                socket.emit("time-ended", winner, room.players[0], room.players[1], ifDraw)
+                io.to(roomId).emit("time-ended", winner, room.players[0], room.players[1], ifDraw)
             }
         })
     })
@@ -477,6 +477,10 @@ io.on("connection", (socket) => {
             io.to(roomId).emit("users-points", winner, playerOne, playerTwo);
         })
     })
+
+    socket.on("carta-impedida", ({ roomId, cor, peca, num }) => {
+        io.to(roomId).emit("carta-impedida", cor, peca, num);
+    });
 
     socket.on("disconnect", () => {
         let socketId = socket.id;
