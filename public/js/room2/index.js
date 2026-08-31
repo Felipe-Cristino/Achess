@@ -64,6 +64,13 @@ let timeBlindMovesLight = 0;
 let timeBlindMovesBlack = 0;
 let blindBoolLight = false;
 let blindBoolBlack = false;
+
+let bispoReiLight = false;
+let bispoReiBlack = false;
+let torreReiLight = false;
+let torreReiBlack = false;
+let reiCountLight = 0;
+let reiCountBlack = 0;
 // =====================
 // Game Variables
 // =====================
@@ -277,6 +284,26 @@ const halfPoints = (piece) => {
         console.log(peca.dataset.points);
     })
 }
+
+const superKing = (piece) => {
+    if (player === "light") {
+        reiCountLight = 2;
+        if (piece === "bishop") {
+            bispoReiLight = true;
+        }
+        if (piece === "rook") {
+            torreReiLight = true;
+        }
+    } else {
+        reiCountBlack = 2;
+        if (piece === "bishop") {
+            bispoReiBlack = true;
+        }
+        if (piece === "rook") {
+            torreReiBlack = true;
+        }
+    }
+}
 // --------------------------------------
 
 // Possible Moves Logic
@@ -325,6 +352,34 @@ const findPossibleMoves = (position, piece) => {
                 getBishopPossibleMoves(xAxisIndex, yAxisIndex)
             )
         case 'king':
+            if (player === "light" && reiCountLight >= 1 && bispoReiLight) {
+                return Array.prototype.concat(
+                    getKingPossibleMoves(xAxisPos, yAxisPos, xAxisIndex, yAxisIndex),
+                    getBishopPossibleMoves(xAxisIndex, yAxisIndex)
+                )
+            }
+
+            if (player === "light" && reiCountLight >= 1 && torreReiLight) {
+                return Array.prototype.concat(
+                    getKingPossibleMoves(xAxisPos, yAxisPos, xAxisIndex, yAxisIndex),
+                    getRookPossibleMoves(xAxisPos, yAxisPos, xAxisIndex, yAxisIndex)
+                )
+            }
+
+            if (player === "black" && reiCountBlack >= 1 && bispoReiBlack) {
+                return Array.prototype.concat(
+                    getKingPossibleMoves(xAxisPos, yAxisPos, xAxisIndex, yAxisIndex),
+                    getBishopPossibleMoves(xAxisIndex, yAxisIndex)
+                )
+            }
+
+            if (player === "black" && reiCountBlack >= 1 && torreReiBlack) {
+                return Array.prototype.concat(
+                    getKingPossibleMoves(xAxisPos, yAxisPos, xAxisIndex, yAxisIndex),
+                    getRookPossibleMoves(xAxisPos, yAxisPos, xAxisIndex, yAxisIndex)
+                )
+            }
+
             return getKingPossibleMoves(xAxisPos, yAxisPos, xAxisIndex, yAxisIndex)
         default:
             return []
@@ -479,6 +534,21 @@ const move = (e) => {
         }
         timeBlindMovesBlack -= 1;
     }
+
+    reiCountLight -= 1;
+    reiCountBlack -= 1;
+
+    if (reiCountLight <= 0) {
+        bispoReiLight = false;
+        torreReiLight = false;
+    }
+
+    if (reiCountBlack <= 0) {
+        bispoReiBlack = false;
+        torreReiBlack = false;
+    }
+
+
 }
 
 function savePosition() {
@@ -1202,7 +1272,8 @@ const efeitoCartasEsp = (cartaNum) => {
             // timer.multiplyTime(5 / 4);
             // blindMoves();
             // halfPoints("queen");
-            removePiece("bishop");
+            // removePiece("bishop");
+            superKing("bishop");
     }
 
     return;

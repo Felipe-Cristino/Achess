@@ -486,7 +486,7 @@ io.on("connection", (socket) => {
         io.to(roomId).emit("blind-moves", corDoInimigo, minhaCor);
     });
 
-    socket.on("remove-piece", ({ roomId, box}) => {
+    socket.on("remove-piece", ({ roomId, box }) => {
         io.to(roomId).emit("remove-piece", box);
     });
 
