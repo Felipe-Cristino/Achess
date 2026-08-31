@@ -59,6 +59,11 @@ let cartaImpedidoNumBlack = 0;
 
 let addPieceImpedidoLight = false;
 let addPieceImpedidoBlack = false;
+
+let timeBlindMovesLight = 0;
+let timeBlindMovesBlack = 0;
+let blindBoolLight = false;
+let blindBoolBlack = false;
 // =====================
 // Game Variables
 // =====================
@@ -76,9 +81,7 @@ let gameDetails = null;
 let gameHasTimer = false;
 let timer = null;
 let myTurn = false;
-let kingIsAttacked = false;
 let pawnToPromotePosition = null;
-let castling = null;
 
 let gameOver = false;
 let myScore = 0;
@@ -232,6 +235,21 @@ const cartaImpedido = (player, peca) => {
     });
 }
 
+const blindMoves = () => {
+    let minhaCor = null;
+    if (enemy === "light") {
+        minhaCor = "black";
+    }
+    else {
+        minhaCor = "light";
+    }
+
+    socket.emit("blind-moves", {
+        roomId: roomId,
+        corDoInimigo: enemy,
+        minhaCor: minhaCor
+    });
+}
 // --------------------------------------
 
 // Possible Moves Logic
@@ -334,9 +352,6 @@ const startGame = (playerTwo) => {
 }
 
 const endMyTurn = (newPieceBox, pawnPromoted = false, elPassantPerformed = false) => {
-    if (kingIsAttacked) {
-        setKingIsAttacked(false);
-    }
 
     myTurn = false;
     setCursor("default")
@@ -375,14 +390,6 @@ const move = (e) => {
 
     boxToMove.appendChild(piece)
 
-    let boxesNeededForCheck = {
-        currentBox, boxToMove
-    }
-
-    let piecesNeededForCheck = {
-        piece, pieceToRemove, pieceToRemovePieceImg
-    }
-
     if (piece.dataset.piece === 'pawn') {
         // Pawn promotion check
         if (
@@ -407,7 +414,7 @@ const move = (e) => {
         }
     }
 
-    if(checkForWin()) {
+    if (checkForWin()) {
         socket.emit("checkmate-room", roomId, user.username);
     }
 
@@ -421,6 +428,30 @@ const move = (e) => {
     cartaImpedidoCorBlack = true;
     addPieceImpedidoLight = false;
     addPieceImpedidoBlack = false;
+
+    let cor = null;
+
+    if (blindBoolLight) {
+        cor = "black";
+        if (timeBlindMovesLight === 0) {
+            let allPieces = document.querySelectorAll(`.piece.${cor}`)
+            allPieces.forEach(piece => {
+                piece.classList.remove("hidden");
+            })
+        }
+        timeBlindMovesLight -= 1;
+    }
+
+    if (blindBoolBlack) {
+        cor = "light";
+        if (timeBlindMovesBlack <= 0) {
+            let allPieces = document.querySelectorAll(`.piece.${cor}`)
+            allPieces.forEach(piece => {
+                piece.classList.remove("hidden");
+            })
+        }
+        timeBlindMovesBlack -= 1;
+    }
 }
 
 function savePosition() {
@@ -1140,8 +1171,9 @@ const efeitoCartasEsp = (cartaNum) => {
         case 2:
         case 3:
             // cartaImpedido(enemy, "bishop");
-            setAddPieces();
-        // timer.multiplyTime(5 / 4);
+            // setAddPieces();
+            // timer.multiplyTime(5 / 4);
+            blindMoves();
     }
 
     return;
@@ -1608,6 +1640,24 @@ socket.on("carta-impedida", (cor, peca, num) => {
         cartaImpedidoCorBlack = true;
         cartaImpedidoPecaBlack = peca;
         cartaImpedidoNumBlack = num;
+    }
+});
+
+socket.on("blind-moves", (corDoInimigo, minhaCor) => {
+
+    if (player === corDoInimigo) {
+        let allPieces = document.querySelectorAll(`.piece.${minhaCor}`)
+        allPieces.forEach(piece => {
+            piece.classList.add("hidden");
+        })
+    }
+    if (corDoInimigo === "light") {
+        timeBlindMovesLight = 2;
+        blindBoolLight = true;
+    }
+    else {
+        timeBlindMovesBlack = 2;
+        blindBoolBlack = true;
     }
 });
 

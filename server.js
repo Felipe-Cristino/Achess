@@ -482,6 +482,10 @@ io.on("connection", (socket) => {
         io.to(roomId).emit("carta-impedida", cor, peca, num);
     });
 
+    socket.on("blind-moves", ({ roomId, corDoInimigo, minhaCor }) => {
+        io.to(roomId).emit("blind-moves", corDoInimigo, minhaCor);
+    });
+
     socket.on("add-piece", ({ roomId, piece, img, corPeca, boxId }) => {
 
         socket.to(roomId).emit("add-piece", {
