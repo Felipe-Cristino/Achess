@@ -69,6 +69,8 @@ let bispoReiLight = false;
 let bispoReiBlack = false;
 let torreReiLight = false;
 let torreReiBlack = false;
+let damaReiLight = false;
+let damaReiBlack = false;
 let reiCountLight = 0;
 let reiCountBlack = 0;
 // =====================
@@ -294,6 +296,9 @@ const superKing = (piece) => {
         if (piece === "rook") {
             torreReiLight = true;
         }
+        if (piece === "queen") {
+            damaReiLight = true;
+        }
     } else {
         reiCountBlack = 2;
         if (piece === "bishop") {
@@ -301,6 +306,9 @@ const superKing = (piece) => {
         }
         if (piece === "rook") {
             torreReiBlack = true;
+        }
+        if (piece === "queen") {
+            damaReiBlack = true;
         }
     }
 }
@@ -366,6 +374,13 @@ const findPossibleMoves = (position, piece) => {
                 )
             }
 
+            if (player === "light" && reiCountLight >= 1 && damaReiLight) {
+                return Array.prototype.concat(
+                    getBishopPossibleMoves(xAxisIndex, yAxisIndex),
+                    getRookPossibleMoves(xAxisPos, yAxisPos, xAxisIndex, yAxisIndex)
+                )
+            }
+
             if (player === "black" && reiCountBlack >= 1 && bispoReiBlack) {
                 return Array.prototype.concat(
                     getKingPossibleMoves(xAxisPos, yAxisPos, xAxisIndex, yAxisIndex),
@@ -376,6 +391,13 @@ const findPossibleMoves = (position, piece) => {
             if (player === "black" && reiCountBlack >= 1 && torreReiBlack) {
                 return Array.prototype.concat(
                     getKingPossibleMoves(xAxisPos, yAxisPos, xAxisIndex, yAxisIndex),
+                    getRookPossibleMoves(xAxisPos, yAxisPos, xAxisIndex, yAxisIndex)
+                )
+            }
+
+            if (player === "black" && reiCountBlack >= 1 && damaReiBlack) {
+                return Array.prototype.concat(
+                    getBishopPossibleMoves(xAxisIndex, yAxisIndex),
                     getRookPossibleMoves(xAxisPos, yAxisPos, xAxisIndex, yAxisIndex)
                 )
             }
@@ -541,11 +563,13 @@ const move = (e) => {
     if (reiCountLight <= 0) {
         bispoReiLight = false;
         torreReiLight = false;
+        damaReiLight = false;
     }
 
     if (reiCountBlack <= 0) {
         bispoReiBlack = false;
         torreReiBlack = false;
+        damaReiBlack = false;
     }
 
 
@@ -1273,7 +1297,7 @@ const efeitoCartasEsp = (cartaNum) => {
             // blindMoves();
             // halfPoints("queen");
             // removePiece("bishop");
-            superKing("bishop");
+            superKing("queen");
     }
 
     return;
