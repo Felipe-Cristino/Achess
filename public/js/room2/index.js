@@ -235,6 +235,23 @@ const cartaImpedido = (player, peca) => {
     });
 }
 
+const removePiece = (piece) => {
+    const pecas = document.querySelectorAll(`.piece.${enemy}`);
+
+    for (const peca of pecas) {
+        if (peca.dataset.piece === piece) {
+
+            socket.emit("remove-piece", {
+                roomId: roomId,
+                box: peca.parentNode.id
+            });
+
+            peca.remove();
+            break;
+        }
+    }
+}
+
 const blindMoves = () => {
     let minhaCor = null;
     if (enemy === "light") {
@@ -249,6 +266,16 @@ const blindMoves = () => {
         corDoInimigo: enemy,
         minhaCor: minhaCor
     });
+}
+
+const halfPoints = (piece) => {
+    const pecas = document.querySelectorAll(`.piece.${player}`);
+    pecas.forEach(peca => {
+        if (peca.dataset.piece === piece) {
+            peca.dataset.points = Math.floor(peca.dataset.points / 2);
+        }
+        console.log(peca.dataset.points);
+    })
 }
 // --------------------------------------
 
@@ -1173,7 +1200,9 @@ const efeitoCartasEsp = (cartaNum) => {
             // cartaImpedido(enemy, "bishop");
             // setAddPieces();
             // timer.multiplyTime(5 / 4);
-            blindMoves();
+            // blindMoves();
+            // halfPoints("queen");
+            removePiece("bishop");
     }
 
     return;
@@ -1659,6 +1688,11 @@ socket.on("blind-moves", (corDoInimigo, minhaCor) => {
         timeBlindMovesBlack = 2;
         blindBoolBlack = true;
     }
+});
+
+socket.on("remove-piece", (box) => {
+    const boxPeca = document.getElementById(box);
+    boxPeca.innerHTML = "";
 });
 
 socket.on("add-piece", ({ piece, img, corPeca, boxId }) => {
