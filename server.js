@@ -348,7 +348,7 @@ io.on("connection", (socket) => {
         })
     })
 
-    socket.on("timer-ended", (roomId, loser, startedAt, ifDraw) => {
+    socket.on("timer-ended", (roomId, loser, ifDraw) => {
         redisClient.get(roomId, (err, reply) => {
             if (err) throw err
 
@@ -392,7 +392,7 @@ io.on("connection", (socket) => {
         })
     })
 
-    socket.on("timer-ended2", (roomId, loser, startedAt, ifDraw) => {
+    socket.on("timer-ended2", (roomId, loser, startedAt) => {
         redisClient.get(roomId, (err, reply) => {
             if (err) throw err
 
@@ -486,8 +486,8 @@ io.on("connection", (socket) => {
         io.to(roomId).emit("blind-moves", corDoInimigo, minhaCor);
     });
 
-    socket.on("remove-piece", ({ roomId, box }) => {
-        io.to(roomId).emit("remove-piece", box);
+    socket.on("remove-piece", ({ roomId, box, peca }) => {
+        io.to(roomId).emit("remove-piece", box, peca);
     });
 
     socket.on("add-piece", ({ roomId, piece, img, corPeca, boxId }) => {

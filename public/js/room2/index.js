@@ -234,8 +234,9 @@ const addPieceListeners = () => {
     })
 }
 
-const cartaImpedido = (player, peca) => {
+const cartaImpedido = async (player) => {
 
+    const peca = await setImpedePieces(player);
     socket.emit("carta-impedida", {
         roomId: roomId,
         cor: player,
@@ -252,7 +253,8 @@ const removePiece = (piece) => {
 
             socket.emit("remove-piece", {
                 roomId: roomId,
-                box: peca.parentNode.id
+                box: peca.parentNode.id,
+                peca: peca
             });
 
             peca.remove();
@@ -277,11 +279,11 @@ const blindMoves = () => {
     });
 }
 
-const halfPoints = (piece) => {
+const halfPoints = (piece, factor) => {
     const pecas = document.querySelectorAll(`.piece.${player}`);
     pecas.forEach(peca => {
         if (peca.dataset.piece === piece) {
-            peca.dataset.points = Math.floor(peca.dataset.points / 2);
+            peca.dataset.points = peca.dataset.points * factor;
         }
         console.log(peca.dataset.points);
     })
@@ -421,14 +423,8 @@ const updateTimer = (currentPlayer, minutes, seconds) => {
 }
 
 const timerEndedCallback = () => {
-    let ifDraw = false;
-    if (myScore === 41) {
-        ifDraw = true;
-    }
-    else {
-        ifDraw = false;
-    }
-    socket.emit('timer-ended2', roomId, user.username, gameStartedAtTimestamp, ifDraw)
+
+    socket.emit('timer-ended2', roomId, user.username, gameStartedAtTimestamp, false)
 }
 // --------------------------------------
 
@@ -902,6 +898,15 @@ const addPecasListener = () => {
             const div = document.createElement("div");
             div.appendChild(elementoPeca);
             div.dataset.piece = peca.dataset.piece;
+            if (peca.dataset.piece === "knight") {
+                div.dataset.points = 3;
+            }
+            if (peca.dataset.piece === "bishop") {
+                div.dataset.points = 4;
+            }
+            if (peca.dataset.piece === "rook") {
+                div.dataset.points = 5;
+            }
             div.classList.add("piece");
             let corPeca = null;
             if (elementoPeca.getAttribute("src").includes("light")) {
@@ -960,6 +965,86 @@ const addPecasListener = () => {
 
     addPecaPecas.addEventListener("click", selecionarPeca);
 }
+
+const setImpedePieces = async (player) => {
+    addPecaPecas.innerHTML = "";
+    if (player === 'light') {
+        let pieces = ["knight", "bishop", "rook", "queen", "king"];
+        let icons = [
+            "../assets/chess-icons/light/chess-knight-light.svg",
+            "../assets/chess-icons/light/chess-bishop-light.svg",
+            "../assets/chess-icons/light/chess-rook-light.svg",
+            "../assets/chess-icons/light/chess-queen-light.svg",
+            "../assets/chess-icons/light/chess-king-light.svg",
+        ];
+
+        let i = 0;
+        while (i <= 4) {
+            const li = document.createElement("li");
+            li.setAttribute("data-piece", pieces[i]);
+
+            const img = document.createElement("img");
+            img.src = icons[i];
+
+            li.appendChild(img);
+            addPecaPecas.appendChild(li);
+
+            i++;
+        }
+    } else {
+        let pieces = ["knight", "bishop", "rook", "queen", "king"];
+        let icons = [
+            "../assets/chess-icons/black/chess-knight-black.svg",
+            "../assets/chess-icons/black/chess-bishop-black.svg",
+            "../assets/chess-icons/black/chess-rook-black.svg",
+            "../assets/chess-icons/black/chess-queen-black.svg",
+            "../assets/chess-icons/black/chess-king-black.svg",
+        ];
+
+        let i = 0;
+        while (i <= 4) {
+            const li = document.createElement("li");
+            li.setAttribute("data-piece", pieces[i]);
+
+            const img = document.createElement("img");
+            img.src = icons[i];
+
+            li.appendChild(img);
+            addPecaPecas.appendChild(li);
+
+            i++;
+        }
+    }
+
+    const pecaSelected = await impedePecaListener();
+    return pecaSelected;
+}
+
+const impedePecaListener = () => {
+    return new Promise((resolve) => {
+
+        addPecaContainer.classList.remove("hidden");
+
+        const selecionarPeca = (e) => {
+            const elemento = e.target.closest("[data-piece]");
+
+            if (!elemento) {
+                return;
+            }
+
+            const peca = elemento.dataset.piece;
+            console.log(peca);
+
+            addPecaContainer.classList.add("hidden");
+
+            addPecaPecas.removeEventListener("click", selecionarPeca);
+
+            resolve(peca);
+        };
+
+        addPecaPecas.addEventListener("click", selecionarPeca);
+    });
+};
 
 // El Passant Logic
 const checkForElPassant = (enemyMove) => {
@@ -1039,7 +1124,8 @@ const performElPassant = (currentPlayer, prevPawnPosition, newPawnPosition) => {
 // --------------------------------------
 
 const checkForWin = () => {
-    if (myScore >= 41) {
+    const pecas = document.querySelectorAll(`.piece.${enemy}`);
+    if (myScore >= 35 || pecas.length === 0) {
         return true;
     }
     return false;
@@ -1282,22 +1368,16 @@ const switchCartas = (cartaNum) => {
 const efeitoCartasEsp = (cartaNum) => {
     switch (cartaNum) {
 
-        // "Add peça tab"
-
-
-
-        // "Impede card"
-
         case 1:
         case 2:
         case 3:
-            // cartaImpedido(enemy, "bishop");
-            // setAddPieces();
-            // timer.multiplyTime(5 / 4);
-            // blindMoves();
-            // halfPoints("queen");
-            // removePiece("bishop");
-            superKing("queen");
+        // cartaImpedido(enemy);
+        // setAddPieces();
+        // timer.multiplyTime(5 / 4);
+        // blindMoves();
+        // halfPoints("queen", 0);
+        // removePiece("bishop");
+        // superKing("queen");
     }
 
     return;
@@ -1785,9 +1865,10 @@ socket.on("blind-moves", (corDoInimigo, minhaCor) => {
     }
 });
 
-socket.on("remove-piece", (box) => {
+socket.on("remove-piece", (box, peca) => {
     const boxPeca = document.getElementById(box);
     boxPeca.innerHTML = "";
+    capturePiece(peca);
 });
 
 socket.on("add-piece", ({ piece, img, corPeca, boxId }) => {

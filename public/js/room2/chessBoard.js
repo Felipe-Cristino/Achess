@@ -62,7 +62,7 @@ const lightPieces = [
     {
         position: "E-1",
         icon: "../assets/chess-icons/light/chess-king-light.svg",
-        points: 5,
+        points: 6,
         piece: 'king'
     },
     {
@@ -161,7 +161,7 @@ const blackPieces = [
     {
         position: "E-8",
         icon: "../assets/chess-icons/black/chess-king-black.svg",
-        points: 5,
+        points: 6,
         piece: 'king'
     },
     {
