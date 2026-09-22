@@ -44,4 +44,14 @@ class Timer {
         socket.emit('update-timer', roomId, this.minutes, this.seconds);
         this.updateTimerCallback(this.player, this.minutes, this.seconds);
     }
+
+    addTime(quantia) {
+        let totalSeconds = Math.round(this.minutes * 60 + this.seconds + quantia);
+
+        this.minutes = Math.floor(totalSeconds / 60);
+        this.seconds = totalSeconds % 60;
+
+        socket.emit('update-timer', roomId, this.minutes, this.seconds);
+        this.updateTimerCallback(this.player, this.minutes, this.seconds);
+    }
 }

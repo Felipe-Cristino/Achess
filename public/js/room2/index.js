@@ -69,10 +69,17 @@ let bispoReiLight = false;
 let bispoReiBlack = false;
 let torreReiLight = false;
 let torreReiBlack = false;
-let damaReiLight = false;
-let damaReiBlack = false;
+let cavaloReiLight = false;
+let cavaloReiBlack = false;
 let reiCountLight = 0;
 let reiCountBlack = 0;
+
+let bispoCavaloLight = false;
+let bispoCavaloBlack = false;
+let torreCavaloLight = false;
+let torreCavaloBlack = false;
+let cavaloCountLight = 0;
+let cavaloCountBlack = 0;
 // =====================
 // Game Variables
 // =====================
@@ -298,8 +305,8 @@ const superKing = (piece) => {
         if (piece === "rook") {
             torreReiLight = true;
         }
-        if (piece === "queen") {
-            damaReiLight = true;
+        if (piece === "knight") {
+            cavaloReiLight = true;
         }
     } else {
         reiCountBlack = 2;
@@ -309,8 +316,28 @@ const superKing = (piece) => {
         if (piece === "rook") {
             torreReiBlack = true;
         }
-        if (piece === "queen") {
-            damaReiBlack = true;
+        if (piece === "knight") {
+            cavaloReiBlack = true;
+        }
+    }
+}
+
+const superCavalo = (piece) => {
+    if (player === "light") {
+        cavaloCountLight = 2;
+        if (piece === "bishop") {
+            bispoCavaloLight = true;
+        }
+        if (piece === "rook") {
+            torreCavaloLight = true;
+        }
+    } else {
+        cavaloCountBlack = 2;
+        if (piece === "bishop") {
+            bispoCavaloBlack = true;
+        }
+        if (piece === "rook") {
+            torreCavaloBlack = true;
         }
     }
 }
@@ -355,6 +382,34 @@ const findPossibleMoves = (position, piece) => {
         case 'bishop':
             return getBishopPossibleMoves(xAxisIndex, yAxisIndex)
         case 'knight':
+            if (player === "light" && cavaloCountLight >= 1 && bispoCavaloLight) {
+                return Array.prototype.concat(
+                    getKnightPossibleMoves(xAxisIndex, yAxisIndex),
+                    getBishopPossibleMoves(xAxisIndex, yAxisIndex)
+                )
+            }
+
+            if (player === "light" && cavaloCountLight >= 1 && torreCavaloLight) {
+                return Array.prototype.concat(
+                    getKnightPossibleMoves(xAxisIndex, yAxisIndex),
+                    getRookPossibleMoves(xAxisPos, yAxisPos, xAxisIndex, yAxisIndex)
+                )
+            }
+
+            if (player === "black" && cavaloCountBlack >= 1 && bispoCavaloBlack) {
+                return Array.prototype.concat(
+                    getKnightPossibleMoves(xAxisIndex, yAxisIndex),
+                    getBishopPossibleMoves(xAxisIndex, yAxisIndex)
+                )
+            }
+
+            if (player === "black" && cavaloCountBlack >= 1 && torreCavaloBlack) {
+                return Array.prototype.concat(
+                    getKnightPossibleMoves(xAxisIndex, yAxisIndex),
+                    getRookPossibleMoves(xAxisPos, yAxisPos, xAxisIndex, yAxisIndex)
+                )
+            }
+
             return getKnightPossibleMoves(xAxisIndex, yAxisIndex)
         case 'queen':
             return Array.prototype.concat(
@@ -376,10 +431,10 @@ const findPossibleMoves = (position, piece) => {
                 )
             }
 
-            if (player === "light" && reiCountLight >= 1 && damaReiLight) {
+            if (player === "light" && reiCountLight >= 1 && cavaloReiLight) {
                 return Array.prototype.concat(
-                    getBishopPossibleMoves(xAxisIndex, yAxisIndex),
-                    getRookPossibleMoves(xAxisPos, yAxisPos, xAxisIndex, yAxisIndex)
+                    getKingPossibleMoves(xAxisPos, yAxisPos, xAxisIndex, yAxisIndex),
+                    getKnightPossibleMoves(xAxisIndex, yAxisIndex)
                 )
             }
 
@@ -397,10 +452,10 @@ const findPossibleMoves = (position, piece) => {
                 )
             }
 
-            if (player === "black" && reiCountBlack >= 1 && damaReiBlack) {
+            if (player === "black" && reiCountBlack >= 1 && cavaloReiBlack) {
                 return Array.prototype.concat(
-                    getBishopPossibleMoves(xAxisIndex, yAxisIndex),
-                    getRookPossibleMoves(xAxisPos, yAxisPos, xAxisIndex, yAxisIndex)
+                    getKingPossibleMoves(xAxisPos, yAxisPos, xAxisIndex, yAxisIndex),
+                    getKnightPossibleMoves(xAxisIndex, yAxisIndex)
                 )
             }
 
@@ -565,9 +620,18 @@ const move = (e) => {
     if (reiCountBlack <= 0) {
         bispoReiBlack = false;
         torreReiBlack = false;
-        damaReiBlack = false;
+        cavaloReiBlack = false;
     }
 
+    if (cavaloCountLight <= 0) {
+        bispoCavaloLight = false;
+        torreCavaloLight = false;
+    }
+
+    if (cavaloCountBlack <= 0) {
+        bispoCavaloBlack = false;
+        torreCavaloBlack = false;
+    }
 
 }
 
@@ -1141,7 +1205,6 @@ const endGame = (playerOne, playerTwo, winner = null) => {
         timer.stop()
     }
 
-    let loser;
     let winnerScore;
     let loserScore;
     let winningPoints = 0;
@@ -1149,7 +1212,6 @@ const endGame = (playerOne, playerTwo, winner = null) => {
     if (winner) {
 
         if (winner === playerOne.username) {
-            loser = playerTwo.username;
             winnerScore = playerOne.user_points;
             loserScore = playerTwo.user_points;
 
@@ -1167,7 +1229,6 @@ const endGame = (playerOne, playerTwo, winner = null) => {
             myScoreElement.classList.add("positive-score")
             socket.emit("update-score", roomId, winningPoints, -Math.abs(winningPoints), playerOne, playerTwo);
         } else {
-            loser = playerOne.username;
             winnerScore = playerTwo.user_points;
             loserScore = playerOne.user_points;
 
@@ -1221,7 +1282,11 @@ const endGame = (playerOne, playerTwo, winner = null) => {
 // --------------------------------------
 const sortearCartas = () => {
 
-    let numeros = [1, 2, 3];
+    let numeros = [];
+
+    for (let i = 1; i <= 21; i++) {
+        numeros.push(i);
+    }
 
     for (let i = numeros.length - 1; i > 0; i--) {
         let j = Math.floor(Math.random() * (i + 1));
@@ -1231,7 +1296,11 @@ const sortearCartas = () => {
     const carta01LightNum = numeros[0];
     const carta02LightNum = numeros[1];
 
-    numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    numeros = [];
+
+    for (let i = 1; i <= 12; i++) {
+        numeros.push(i);
+    }
 
     for (let i = numeros.length - 1; i > 0; i--) {
         let j = Math.floor(Math.random() * (i + 1));
@@ -1242,13 +1311,17 @@ const sortearCartas = () => {
     const carta04LightNum = numeros[1];
     const carta05LightNum = numeros[2];
 
-    const carta01LightImg = "../../assets/cartas/esp-carta" + carta01LightNum + ".jpeg";
-    const carta02LightImg = "../../assets/cartas/esp-carta" + carta02LightNum + ".jpeg";
-    const carta03LightImg = "../../assets/cartas/carta" + carta03LightNum + ".jpeg";
-    const carta04LightImg = "../../assets/cartas/carta" + carta04LightNum + ".jpeg";
-    const carta05LightImg = "../../assets/cartas/carta" + carta05LightNum + ".jpeg";
+    const carta01LightImg = "../../assets/cartas/cartas-esp/carta" + carta01LightNum + ".jpeg";
+    const carta02LightImg = "../../assets/cartas/cartas-esp/carta" + carta02LightNum + ".jpeg";
+    const carta03LightImg = "../../assets/cartas/cartas-co/carta" + carta03LightNum + ".jpeg";
+    const carta04LightImg = "../../assets/cartas/cartas-co/carta" + carta04LightNum + ".jpeg";
+    const carta05LightImg = "../../assets/cartas/cartas-co/carta" + carta05LightNum + ".jpeg";
 
-    numeros = [1, 2, 3];
+    numeros = [];
+
+    for (let i = 1; i <= 21; i++) {
+        numeros.push(i);
+    }
 
     for (let i = numeros.length - 1; i > 0; i--) {
         let j = Math.floor(Math.random() * (i + 1));
@@ -1258,7 +1331,11 @@ const sortearCartas = () => {
     const carta01BlackNum = numeros[0];
     const carta02BlackNum = numeros[1];
 
-    numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    numeros = [];
+
+    for (let i = 1; i <= 12; i++) {
+        numeros.push(i);
+    }
 
     for (let i = numeros.length - 1; i > 0; i--) {
         let j = Math.floor(Math.random() * (i + 1));
@@ -1269,11 +1346,11 @@ const sortearCartas = () => {
     const carta04BlackNum = numeros[1];
     const carta05BlackNum = numeros[2];
 
-    const carta01BlackImg = "../../assets/cartas/esp-carta" + carta01BlackNum + ".jpeg";
-    const carta02BlackImg = "../../assets/cartas/esp-carta" + carta02BlackNum + ".jpeg";
-    const carta03BlackImg = "../../assets/cartas/carta" + carta03BlackNum + ".jpeg";
-    const carta04BlackImg = "../../assets/cartas/carta" + carta04BlackNum + ".jpeg";
-    const carta05BlackImg = "../../assets/cartas/carta" + carta05BlackNum + ".jpeg";
+    const carta01BlackImg = "../../assets/cartas/cartas-esp/carta" + carta01BlackNum + ".jpeg";
+    const carta02BlackImg = "../../assets/cartas/cartas-esp/carta" + carta02BlackNum + ".jpeg";
+    const carta03BlackImg = "../../assets/cartas/cartas-co/carta" + carta03BlackNum + ".jpeg";
+    const carta04BlackImg = "../../assets/cartas/cartas-co/carta" + carta04BlackNum + ".jpeg";
+    const carta05BlackImg = "../../assets/cartas/cartas-co/carta" + carta05BlackNum + ".jpeg";
 
     const lightCards =
         [carta01LightImg, carta02LightImg,
@@ -1299,15 +1376,63 @@ const switchCartasEsp = (cartaNum) => {
     let poderCarta;
     switch (cartaNum) {
         case 1:
+        case 2:
+        case 3:
+            poderCarta = "Add 1 min";
+            break;
+
+        case 4:
+        case 5:
+        case 6:
             poderCarta = "Add peça tab";
             break;
 
-        case 2:
-            poderCarta = "Impede card";
+        case 7:
+            poderCarta = "Cavalo + bispo";
             break;
 
-        case 3:
-            poderCarta = "Win 1/4 time";
+        case 8:
+            poderCarta = "Cavalo + torre";
+            break;
+
+        case 9:
+            poderCarta = "Rei + torre";
+            break;
+
+        case 10:
+        case 11:
+        case 12:
+            poderCarta = "Impede peça adv";
+            break;
+
+        case 13:
+        case 14:
+        case 15:
+            poderCarta = "blind moves";
+            break;
+
+        case 16:
+            poderCarta = "Queen half points";
+            break;
+
+        case 17:
+            poderCarta = "Torre vale 0";
+            break;
+
+        case 18:
+            poderCarta = "Rei vale 0";
+            break;
+
+        case 19:
+            poderCarta = "Excluir peça adv";
+            break;
+
+        case 20:
+            poderCarta = "Excluir peça adv";
+            break;
+
+        case 21:
+            poderCarta = "Excluir peça adv";
             break;
 
         default:
@@ -1322,39 +1447,39 @@ const switchCartas = (cartaNum) => {
     let poderCarta;
     switch (cartaNum) {
         case 1:
-            poderCarta = "Rei = dama";
+            poderCarta = "Bispo vale 0";
             break;
 
         case 2:
-            poderCarta = "Ganha 30 seg";
+            poderCarta = "Rook half points";
             break;
 
         case 3:
-            poderCarta = "Ganha 10 seg";
+            poderCarta = "Cavalo vale 0";
             break;
 
         case 4:
-            poderCarta = "Remove piece";
+            poderCarta = "King half points";
             break;
 
         case 5:
-            poderCarta = "2 move blind";
-            break;
-
         case 6:
-            poderCarta = "Impede captura";
+            poderCarta = "Rei + cavalo";
             break;
 
         case 7:
-            poderCarta = "Trocar peça"
-            break;
-
         case 8:
-            poderCarta = "Impede carta";
+            poderCarta = "Rei + bispo";
             break;
 
         case 9:
-            poderCarta = "Move enemy";
+        case 10:
+            poderCarta = "Ganha 30 seg";
+            break;
+
+        case 11:
+        case 12:
+            poderCarta = "Ganha 1/4 tempo";
             break;
 
         default:
@@ -1371,13 +1496,60 @@ const efeitoCartasEsp = (cartaNum) => {
         case 1:
         case 2:
         case 3:
-        // cartaImpedido(enemy);
-        // setAddPieces();
-        // timer.multiplyTime(5 / 4);
-        // blindMoves();
-        // halfPoints("queen", 0);
-        // removePiece("bishop");
-        // superKing("queen");
+            timer.addTime(60);
+            break;
+
+        case 4:
+        case 5:
+        case 6:
+            setAddPieces();
+            break;
+
+        case 7:
+            superCavalo("bishop");
+            break;
+        case 8:
+            superCavalo("rook");
+            break;
+        case 9:
+            superKing("rook");
+            break;
+
+        case 10:
+        case 11:
+        case 12:
+            cartaImpedido(enemy);
+            break;
+
+        case 13:
+        case 14:
+        case 15:
+            blindMoves();
+            break;
+
+        case 16:
+            halfPoints("queen", 1 / 2);
+            break;
+        case 17:
+            halfPoints("rook", 0);
+            break;
+        case 18:
+            halfPoints("king", 0);
+            break;
+
+        case 19:
+            removePiece("knight");
+            break;
+
+        case 20:
+            removePiece("bishop");
+            break;
+
+        case 21:
+            removePiece("rook");
+
+        default:
+            break;
     }
 
     return;
@@ -1385,40 +1557,44 @@ const efeitoCartasEsp = (cartaNum) => {
 
 const efeitoCartas = (cartaNum) => {
     switch (cartaNum) {
+
         case 1:
-            // "Rei = dama";
+            halfPoints("bishop", 0);
             break;
 
         case 2:
-            // "Ganha 30 seg"
+            halfPoints("rook", 1 / 2);
             break;
 
         case 3:
-            // "Ganha 10 seg"
+            halfPoints("knight", 0);
             break;
 
         case 4:
-            // "Remove piece"
+            halfPoints("king", 1 / 2);
             break;
 
         case 5:
-            // "2 move blind"
-            break;
-
         case 6:
-            // "Impede captura"
+            superKing("knight");
             break;
 
         case 7:
-            // "Trocar peça"
-            break;
-
         case 8:
-            // "Impede carta"
+            superKing("bishop");
             break;
 
         case 9:
-            // "Move enemy"
+        case 10:
+            timer.addTime(30);
+            break;
+
+        case 11:
+        case 12:
+            timer.multiplyTime(5/4);
+            break;
+
+        default:
             break;
     }
 
@@ -1521,7 +1697,7 @@ const listenersCartas = (lightCards, blackCards,
                 showCard.children[0].src = "";
             }, 2000)
             carta03LightCard.remove();
-            efeitoCartasEsp(carta02LightNum);
+            efeitoCartas(carta03LightNum);
 
             carta04LightCard.children[0].src = carta04LightImg;
             estagioCarta04Light += 1;
@@ -1541,7 +1717,7 @@ const listenersCartas = (lightCards, blackCards,
                 showCard.children[0].src = "";
             }, 2000)
             carta04LightCard.remove();
-            efeitoCartasEsp(carta02LightNum);
+            efeitoCartas(carta04LightNum);
 
             carta05LightCard.children[0].src = carta05LightImg;
             estagioCarta05Light += 1;
@@ -1561,7 +1737,7 @@ const listenersCartas = (lightCards, blackCards,
                 showCard.children[0].src = "";
             }, 2000)
             carta05LightCard.remove();
-            efeitoCartasEsp(carta02LightNum);
+            efeitoCartas(carta05LightNum);
         }
     })
 
@@ -1629,7 +1805,7 @@ const listenersCartas = (lightCards, blackCards,
                 showCard.children[0].src = "";
             }, 2000)
             carta03BlackCard.remove();
-            efeitoCartasEsp(carta02BlackNum);
+            efeitoCartas(carta03BlackNum);
 
             carta04BlackCard.children[0].src = carta04BlackImg;
             estagioCarta04Black += 1;
@@ -1649,7 +1825,7 @@ const listenersCartas = (lightCards, blackCards,
                 showCard.children[0].src = "";
             }, 2000)
             carta04BlackCard.remove();
-            efeitoCartasEsp(carta02BlackNum);
+            efeitoCartas(carta04BlackNum);
 
             carta05BlackCard.children[0].src = carta05BlackImg;
             estagioCarta05Black += 1;
@@ -1669,7 +1845,7 @@ const listenersCartas = (lightCards, blackCards,
                 showCard.children[0].src = "";
             }, 2000)
             carta05BlackCard.remove();
-            efeitoCartasEsp(carta02BlackNum);
+            efeitoCartas(carta05BlackNum);
         }
     })
 }
@@ -1868,7 +2044,33 @@ socket.on("blind-moves", (corDoInimigo, minhaCor) => {
 socket.on("remove-piece", (box, peca) => {
     const boxPeca = document.getElementById(box);
     boxPeca.innerHTML = "";
-    capturePiece(peca);
+
+    let pawnImg = peca.children[0];
+
+    let li = document.createElement('li')
+    li.appendChild(pawnImg);
+
+    if (peca.classList.contains('black')) {
+        blackCapturedPieces.appendChild(li);
+
+        if (!gameOver) {
+            if (player === 'light') {
+                myScore += parseInt(peca.dataset.points / 2)
+            } else {
+                enemyScore += parseInt(peca.dataset.points / 2)
+            }
+        }
+    } else {
+        lightCapturedPieces.appendChild(li);
+
+        if (!gameOver) {
+            if (player === 'black') {
+                myScore += parseInt(peca.dataset.points / 2)
+            } else {
+                enemyScore += parseInt(peca.dataset.points / 2)
+            }
+        }
+    }
 });
 
 socket.on("add-piece", ({ piece, img, corPeca, boxId }) => {
