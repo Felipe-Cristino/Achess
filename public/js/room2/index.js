@@ -203,14 +203,14 @@ const addPieceListeners = () => {
             if (cartaImpedidoCorLight === true &&
                 player === "light" &&
                 cartaImpedidoPecaLight === piece.dataset.piece
-                && cartaImpedidoNumLight === 2) {
+                && cartaImpedidoNumLight > 0) {
                 return;
             }
 
             if (cartaImpedidoCorBlack === true &&
                 player === "black" &&
                 cartaImpedidoPecaBlack === piece.dataset.piece
-                && cartaImpedidoNumBlack === 2) {
+                && cartaImpedidoNumBlack > 0) {
                 return;
             }
 
@@ -221,14 +221,14 @@ const addPieceListeners = () => {
             if (cartaImpedidoCorLight === true &&
                 player === "light" &&
                 cartaImpedidoPecaLight === piece.dataset.piece
-                && cartaImpedidoNumLight === 2) {
+                && cartaImpedidoNumLight > 0) {
                 return;
             }
 
             if (cartaImpedidoCorBlack === true &&
                 player === "black" &&
                 cartaImpedidoPecaBlack === piece.dataset.piece
-                && cartaImpedidoNumBlack === 2) {
+                && cartaImpedidoNumBlack > 0) {
                 return;
             }
 
@@ -588,11 +588,12 @@ const move = (e) => {
 
     if (blindBoolLight) {
         cor = "black";
-        if (timeBlindMovesLight === 0) {
+        if (timeBlindMovesLight <= 0) {
             let allPieces = document.querySelectorAll(`.piece.${cor}`)
             allPieces.forEach(piece => {
                 piece.classList.remove("hidden");
             })
+            blindBoolLight = false;
         }
         timeBlindMovesLight -= 1;
     }
@@ -604,6 +605,7 @@ const move = (e) => {
             allPieces.forEach(piece => {
                 piece.classList.remove("hidden");
             })
+            blindBoolBlack = false;
         }
         timeBlindMovesBlack -= 1;
     }
@@ -1311,8 +1313,8 @@ const sortearCartas = () => {
     const carta04LightNum = numeros[1];
     const carta05LightNum = numeros[2];
 
-    const carta01LightImg = "../../assets/cartas/cartas-esp/carta" + carta01LightNum + ".jpeg";
-    const carta02LightImg = "../../assets/cartas/cartas-esp/carta" + carta02LightNum + ".jpeg";
+    const carta01LightImg = "../../assets/cartas/cartas-esp/carta" + carta01LightNum + ".png";
+    const carta02LightImg = "../../assets/cartas/cartas-esp/carta" + carta02LightNum + ".png";
     const carta03LightImg = "../../assets/cartas/cartas-co/carta" + carta03LightNum + ".jpeg";
     const carta04LightImg = "../../assets/cartas/cartas-co/carta" + carta04LightNum + ".jpeg";
     const carta05LightImg = "../../assets/cartas/cartas-co/carta" + carta05LightNum + ".jpeg";
@@ -1346,8 +1348,8 @@ const sortearCartas = () => {
     const carta04BlackNum = numeros[1];
     const carta05BlackNum = numeros[2];
 
-    const carta01BlackImg = "../../assets/cartas/cartas-esp/carta" + carta01BlackNum + ".jpeg";
-    const carta02BlackImg = "../../assets/cartas/cartas-esp/carta" + carta02BlackNum + ".jpeg";
+    const carta01BlackImg = "../../assets/cartas/cartas-esp/carta" + carta01BlackNum + ".png";
+    const carta02BlackImg = "../../assets/cartas/cartas-esp/carta" + carta02BlackNum + ".png";
     const carta03BlackImg = "../../assets/cartas/cartas-co/carta" + carta03BlackNum + ".jpeg";
     const carta04BlackImg = "../../assets/cartas/cartas-co/carta" + carta04BlackNum + ".jpeg";
     const carta05BlackImg = "../../assets/cartas/cartas-co/carta" + carta05BlackNum + ".jpeg";
@@ -1591,7 +1593,7 @@ const efeitoCartas = (cartaNum) => {
 
         case 11:
         case 12:
-            timer.multiplyTime(5/4);
+            timer.multiplyTime(5 / 4);
             break;
 
         default:
@@ -1640,6 +1642,8 @@ const listenersCartas = (lightCards, blackCards,
             && myTurn && lance % 2 === 0
         ) {
             carta01LightCard.children[0].src = carta01LightImg;
+            console.log("Imagem:", carta01LightImg);
+            console.log("Número:", carta01LightNum);
             estagioCarta01Light += 1;
             waitLanceEspLight += 4;
             popUp(carta01LightCard, switchCartasEsp(carta01LightNum));
@@ -2032,11 +2036,11 @@ socket.on("blind-moves", (corDoInimigo, minhaCor) => {
         })
     }
     if (corDoInimigo === "light") {
-        timeBlindMovesLight = 2;
+        timeBlindMovesLight = 1;
         blindBoolLight = true;
     }
     else {
-        timeBlindMovesBlack = 2;
+        timeBlindMovesBlack = 1;
         blindBoolBlack = true;
     }
 });
