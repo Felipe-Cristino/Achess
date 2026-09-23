@@ -674,15 +674,15 @@ nav{
 }
 
 .games-bottom button:first-child:hover{
-    background: #669146;
+    background: #08860B;
 }
 
 .games-bottom button:last-child{
-    background: #669146;
+    background: #026B39;
 }
 
 .games-bottom button:last-child:hover{
-    background: #924557;
+    background: #08860B;
 }
 
 .games-list{
@@ -734,7 +734,7 @@ nav{
     width: 400px;
     padding: 20px;
     border-radius: 15px;
-    background: var(--main-color-darker);
+    background: #01365C;
 }
 
 .form-container form .input-group label{
@@ -1343,10 +1343,11 @@ tbody td img{
     font-size: 2rem;
     margin-bottom: 30px;
     font-weight: 500;
+    color: black;
 }
 
 .profile-details-container{
-    background: var(--main-color-darker);
+    background: #01365C;
     padding: 20px;
     border-radius: 5px;
 }
@@ -1387,7 +1388,7 @@ tbody td img{
     height: 45px;
     width: fit-content;
     padding: 0 10px;
-    background: var(--secondary-color);
+    background: #026B39;
     color: white;
     border-radius: 3px;
     font-size: 1.1rem;

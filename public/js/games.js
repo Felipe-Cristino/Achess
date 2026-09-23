@@ -89,10 +89,6 @@ socket.on("room-joined", (id) => {
     window.location.href = window.location.origin + "/room2?id=" + id;
 })
 
-rankFilter.addEventListener("change", (e) => {
-    socket.emit("get-rooms", e.target.value)
-})
-
 createRoomBtn.addEventListener("click", () => {
     createRoomFormContainer.classList.remove("hidden")
 })

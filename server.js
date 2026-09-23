@@ -209,10 +209,6 @@ io.on("connection", (socket) => {
 
                 if (rank === 'all') {
                     socket.emit("receive-rooms", rooms)
-                } else {
-                    let filteredRooms = rooms.filter(room => room.players[0].user_rank === rank);
-
-                    socket.emit("receive-rooms", filteredRooms)
                 }
             } else {
                 socket.emit("receive-rooms", [])
