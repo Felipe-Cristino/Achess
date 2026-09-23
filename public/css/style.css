@@ -1281,6 +1281,7 @@ nav{
 
 .my-stats, .played-game{
     padding: 50px 0;
+    color: black;
 }
 
 table{
@@ -1289,7 +1290,7 @@ table{
 }
 
 thead{
-    border-bottom: 1px solid white;
+    border-bottom: 1px solid black;
 }
 
 thead th{
@@ -1299,7 +1300,7 @@ thead th{
 }
 
 tbody tr{
-    border-bottom: 1px solid white;
+    border-bottom: 1px solid black;
 }
 
 tbody td{
@@ -1309,14 +1310,15 @@ tbody td{
 }
 
 tbody td a{
-    background: var(--secondary-color);
+    background: #026B39;
+    color: white;
     padding: 5px 15px;
     border-radius: 3px;
     transition: background-color 150ms ease-in;
 }
 
 tbody td a:hover{
-    background: var(--secondary-color-lighter);
+    background: #4CA126;
 }
 
 tbody td img{
@@ -1327,7 +1329,7 @@ tbody td img{
 .played-game .table-container{
     padding: 25px;
     padding-top: 10px;
-    background: var(--main-color-darker);
+    background-color: #D9D9D9;
     border-radius: 3px;
 }
 
@@ -1412,17 +1414,17 @@ tbody td img{
     margin-left: 15px;
 }
 
-.profile-details-container form:nth-child(4) button{
+.profile-details-container form:nth-child(3) button{
     margin-top: 25px;
     margin-right: 10px;
     display: inline-block;
 }
 
-.profile-details-container button:nth-child(5){
+.profile-details-container button:nth-child(4){
     background: var(--bg-danger);
 }
 
-.profile-details-container button:nth-child(5):hover{
+.profile-details-container button:nth-child(4):hover{
     background: #e57e98;
 }
 
