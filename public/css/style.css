@@ -27,7 +27,7 @@ body{
     width: 100vw;
     font-size: 18px;
     overflow-x: hidden;
-    background: var(--main-color);
+    background-color: #D9D9D9;
     color: white;
 }
 
@@ -135,7 +135,7 @@ nav{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: var(--main-color-darker);
+    background: #01365C;
 }
 
 .nav-brand{
@@ -259,7 +259,7 @@ nav{
 }
 
 .auth-form button:hover{
-    background: var(--secondary-color-lighter);
+    background: #01368C;
 }
 
 #create-account {
@@ -275,7 +275,9 @@ nav{
     font-family:'Times New Roman', Times, serif;
 }
 
-
+#create-account:hover {
+    background: #08B60B;
+}
 
 .redirect-link{
     font-weight: 300;
@@ -302,7 +304,7 @@ nav{
 .my-info{
     width: 250px;
     height: fit-content;
-    background: var(--main-color-darker);
+    background: #01365C;
     border-radius: 4px;
     padding: 20px;
     margin-right: 50px;
@@ -351,11 +353,16 @@ nav{
     margin-bottom: 20px;
     font-weight: 600;
     font-size: 1.7rem;
+    color: black;
+}
+
+.rooms p {
+    color: black;
 }
 
 .room{
     width: 100%;
-    background: var(--main-color-darker);
+    background: #01365C;
     margin-bottom: 30px;
     padding: 10px 20px;
     border-radius: 3px;
@@ -371,7 +378,7 @@ nav{
 }
 
 .room a{
-    background: var(--secondary-color);
+    background: #026B39;
     display: block;
     width: fit-content;
     padding: 10px 35px;
@@ -383,7 +390,7 @@ nav{
 }
 
 .room a:hover{
-    background: var(--secondary-color-lighter);
+    background-color: #4CA126;
 }
 
 .room:last-child{
@@ -446,7 +453,7 @@ nav{
     justify-content: center;
     align-items: center;
     transform-origin: bottom right;
-    background: var(--main-color-darker);
+    background: #01365C;
     border-radius: 10px;
     padding: 30px;
 }
@@ -501,7 +508,7 @@ nav{
     max-height: 150px;
     overflow-y: auto;
     width: 100%;
-    background: var(--main-color);
+    background-color: #D9D9D9;
     margin-bottom: 20px;
     border-radius: 5px;
     padding: 10px;
@@ -534,8 +541,8 @@ nav{
 }
 
 .message .time{
-    color: var(--bg-orange);
-    font-weight: 300;
+    color: #01365C;
+    font-weight: bolder;
     font-size: .9rem;
     margin-bottom: 5px;
 }
@@ -545,10 +552,12 @@ nav{
     letter-spacing: .4px;
     font-weight: 300;
     font-size: 1rem;
+    color: black;
+    font-weight: bolder;
 }
 
 .message strong{
-    color: var(--bg-danger);
+    color: #026B39;
     margin-right: 5px;
     font-weight: 900 !important;
 }
@@ -564,16 +573,16 @@ nav{
 }
 
 .chat-form input{
-    background: var(--main-color);
+    background-color: #D9D9D9;
     border: none;
     border-radius: 5px;
     padding: 5px 15px;
     display: block;
     height: 100%;
     width: 70%;
-    color: white;
+    color: black;
     font-size: 1.1rem;
-    font-weight: 300;
+    font-weight: bolder;
 }
 
 .chat-form button{
@@ -582,7 +591,7 @@ nav{
     height: 100%;
     font-weight: 300;
     color: white;
-    background: var(--secondary-color);
+    background: #026B39;
     border-radius: 5px;
     font-size: 1.1rem;
     transition: background-color 200ms ease-in;
@@ -618,6 +627,7 @@ nav{
 .games-top h1{
     font-weight: 400;
     font-size: 2.5rem;
+    color: black;
 }
 
 .games-top select{
@@ -625,7 +635,7 @@ nav{
     height: 100%;
     width: fit-content;
     padding: 10px;
-    background: var(--main-color-darker);
+    background: #01365C;
     color: white;
     outline: none;
     border: 1px solid white;
@@ -639,6 +649,7 @@ nav{
     text-align: center;
     font-size: 1.8rem;
     margin-bottom: 20px;
+    color: black;
 }
 
 .games-bottom{
@@ -655,10 +666,11 @@ nav{
     font-weight: 300;
     border-radius: 5px;
     transition: background-color 200ms ease-in;
+    background: #026B39;
 }
 
 .games-bottom button:first-child{
-    background: var(--bg-success);
+    background-color: #026B39;
 }
 
 .games-bottom button:first-child:hover{
@@ -666,7 +678,7 @@ nav{
 }
 
 .games-bottom button:last-child{
-    background: var(--bg-danger);
+    background: #669146;
 }
 
 .games-bottom button:last-child:hover{

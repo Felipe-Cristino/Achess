@@ -1286,7 +1286,7 @@ const sortearCartas = () => {
 
     let numeros = [];
 
-    for (let i = 1; i <= 21; i++) {
+    for (let i = 1; i <= 18; i++) {
         numeros.push(i);
     }
 
@@ -1300,7 +1300,7 @@ const sortearCartas = () => {
 
     numeros = [];
 
-    for (let i = 1; i <= 12; i++) {
+    for (let i = 1; i <= 15; i++) {
         numeros.push(i);
     }
 
@@ -1321,7 +1321,7 @@ const sortearCartas = () => {
 
     numeros = [];
 
-    for (let i = 1; i <= 21; i++) {
+    for (let i = 1; i <= 18; i++) {
         numeros.push(i);
     }
 
@@ -1335,7 +1335,7 @@ const sortearCartas = () => {
 
     numeros = [];
 
-    for (let i = 1; i <= 12; i++) {
+    for (let i = 1; i <= 15; i++) {
         numeros.push(i);
     }
 
@@ -1425,18 +1425,6 @@ const switchCartasEsp = (cartaNum) => {
             poderCarta = "Rei vale 0";
             break;
 
-        case 19:
-            poderCarta = "Excluir peça adv";
-            break;
-
-        case 20:
-            poderCarta = "Excluir peça adv";
-            break;
-
-        case 21:
-            poderCarta = "Excluir peça adv";
-            break;
-
         default:
             poderCarta = "Carta errada";
             break;
@@ -1482,6 +1470,12 @@ const switchCartas = (cartaNum) => {
         case 11:
         case 12:
             poderCarta = "Ganha 1/4 tempo";
+            break;
+
+        case 13:
+        case 14:
+        case 15:
+            poderCarta = "Exclui peça adv";
             break;
 
         default:
@@ -1539,17 +1533,6 @@ const efeitoCartasEsp = (cartaNum) => {
             halfPoints("king", 0);
             break;
 
-        case 19:
-            removePiece("knight");
-            break;
-
-        case 20:
-            removePiece("bishop");
-            break;
-
-        case 21:
-            removePiece("rook");
-
         default:
             break;
     }
@@ -1595,6 +1578,17 @@ const efeitoCartas = (cartaNum) => {
         case 12:
             timer.multiplyTime(5 / 4);
             break;
+
+        case 13:
+            removePiece("knight");
+            break;
+
+        case 14:
+            removePiece("bishop");
+            break;
+
+        case 15:
+            removePiece("rook");
 
         default:
             break;
