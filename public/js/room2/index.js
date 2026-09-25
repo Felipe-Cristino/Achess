@@ -265,7 +265,11 @@ const removePiece = (piece) => {
             socket.emit("remove-piece", {
                 roomId: roomId,
                 box: peca.parentNode.id,
-                peca: peca
+                peca: {
+                    points: peca.dataset.points,
+                    img: peca.children[0],
+                    color: enemy
+                }
             });
 
             peca.remove();
@@ -290,15 +294,33 @@ const blindMoves = () => {
     });
 }
 
+// const halfPoints = (piece, factor) => {
+//     const pecas = document.querySelectorAll(`.piece.${player}`);
+//     pecas.forEach(peca => {
+//         if (peca.dataset.piece === piece) {
+//             peca.dataset.points = Number(peca.dataset.points) * factor;
+//         }
+//     })
+// }
+
 const halfPoints = (piece, factor) => {
     const pecas = document.querySelectorAll(`.piece.${player}`);
+
     pecas.forEach(peca => {
         if (peca.dataset.piece === piece) {
-            peca.dataset.points = Number(peca.dataset.points) * factor;
-            console.log(peca.dataset.points);
+            const newPoints = Number(peca.dataset.points) * factor;
+
+            peca.dataset.points = newPoints;
+
+            socket.emit("update-piece-points", {
+                roomId,
+                piece,
+                color: player,
+                newPoints
+            });
         }
-    })
-}
+    });
+};
 
 const superKing = (piece) => {
     if (player === "light") {
@@ -2044,29 +2066,35 @@ socket.on("blind-moves", (corDoInimigo, minhaCor) => {
     }
 });
 
+socket.on("piece-points-updated", ({ piece, color, newPoints }) => {
+    const pecas = document.querySelectorAll(`.piece.${color}`);
+
+    pecas.forEach(peca => {
+        if (peca.dataset.piece === piece) {
+            peca.dataset.points = newPoints;
+        }
+    });
+});
+
 socket.on("remove-piece", (box, peca) => {
     const boxPeca = document.getElementById(box);
 
-    console.log(peca);
-
-    let pawnImg = peca.children[0];
-    console.log(pawnImg);
-
     let li = document.createElement('li')
+    let pawnImg = document.createElement("img");
+    pawnImg.src = peca.img;
+
     li.appendChild(pawnImg);
 
-    if (peca.classList.contains('black')) {
+    if (peca.color === 'black') {
         blackCapturedPieces.appendChild(li);
 
         if (!gameOver) {
             if (player === 'light') {
-                myScore += Number(peca.dataset.points) / 2;
+                myScore += Number(peca.points) / 2;
                 myScorePoints.textContent = myScore;
-                console.log(Number(peca.dataset.points));
             } else {
-                enemyScore += Number(peca.dataset.points) / 2;
+                enemyScore += Number(peca.points) / 2;
                 enemyScorePoints.textContent = enemyScore;
-                console.log(Number(peca.dataset.points));
             }
         }
     } else {
@@ -2074,13 +2102,11 @@ socket.on("remove-piece", (box, peca) => {
 
         if (!gameOver) {
             if (player === 'black') {
-                myScore += Number(peca.dataset.points) / 2;
+                myScore += Number(peca.points) / 2;
                 myScorePoints.textContent = myScore;
-                console.log(Number(peca.dataset.points));
             } else {
-                enemyScore += Number(peca.dataset.points) / 2;
+                enemyScore += Number(peca.points) / 2;
                 enemyScorePoints.textContent = enemyScore;
-                console.log(Number(peca.dataset.points));
             }
         }
     }

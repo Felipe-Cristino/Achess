@@ -482,6 +482,15 @@ io.on("connection", (socket) => {
         io.to(roomId).emit("blind-moves", corDoInimigo, minhaCor);
     });
 
+    socket.on("update-piece-points", ({ roomId, piece, color, newPoints }) => {
+        // Enviar os pontos atualizados aos jogadores
+        io.to(roomId).emit("piece-points-updated", {
+            piece,
+            color,
+            newPoints
+        });
+    });
+
     socket.on("remove-piece", ({ roomId, box, peca }) => {
         io.to(roomId).emit("remove-piece", box, peca);
     });
