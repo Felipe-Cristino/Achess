@@ -388,7 +388,7 @@ io.on("connection", (socket) => {
         })
     })
 
-    socket.on("timer-ended2", (roomId, loser, startedAt) => {
+    socket.on("timer-ended2", (roomId, loser, ifDraw) => {
         redisClient.get(roomId, (err, reply) => {
             if (err) throw err
 

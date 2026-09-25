@@ -72,7 +72,7 @@ socket.on('receive-rooms', rooms => {
         noGamesMessage.classList.add("hidden");
         gamesList.classList.remove('hidden');
 
-        displayRooms(rooms);
+        // displayRooms(rooms);
     }else{
         gamesList.classList.add('hidden');
         noGamesMessage.classList.remove('hidden')
