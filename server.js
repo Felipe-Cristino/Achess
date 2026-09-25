@@ -273,30 +273,13 @@ io.on("connection", (socket) => {
                 redisClient.set(roomId, JSON.stringify(room))
 
                 let query = `
-                    INSERT INTO games(timer, moves, user_id_light, user_id_black, if_draw, started_at)
-                    VALUES('${room.time + ''}', '${JSON.stringify(room.moves)}', ${room.players[0].id}, ${room.players[1].id}, false, '${startedAt + ''}')
+                    INSERT INTO games(timer, moves, user_id_light, user_id_black, if_draw, mode, started_at)
+                    VALUES('${room.time + ''}', '${JSON.stringify(room.moves)}', ${room.players[0].id}, ${room.players[1].id}, false, 'normal', '${startedAt + ''}')
                 `
 
                 db.query(query, (err) => {
                     if (err) throw err;
                 })
-            }
-        })
-    })
-
-    socket.on("checkmate2", (roomId, startedAt) => {
-        redisClient.get(roomId, (err, reply) => {
-            if (err) throw err;
-
-            if (reply) {
-                let room = JSON.parse(reply);
-
-                redisClient.del(`${room.players[0].id}-played-games`);
-                redisClient.del(`${room.players[1].id}-played-games`);
-
-                room.gameFinished = true;
-
-                redisClient.set(roomId, JSON.stringify(room))
             }
         })
     })
@@ -316,8 +299,8 @@ io.on("connection", (socket) => {
                 redisClient.set(roomId, JSON.stringify(room))
 
                 let query = `
-                    INSERT INTO games(timer, moves, user_id_light, user_id_black, if_draw, started_at)
-                    VALUES('${room.time + ''}', '${JSON.stringify(room.moves)}', ${room.players[0].id}, ${room.players[1].id}, true, '${startedAt + ''}')
+                    INSERT INTO games(timer, moves, user_id_light, user_id_black, if_draw, mode, started_at)
+                    VALUES('${room.time + ''}', '${JSON.stringify(room.moves)}', ${room.players[0].id}, ${room.players[1].id}, true, 'normal', '${startedAt + ''}')
                 `
 
                 db.query(query, (err) => {
@@ -369,13 +352,13 @@ io.on("connection", (socket) => {
                 let query;
                 if (ifDraw) {
                     query = `
-                    INSERT INTO games(timer, moves, user_id_light, user_id_black, if_draw, started_at)
-                    VALUES('${room.time + ''}', '${JSON.stringify(room.moves)}', ${room.players[0].id}, ${room.players[1].id}, true, '${startedAt + ''}')
+                    INSERT INTO games(timer, moves, user_id_light, user_id_black, if_draw, mode, started_at)
+                    VALUES('${room.time + ''}', '${JSON.stringify(room.moves)}', ${room.players[0].id}, ${room.players[1].id}, true, 'normal', '${startedAt + ''}')
                 `
                 } else {
                     query = `
-                    INSERT INTO games(timer, moves, user_id_light, user_id_black, if_draw, started_at)
-                    VALUES('${room.time + ''}', '${JSON.stringify(room.moves)}', ${room.players[0].id}, ${room.players[1].id}, false, '${startedAt + ''}')
+                    INSERT INTO games(timer, moves, user_id_light, user_id_black, if_draw, mode, started_at)
+                    VALUES('${room.time + ''}', '${JSON.stringify(room.moves)}', ${room.players[0].id}, ${room.players[1].id}, false, 'normal', '${startedAt + ''}')
                 `
                 }
 

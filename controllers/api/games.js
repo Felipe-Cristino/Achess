@@ -12,7 +12,7 @@ exports.getGames = (req, res) => {
                 res.json(playedGames)
             }else{
                 let query = `
-                    SELECT id, timer, moves, user_id_light, user_id_black, if_draw,
+                    SELECT id, timer, moves, user_id_light, user_id_black, if_draw, mode,
                     date_format(started_at, '%d/%m/%y %H:%i') as started_at,
                     date_format(completed_at, '%d/%m/%y %H:%i') as completed_at
                     FROM games WHERE user_id_light=${req.user.id} OR user_id_black=${req.user.id}
@@ -36,8 +36,9 @@ exports.getGames = (req, res) => {
 exports.getGameMoves = (req, res) => {
     try {
         const gameId = req.params.gameId
+        const gameMode = req.params.gameMode;
 
-        redisClient.get(`${req.user.id}-played-game-${gameId}-moves`, (err, reply) => {
+        redisClient.get(`${req.user.id}-played-game-${gameId}-${gameMode}-moves`, (err, reply) => {
             if(err) throw err;
 
             if(reply){
@@ -45,7 +46,7 @@ exports.getGameMoves = (req, res) => {
 
                 res.json(moves)
             }else{
-                let query = `SELECT moves FROM games WHERE id=${gameId}`;
+                let query = `SELECT moves FROM games WHERE id=${gameId} AND mode = '${gameMode}'`;
 
                 db.query(query, (err, result) => {
                     if(err) throw err;
@@ -56,7 +57,7 @@ exports.getGameMoves = (req, res) => {
 
                     let moves = JSON.parse(result[0].moves);
 
-                    redisClient.set(`${req.user.id}-played-game-${gameId}-moves`, result[0].moves);
+                    redisClient.set(`${req.user.id}-played-game-${gameId}-${gameMode}-moves`, result[0].moves);
 
                     res.json(moves);
                 })

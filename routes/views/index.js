@@ -26,7 +26,7 @@ router.get("/room4", getRoomPage4)
 
 router.get("/my-stats", getStatsPage)
 
-router.get("/my-stats/played-games/:gameId", getPlayedGamesPage)
+router.get("/my-stats/played-games/:gameId/:gameMode", getPlayedGamesPage)
 
 router.get("/profile", getProfilePage)
 

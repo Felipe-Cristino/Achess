@@ -19,7 +19,7 @@ const fetchPlayedGamesCallback = (data) => {
 
 const displayPlayedGames = (games) => {
     games.forEach(game => {
-        const {id, timer, started_at, completed_at, user_id_light, moves, if_draw} = game;
+        const {id, timer, started_at, completed_at, user_id_light, moves, if_draw, mode} = game;
 
         const myColor = user.id === user_id_light ? 'light' : 'black';
 
@@ -52,8 +52,9 @@ const displayPlayedGames = (games) => {
                 <td>${started_at}</td>
                 <td>${completed_at}</td>
                 <td>${gameWon}</td>
+                <td>${mode}</td>
                 <td>
-                    <a href='/my-stats/played-games/${id}'>Check</a>
+                    <a href='/my-stats/played-games/${id}/${mode}'>Check</a>
                 </td>
             </tr>
         `

@@ -294,15 +294,6 @@ const blindMoves = () => {
     });
 }
 
-// const halfPoints = (piece, factor) => {
-//     const pecas = document.querySelectorAll(`.piece.${player}`);
-//     pecas.forEach(peca => {
-//         if (peca.dataset.piece === piece) {
-//             peca.dataset.points = Number(peca.dataset.points) * factor;
-//         }
-//     })
-// }
-
 const halfPoints = (piece, factor) => {
     const pecas = document.querySelectorAll(`.piece.${player}`);
 

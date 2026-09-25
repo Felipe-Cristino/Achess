@@ -6,6 +6,6 @@ const router = Router()
 
 router.get("/games/:userId", isAuthorized, getGames);
 
-router.get("/games/:gameId/:userId", isAuthorized, getGameMoves);
+router.get("/games/:gameId/:userId/:gameMode", isAuthorized, getGameMoves);
 
 module.exports = router;
