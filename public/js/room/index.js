@@ -1081,7 +1081,7 @@ const endGame = (playerOne, playerTwo, winner = null) => {
             enemyScoreElement.innerText = playerTwo.username + " -= "
                 + winningPoints + " pts";
             myScoreElement.classList.add("positive-score")
-            socket.emit("update-score", roomId, winningPoints, -Math.abs(winningPoints), playerOne, playerTwo);
+            socket.emit("update-score", roomId, winningPoints, -Math.abs(winningPoints), playerOne, playerTwo, "normal", gameDetails.time);
         } else {
             loser = playerOne.username;
             winnerScore = playerTwo.user_points;
@@ -1099,7 +1099,7 @@ const endGame = (playerOne, playerTwo, winner = null) => {
             enemyScoreElement.innerText = playerOne.username + " -= "
                 + winningPoints + " pts";
             myScoreElement.classList.add("positive-score")
-            socket.emit("update-score", roomId, -Math.abs(winningPoints), winningPoints, playerOne, playerTwo);
+            socket.emit("update-score", roomId, -Math.abs(winningPoints), winningPoints, playerOne, playerTwo, "normal", gameDetails.time);
         }
     } else {
         if (playerOne.user_points > playerTwo.user_points) {
@@ -1115,7 +1115,7 @@ const endGame = (playerOne, playerTwo, winner = null) => {
             enemyScoreElement.innerText = playerOne.username + " -="
                 + winningPoints + " pts";
             myScoreElement.classList.add("positive-score")
-            socket.emit("update-score", roomId, -Math.abs(winningPoints), winningPoints, playerOne, playerTwo);
+            socket.emit("update-score", roomId, -Math.abs(winningPoints), winningPoints, playerOne, playerTwo, "normal", gameDetails.time);
         } else {
             winningPoints = parseInt((playerTwo.user_points - playerOne.user_points) * 1.4 / 100)
             if (winningPoints >= 9) {
@@ -1129,7 +1129,7 @@ const endGame = (playerOne, playerTwo, winner = null) => {
             enemyScoreElement.innerText = playerTwo.username + " -="
                 + winningPoints + " pts";
             myScoreElement.classList.add("positive-score")
-            socket.emit("update-score", roomId, winningPoints, -Math.abs(winningPoints), playerOne, playerTwo);
+            socket.emit("update-score", roomId, winningPoints, -Math.abs(winningPoints), playerOne, playerTwo, "normal", gameDetails.time);
         }
     }
     gameOverMessageContainer.classList.remove("hidden")

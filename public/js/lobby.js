@@ -1,12 +1,21 @@
 // DOM Elements
 const lobby = document.getElementById("lobby");
 const username = document.getElementById("username");
-const rank = document.getElementById("rank");
-const points = document.getElementById("points");
-const beginnerRooms = document.getElementById("beginner-rooms")
-const intermediateRooms = document.getElementById("intermediate-rooms")
-const advancedRooms = document.getElementById("advanced-rooms")
-const expertRooms = document.getElementById("expert-rooms")
+
+const rank_normal_rapido = document.getElementById("rank_normal_rapido");
+const points_normal_rapido = document.getElementById("points_normal_rapido");
+const rank_normal_blitz = document.getElementById("rank_normal_blitz");
+const points_normal_blitz = document.getElementById("points_normal_blitz");
+const rank_normal_bullet = document.getElementById("rank_normal_bullet");
+const points_normal_bullet = document.getElementById("points_normal_bullet");
+
+const rank_funny_rapido = document.getElementById("rank_funny_rapido");
+const points_funny_rapido = document.getElementById("points_funny_rapido");
+const rank_funny_blitz = document.getElementById("rank_funny_blitz");
+const points_funny_blitz = document.getElementById("points_funny_blitz");
+const rank_funny_bullet = document.getElementById("rank_funny_bullet");
+const points_funny_bullet = document.getElementById("points_funny_bullet");
+
 const totalUsers = document.getElementById("total-users");
 const totalRooms = document.getElementById("total-rooms");
 
@@ -21,8 +30,8 @@ const fetchUserCallback = (data) => {
 
     lobby.classList.remove("hidden");
     username.innerText = user.username;
-    rank.innerText = user.user_rank;
-    points.innerText = user.user_points;
+    rank_normal_rapido.innerText = user.user_rank_normal_rapido;
+    points_normal_rapido.innerText = user.user_points_normal_rapido;
 
     hideSpinner();
 }

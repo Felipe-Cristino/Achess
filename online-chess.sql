@@ -12,8 +12,11 @@ CREATE TABLE users(
 
 CREATE TABLE user_info(
 	user_id INT,
-    user_rank ENUM('beginner', 'intermediate', 'advanced', 'expert') DEFAULT 'beginner',
-    user_points INT DEFAULT 1000,
+    user_rank ENUM('madeira', 'ferro', 'bronze', 'prata', 'ouro', 'platina', 'esmeralda', 'diamante', 'mestre', 'grao-mestre', 'challenger') DEFAULT 'prata',
+    user_points INT DEFAULT 1500,
+    game_mode ENUM('normal', 'funny') DEFAULT 'normal',
+    game_time ENUM('rapido', 'blitz', 'bullet') DEFAULT 'blitz',
+    PRIMARY KEY (user_id, game_mode, game_time),
     KEY userID(user_id),
     CONSTRAINT userID FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
 );
@@ -40,12 +43,22 @@ CREATE PROCEDURE createUser(
     IN _email VARCHAR(255),
     IN _password VARCHAR(255)
 )
+
 BEGIN
 	DECLARE userId INT;
     
     INSERT INTO users(username, email, password) VALUES(_username, _email, _password);
     SELECT id INTO userId FROM users WHERE username=_username;
-    INSERT INTO user_info(user_id) VALUE(userId);
+
+    INSERT INTO user_info (user_id, game_mode, game_time)
+    VALUES
+        (userId, 'normal', 'bullet'),
+        (userId, 'normal', 'blitz'),
+        (userId, 'normal', 'rapido'),
+        (userId, 'funny', 'bullet'),
+        (userId, 'funny', 'blitz'),
+        (userId, 'funny', 'rapido');
+
 END $$
 DELIMITER ;
 
@@ -54,39 +67,73 @@ CREATE PROCEDURE updateScores(
 	IN username_1 VARCHAR(255),
     IN points_1 INT,
     IN username_2 VARCHAR(255),
-    IN points_2 INT
+    IN points_2 INT,
+    IN gameMode VARCHAR(10),
+    IN gameTime VARCHAR(10)
 )
+
 BEGIN
 	DECLARE userId_1 INT;
     DECLARE userId_2 INT;
-    DECLARE user_rank_1 VARCHAR(20) DEFAULT "beginner";
-    DECLARE user_rank_2 VARCHAR(20) DEFAULT "beginner";
+    DECLARE user_rank_1 VARCHAR(20) DEFAULT "prata";
+    DECLARE user_rank_2 VARCHAR(20) DEFAULT "prata";
     
     SELECT id INTO userId_1 FROM users WHERE username=username_1;
     SELECT id INTO userId_2 FROM users WHERE username=username_2;
     
-    IF points_1 < 1000 THEN
-		SET user_rank_1 := "beginner";
-	ELSEIF points_1 < 1300 THEN
-		SET user_rank_1 := "intermediate";
-	ELSEIF points_1 < 1600 THEN
-		SET user_rank_1 := "advanced";
+    IF points_1 < 500 THEN
+		SET user_rank_1 := "madeira";
+	ELSEIF points_1 < 1000 THEN
+		SET user_rank_1 := "ferro";
+	ELSEIF points_1 < 1400 THEN
+		SET user_rank_1 := "bronze";
+    ELSEIF points_1 < 1800 THEN
+		SET user_rank_1 := "prata";
+    ELSEIF points_1 < 2100 THEN
+		SET user_rank_1 := "ouro";
+    ELSEIF points_1 < 2300 THEN
+		SET user_rank_1 := "platina";
+    ELSEIF points_1 < 2500 THEN
+		SET user_rank_1 := "esmeralda";
+    ELSEIF points_1 < 2650 THEN
+		SET user_rank_1 := "diamante";
+    ELSEIF points_1 < 2800 THEN
+		SET user_rank_1 := "mestre";
+    ELSEIF points_1 < 2900 THEN
+		SET user_rank_1 := "grao-mestre";  
 	ELSE
-		SET user_rank_1 := "expert";
+		SET user_rank_1 := "challenger";
 	END IF;
     
-    IF points_2 < 1000 THEN
-		SET user_rank_2 := "beginner";
-	ELSEIF points_2 < 1300 THEN
-		SET user_rank_2 := "intermediate";
-	ELSEIF points_2 < 1600 THEN
-		SET user_rank_2 := "advanced";
+    IF points_2 < 500 THEN
+		SET user_rank_2 := "madeira";
+	ELSEIF points_2 < 1000 THEN
+		SET user_rank_2 := "ferro";
+	ELSEIF points_2 < 1400 THEN
+		SET user_rank_2 := "bronze";
+    ELSEIF points_2 < 1800 THEN
+		SET user_rank_2 := "prata";
+    ELSEIF points_2 < 2100 THEN
+		SET user_rank_2 := "ouro";
+    ELSEIF points_2 < 2300 THEN
+		SET user_rank_2 := "platina";
+    ELSEIF points_2 < 2500 THEN
+		SET user_rank_2 := "esmeralda";
+    ELSEIF points_2 < 2650 THEN
+		SET user_rank_2 := "diamante";
+    ELSEIF points_2 < 2800 THEN
+		SET user_rank_2 := "mestre";
+    ELSEIF points_2 < 2900 THEN
+		SET user_rank_2 := "grao-mestre";  
 	ELSE
-		SET user_rank_2 := "expert";
+		SET user_rank_2 := "challenger";
 	END IF;
     
-    UPDATE user_info SET user_points=points_1, user_rank=user_rank_1 WHERE user_id=userId_1;
-    UPDATE user_info SET user_points=points_2, user_rank=user_rank_2 WHERE user_id=userId_2;
+    UPDATE user_info SET user_points=points_1, user_rank=user_rank_1 WHERE user_id=userId_1
+     AND game_mode = gameMode AND game_time = gameTime;
+    UPDATE user_info SET user_points=points_2, user_rank=user_rank_2 WHERE user_id=userId_2 
+     AND game_mode = gameMode AND game_time = gameTime;
+
 END $$
 DELIMITER ;
 

@@ -431,7 +431,7 @@ io.on("connection", (socket) => {
         })
     })
 
-    socket.on("update-score", (roomId, playerOneScore, playerTwoScore, playerOne, playerTwo) => {
+    socket.on("update-score", (roomId, playerOneScore, playerTwoScore, playerOne, playerTwo, mode, time) => {
 
         let userOne = playerOne
         let userTwo = playerTwo
@@ -444,7 +444,9 @@ io.on("connection", (socket) => {
                         '${userOne.username}',
                         ${Math.max(userOne.user_points, 0)},
                         '${userTwo.username}',
-                        ${Math.max(userTwo.user_points, 0)}
+                        ${Math.max(userTwo.user_points, 0)},
+                        ${mode},
+                        ${time}
                     )
                 `
 

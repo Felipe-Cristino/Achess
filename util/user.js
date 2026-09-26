@@ -1,6 +1,5 @@
 const redisClient = require("../config/redis")
 
-// user object -> {socket_id: {'username': 'testuser', 'user_rank': 'beginner', 'user_points': 1000, 'room': null}}
 const newUser = (socketId, user, roomId = null) => {
     if (roomId) {
         user.room = roomId;

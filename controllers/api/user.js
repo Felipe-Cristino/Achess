@@ -67,8 +67,25 @@ exports.register = (req, res) => {
                         }
 
                         res.cookie("token", token, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-                        res.cookie("user_rank", 'beginner', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-                        res.cookie("user_points", 1000, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+
+                        res.cookie("user_rank_normal_rapido", 'prata', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                        res.cookie("user_points_normal_rapido", 1500, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+
+                        res.cookie("user_rank_normal_blitz", 'prata', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                        res.cookie("user_points_normal_blitz", 1500, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+
+                        res.cookie("user_rank_normal_bullet", 'prata', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                        res.cookie("user_points_normal_bullet", 1500, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+
+                        res.cookie("user_rank_funny_rapido", 'prata', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                        res.cookie("user_points_funny_rapido", 1500, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+
+                        res.cookie("user_rank_funny_blitz", 'prata', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                        res.cookie("user_points_funny_blitz", 1500, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+
+                        res.cookie("user_rank_funny_bullet", 'prata', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                        res.cookie("user_points_funny_bullet", 1500, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+
 
                         res.redirect("/?success=You have register your user successfully");
                     })
@@ -110,14 +127,15 @@ exports.login = (req, res) => {
                 return res.redirect("/login?error=Email or password is incorrect!");
             }
 
-            query = `SELECT user_rank, user_points FROM user_info WHERE user_id=${user.id}`;
+            query = `SELECT user_rank, user_points FROM user_info WHERE user_id=${user.id} 
+            AND game_mode IN ('normal', 'funny') AND game_time IN ('rapido', 'blitz', 'bullet')`;
 
             db.query(query, (err, result) => {
                 if (err) {
                     throw err;
                 }
 
-                let userInfo = result[0];
+                let userInfo = result;
 
                 const payload = {
                     id: user.id, username: user.username, email
@@ -129,8 +147,24 @@ exports.login = (req, res) => {
                     }
 
                     res.cookie("token", token, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-                    res.cookie("user_rank", userInfo.user_rank, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-                    res.cookie("user_points", userInfo.user_points, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+
+                    res.cookie("user_rank_normal_rapido", userInfo[0].user_rank, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                    res.cookie("user_points_normal_rapido", userInfo[0].user_points, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+
+                    res.cookie("user_rank_normal_blitz", userInfo[1].user_rank, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                    res.cookie("user_points_normal_blitz", userInfo[1].user_points, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+
+                    res.cookie("user_rank_normal_bullet", userInfo[2].user_rank, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                    res.cookie("user_points_normal_bullet", userInfo[2].user_points, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+
+                    res.cookie("user_rank_funny_rapido", userInfo[3].user_rank, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                    res.cookie("user_points_funny_rapido", userInfo[3].user_points, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+
+                    res.cookie("user_rank_funny_blitz", userInfo[4].user_rank, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                    res.cookie("user_points_funny_blitz", userInfo[4].user_points, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+
+                    res.cookie("user_rank_funny_bullet", userInfo[5].user_rank, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                    res.cookie("user_points_funny_bullet", userInfo[5].user_points, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
 
                     res.redirect("/?success=You have logged in successfully");
                 })
@@ -153,36 +187,67 @@ exports.getInfo = (req, res) => {
                 id,
                 username,
                 email,
-                user_rank: req.cookies.user_rank,
-                user_points: parseInt(req.cookies.user_points)
+                user_rank_normal_rapido: req.cookies.user_rank_normal_rapido,
+                user_points_normal_rapido: parseInt(req.cookies.user_points_normal_rapido),
+                user_rank_normal_blitz: req.cookies.user_rank_normal_blitz,
+                user_points_normal_blitz: parseInt(req.cookies.user_points_normal_blitz),
+                user_rank_normal_bullet: req.cookies.user_rank_normal_bullet,
+                user_points_normal_bullet: parseInt(req.cookies.user_points_normal_bullet),
+
+                user_rank_funny_rapido: req.cookies.user_rank_funny_rapido,
+                user_points_funny_rapido: parseInt(req.cookies.user_points_funny_rapido),
+                user_rank_funny_blitz: req.cookies.user_rank_funny_blitz,
+                user_points_funny_blitz: parseInt(req.cookies.user_points_funny_blitz),
+                user_rank_funny_bullet: req.cookies.user_rank_funny_bullet,
+                user_points_funny_bullet: parseInt(req.cookies.user_points_funny_bullet)
             }
 
-            const query = `SELECT user_rank, user_points FROM user_info WHERE user_id = ?`;
+            const query = `SELECT user_rank, user_points FROM user_info WHERE user_id = ? 
+            AND game_mode IN ('normal', 'funny') AND game_time IN ('rapido', 'blitz', 'bullet')`;
 
             db.query(query, [user.id], (err, result) => {
                 if (err) {
                     return res.status(500).json({ error: err.message });
                 }
 
-                const userInfo = result[0];
+                const userInfo = result;
 
-                res.cookie("user_rank", userInfo.user_rank, {
-                    maxAge: 1000 * 60 * 60 * 24 * 30 * 6,
-                    httpOnly: true,
-                    secure: false,
-                    sameSite: "strict"
-                });
+                res.cookie("user_rank_normal_rapido", userInfo[0].user_rank, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                res.cookie("user_points_normal_rapido", userInfo[0].user_points, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
 
-                res.cookie("user_points", userInfo.user_points, {
-                    maxAge: 1000 * 60 * 60 * 24 * 30 * 6,
-                    httpOnly: true,
-                    secure: false,
-                    sameSite: "strict"
-                });
+                res.cookie("user_rank_normal_blitz", userInfo[1].user_rank, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                res.cookie("user_points_normal_blitz", userInfo[1].user_points, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+
+                res.cookie("user_rank_normal_bullet", userInfo[2].user_rank, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                res.cookie("user_points_normal_bullet", userInfo[2].user_points, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+
+                res.cookie("user_rank_funny_rapido", userInfo[3].user_rank, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                res.cookie("user_points_funny_rapido", userInfo[3].user_points, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+
+                res.cookie("user_rank_funny_blitz", userInfo[4].user_rank, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                res.cookie("user_points_funny_blitz", userInfo[4].user_points, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+
+                res.cookie("user_rank_funny_bullet", userInfo[5].user_rank, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                res.cookie("user_points_funny_bullet", userInfo[5].user_points, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
 
                 // Atualiza o objeto antes de enviar
-                user.user_rank = userInfo.user_rank;
-                user.user_points = userInfo.user_points;
+                user.user_rank_normal_rapido = userInfo[0].user_rank;
+                user.user_points_normal_rapido = userInfo[0].user_points;
+
+                user.user_rank_normal_blitz = userInfo[1].user_rank;
+                user.user_points_normal_blitz = userInfo[1].user_points;
+
+                user.user_rank_normal_bullet = userInfo[2].user_rank;
+                user.user_points_normal_bullet = userInfo[2].user_points;
+
+                user.user_rank_funny_rapido = userInfo[3].user_rank;
+                user.user_points_funny_rapido = userInfo[3].user_points;
+
+                user.user_rank_funny_blitz = userInfo[4].user_rank;
+                user.user_points_funny_blitz = userInfo[4].user_points;
+
+                user.user_rank_funny_bullet = userInfo[5].user_rank;
+                user.user_points_funny_bullet = userInfo[5].user_points;
 
                 return res.json(user);
             });
@@ -322,8 +387,20 @@ exports.changePassword = (req, res) => {
 
 exports.logout = (req, res) => {
     res.clearCookie("token");
-    res.clearCookie("user_points");
-    res.clearCookie("user_rank");
+
+    res.clearCookie("user_rank_normal_rapido");
+    res.clearCookie("user_points_normal_rapido");
+    res.clearCookie("user_rank_normal_blitz");
+    res.clearCookie("user_points_normal_blitz");
+    res.clearCookie("user_rank_normal_bullet");
+    res.clearCookie("user_points_normal_bullet");
+
+    res.clearCookie("user_rank_funny_rapido");
+    res.clearCookie("user_points_funny_rapido");
+    res.clearCookie("user_rank_funny_blitz");
+    res.clearCookie("user_points_funny_blitz");
+    res.clearCookie("user_rank_funny_bullet");
+    res.clearCookie("user_points_funny_bullet");
 
     res.redirect("/login")
 }
