@@ -1231,11 +1231,22 @@ const endGame = (playerOne, playerTwo, winner = null) => {
     let loserScore;
     let winningPoints = 0;
 
+    let game_time = null;
+    if(gameDetails.time <= 3) {
+        game_time = "bullet";
+    }
+    else if(gameDetails.time >= 5 && gameDetails.time <= 8) {
+        game_time = "blitz";
+    }
+    else {
+        game_time = "rapido";
+    }
+
     if (winner) {
 
         if (winner === playerOne.username) {
-            winnerScore = playerOne.user_points;
-            loserScore = playerTwo.user_points;
+            winnerScore = playerOne[`user_points_normal_${game_time}`];
+            loserScore = playerTwo[`user_points_normal_${game_time}`];
 
             winningPoints = parseInt(10 + ((loserScore - winnerScore) * 1.4 / 100));
             if (winningPoints > 19) {
@@ -1249,10 +1260,11 @@ const endGame = (playerOne, playerTwo, winner = null) => {
             enemyScoreElement.innerText = playerTwo.username + " -= "
                 + winningPoints + " pts";
             myScoreElement.classList.add("positive-score")
+
             socket.emit("update-score", roomId, winningPoints, -Math.abs(winningPoints), playerOne, playerTwo, "funny", gameDetails.time);
         } else {
-            winnerScore = playerTwo.user_points;
-            loserScore = playerOne.user_points;
+            winnerScore = playerOne[`user_points_normal_${game_time}`];
+            loserScore = playerTwo[`user_points_normal_${game_time}`];
 
             winningPoints = parseInt(10 + ((loserScore - winnerScore) * 1.4 / 100));
             if (winningPoints > 19) {
@@ -1266,11 +1278,15 @@ const endGame = (playerOne, playerTwo, winner = null) => {
             enemyScoreElement.innerText = playerOne.username + " -= "
                 + winningPoints + " pts";
             myScoreElement.classList.add("positive-score")
+
             socket.emit("update-score", roomId, -Math.abs(winningPoints), winningPoints, playerOne, playerTwo, "funny", gameDetails.time);
         }
     } else {
-        if (playerOne.user_points > playerTwo.user_points) {
-            winningPoints = parseInt((playerOne.user_points - playerTwo.user_points) * 1.4 / 100)
+        if (playerOne[`user_points_normal_${game_time}`] > playerTwo[`user_points_normal_${game_time}`]) {
+            
+            winningPoints = parseInt((playerOne[`user_points_normal_${game_time}`] 
+                - playerTwo[`user_points_normal_${game_time}`]) * 1.4 / 100);
+
             if (winningPoints >= 9) {
                 winningPoints = 9;
             }
@@ -1282,9 +1298,12 @@ const endGame = (playerOne, playerTwo, winner = null) => {
             enemyScoreElement.innerText = playerOne.username + " -="
                 + winningPoints + " pts";
             myScoreElement.classList.add("positive-score")
+            
             socket.emit("update-score", roomId, -Math.abs(winningPoints), winningPoints, playerOne, playerTwo, "funny", gameDetails.time);
         } else {
-            winningPoints = parseInt((playerTwo.user_points - playerOne.user_points) * 1.4 / 100)
+            winningPoints = parseInt((playerTwo[`user_points_normal_${game_time}`] 
+                - playerOne[`user_points_normal_${game_time}`]) * 1.4 / 100);
+
             if (winningPoints >= 9) {
                 winningPoints = 9;
             }
@@ -1296,6 +1315,7 @@ const endGame = (playerOne, playerTwo, winner = null) => {
             enemyScoreElement.innerText = playerTwo.username + " -="
                 + winningPoints + " pts";
             myScoreElement.classList.add("positive-score")
+
             socket.emit("update-score", roomId, winningPoints, -Math.abs(winningPoints), playerOne, playerTwo, "funny", gameDetails.time);
         }
     }

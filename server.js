@@ -436,17 +436,29 @@ io.on("connection", (socket) => {
         let userOne = playerOne
         let userTwo = playerTwo
 
-        userOne.user_points += playerOneScore
-        userTwo.user_points += playerTwoScore
+        let game_time = null;
 
+        if(time <= 3) {
+            game_time = 'bullet';
+        }
+        else if(time > 3 && time <= 8) {
+            game_time = 'blitz';
+        }
+        else {
+            game_time = "rapido";
+        }
+
+        userOne[`user_points_${mode}_${game_time}`] += playerOneScore;
+        userTwo[`user_points_${mode}_${game_time}`]  += playerTwoScore;
+        
         let query = `
                     CALL updateScores(
                         '${userOne.username}',
-                        ${Math.max(userOne.user_points, 0)},
+                        ${Math.max(userOne[`user_points_${mode}_${game_time}`], 0)},
                         '${userTwo.username}',
-                        ${Math.max(userTwo.user_points, 0)},
-                        ${mode},
-                        ${time}
+                        ${Math.max(userTwo[`user_points_${mode}_${game_time}`], 0)},
+                        '${mode}',
+                        '${game_time}'
                     )
                 `
 

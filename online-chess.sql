@@ -64,7 +64,7 @@ DELIMITER ;
 
 DELIMITER $$
 CREATE PROCEDURE updateScores(
-	IN username_1 VARCHAR(255),
+	  IN username_1 VARCHAR(255),
     IN points_1 INT,
     IN username_2 VARCHAR(255),
     IN points_2 INT,
@@ -73,7 +73,7 @@ CREATE PROCEDURE updateScores(
 )
 
 BEGIN
-	DECLARE userId_1 INT;
+	  DECLARE userId_1 INT;
     DECLARE userId_2 INT;
     DECLARE user_rank_1 VARCHAR(20) DEFAULT "prata";
     DECLARE user_rank_2 VARCHAR(20) DEFAULT "prata";

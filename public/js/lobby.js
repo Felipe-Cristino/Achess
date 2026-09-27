@@ -1,6 +1,9 @@
 // DOM Elements
 const lobby = document.getElementById("lobby");
 const username = document.getElementById("username");
+const btn1 = document.getElementById("btn1");
+const flex3 = document.querySelector(".flex3")
+const flex4 = document.querySelector(".flex4")
 
 const rank_normal_rapido = document.getElementById("rank_normal_rapido");
 const points_normal_rapido = document.getElementById("points_normal_rapido");
@@ -30,8 +33,20 @@ const fetchUserCallback = (data) => {
 
     lobby.classList.remove("hidden");
     username.innerText = user.username;
+    
     rank_normal_rapido.innerText = user.user_rank_normal_rapido;
     points_normal_rapido.innerText = user.user_points_normal_rapido;
+    rank_normal_blitz.innerText = user.user_rank_normal_blitz;
+    points_normal_blitz.innerText = user.user_points_normal_blitz;
+    rank_normal_bullet.innerText = user.user_rank_normal_bullet;
+    points_normal_bullet.innerText = user.user_points_normal_bullet;
+
+    rank_funny_rapido.innerText = user.user_rank_funny_rapido;
+    points_funny_rapido.innerText = user.user_points_funny_rapido;
+    rank_funny_blitz.innerText = user.user_rank_funny_blitz;
+    points_funny_blitz.innerText = user.user_points_funny_blitz;
+    rank_funny_bullet.innerText = user.user_rank_funny_bullet;
+    points_funny_bullet.innerText = user.user_points_funny_bullet;
 
     hideSpinner();
 }
@@ -41,4 +56,18 @@ fetchData('/api/user-info', fetchUserCallback);
 socket.on("receive-number-of-rooms-and-users", (totalR, totalU) => {
     totalRooms.innerText = `Total Rooms: ${totalR}`
     totalUsers.innerText = `Total Users: ${totalU}`
+})
+
+btn1.addEventListener("click", ()=>{
+    flex3.classList.toggle("hidden");
+    flex4.classList.toggle("hidden");
+    btn1.classList.toggle("hidden");
+    btn2.classList.toggle("hidden");
+})
+
+btn2.addEventListener("click", ()=>{
+    flex3.classList.toggle("hidden");
+    flex4.classList.toggle("hidden");
+    btn1.classList.toggle("hidden");
+    btn2.classList.toggle("hidden");
 })
