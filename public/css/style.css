@@ -1656,3 +1656,21 @@ tbody td img{
     height: 40px;
     border-radius: 50%;
 }
+
+.flex6 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ================================================ */
+
+.brasao {
+    width: 25px;
+    height: 25px;
+}
+
+.playerOneBrasao, .playerTwoBrasao {
+    width: 40px;
+    height: 40px;
+}

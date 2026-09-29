@@ -28,6 +28,7 @@ icons.forEach((icon) => {
 
 const icones = document.querySelectorAll(".icon");
 const p1 = document.getElementById("p1");
+p1.classList.add("hidden");
 
 icones.forEach(icon => {
     icon.addEventListener("click", () => {

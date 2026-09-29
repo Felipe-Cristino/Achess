@@ -23,6 +23,8 @@ let playerOneRank = null;
 let playerTwoRank = null;
 let playerOneImage = null;
 let playerTwoImage = null;
+let playerOneBrasao = null;
+let playerTwoBrasao = null;
 
 const plOneRating = document.querySelector(".playerOneRating");
 const plOneRank = document.querySelector(".playerOneRank");
@@ -30,6 +32,8 @@ const plTwoRating = document.querySelector(".playerTwoRating");
 const plTwoRank = document.querySelector(".playerTwoRank");
 const plOneImage = document.querySelector(".playerOneImage");
 const plTwoImage = document.querySelector(".playerTwoImage");
+const plOneBrasao = document.querySelector(".playerOneBrasao");
+const plTwoBrasao = document.querySelector(".playerTwoBrasao");
 // =====================
 // Game Variables
 // =====================
@@ -336,10 +340,12 @@ const startGame = (playerTwo) => {
     playerTwoRating = playerTwo[`user_points_normal_${game_time}`];
     playerTwoRank = playerTwo[`user_rank_normal_${game_time}`];
     playerTwoImage = playerTwo.profileImage;
+    playerTwoBrasao = playerTwo[`user_brasao_normal_${game_time}`];
 
     plTwoRating.innerText = playerTwoRating;
     plTwoRank.innerText = playerTwoRank;
     plTwoImage.src = playerTwoImage;
+    plTwoBrasao.src = playerTwoBrasao;
 
     displayChessPieces();
 
@@ -1211,10 +1217,12 @@ socket.on("receive-game-details", (details) => {
     playerOneRating = playerOne[`user_points_normal_${game_time}`];
     playerOneRank = playerOne[`user_rank_normal_${game_time}`];
     playerOneImage = playerOne.profileImage;
+    playerOneBrasao = playerOne[`user_brasao_normal_${game_time}`];
 
     plOneRating.innerText = playerOneRating;
     plOneRank.innerText = playerOneRank;
     plOneImage.src = playerOneImage;
+    plOneBrasao.src = playerOneBrasao;
 
     if (!gameHasTimer) {
         playerLightTimer.classList.add("hidden")
