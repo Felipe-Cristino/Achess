@@ -901,11 +901,11 @@ nav{
 }
 
 .chess-board{
-    width: 600px;
-    height: 600px;
+    width: 500px;
+    height: 500px;
     display: grid;
-    grid-template-rows: repeat(8, calc(600px / 8));
-    grid-template-columns: repeat(8, calc(600px / 8));
+    grid-template-rows: repeat(8, calc(500px / 8));
+    grid-template-columns: repeat(8, calc(500px / 8));
     margin: 35px;
 }
 
@@ -1279,6 +1279,9 @@ nav{
     background: var(--secondary-color-lighter);
 }
 
+.playerOneRating, .playerOneRank, .playerTwoRating, .playerTwoRank {
+    color: black;
+}
 /* ================================================================================= */
 
 /* Toast Styles */
@@ -1598,4 +1601,58 @@ tbody td img{
     white-space: nowrap;
     margin-left: 100px;
     margin-right: -100px;
+}
+
+#lista {
+    width: 1200px;
+    max-width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    padding: 0;
+    margin: 0 auto;
+    list-style: none;
+    margin-top: 30px;
+}
+
+#lista > li > img {
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.selecionado {
+    border: 5px solid red;
+    border-radius: 50%;
+}
+
+#submit-profile-image-btn {
+    background-color: green;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+#imagem-profile {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+.flex5 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.playerOneImage, .playerTwoImage {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
 }

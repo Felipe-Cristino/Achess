@@ -1,0 +1,20 @@
+<%- include('../include/header') %>
+
+    <div class="container">
+        <%- include('../include/partials/responseMessage') %>
+            <form id="profile-image-form">
+                <p id="p1"></p>
+                <ul id="lista">
+                </ul>
+                <button id="submit-profile-image-btn">Trocar Imagem de Perfil</button>
+            </form>
+    </div>
+    <%- include('../include/partials/chat') %>
+
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="js/spinner.js"></script>
+        <script src="js/index.js"></script>
+        <script src="js/icons.js"></script>
+        <script src="js/responseMessage.js"></script>
+
+        <%- include('../include/footer') %>

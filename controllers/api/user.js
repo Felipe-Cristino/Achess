@@ -68,6 +68,8 @@ exports.register = (req, res) => {
 
                         res.cookie("token", token, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
 
+                        res.cookie("profileImage", null, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+
                         res.cookie("user_rank_normal_rapido", 'prata', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
                         res.cookie("user_points_normal_rapido", 1500, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
 
@@ -148,6 +150,8 @@ exports.login = (req, res) => {
 
                     res.cookie("token", token, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
 
+                    res.cookie("profileImage", user.profileImage, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+
                     res.cookie("user_rank_normal_rapido", userInfo[0].user_rank, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
                     res.cookie("user_points_normal_rapido", userInfo[0].user_points, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
 
@@ -187,6 +191,7 @@ exports.getInfo = (req, res) => {
                 id,
                 username,
                 email,
+                profileImage: req.cookies.profileImage,
                 user_rank_normal_rapido: req.cookies.user_rank_normal_rapido,
                 user_points_normal_rapido: parseInt(req.cookies.user_points_normal_rapido),
                 user_rank_normal_blitz: req.cookies.user_rank_normal_blitz,
@@ -340,6 +345,38 @@ exports.changeEmail = (req, res) => {
 
                     res.json({ message: "Your email updated successfully!", email });
                 })
+            })
+        })
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ error: err.message })
+    }
+}
+
+exports.changeProfileImage = (req, res) => {
+    try {
+
+        const { profileImage } = req.body;
+
+        query = `UPDATE users SET profileImage='${profileImage}' WHERE id=${req.user.id}`;
+
+        db.query(query, (err) => {
+            if (err) throw err;
+
+            const payload = {
+                id: req.user.id,
+                username: req.user.username,
+                email: req.user.email
+            }
+
+            jwt.sign(payload, jwtSecret, (err, token) => {
+                if (err) throw err;
+                
+                res.cookie("token", token, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+
+                res.cookie("profileImage", profileImage, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+
+                res.json({ message: "Your profile image updated successfully!", username });
             })
         })
     } catch (err) {

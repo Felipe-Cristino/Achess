@@ -19,6 +19,20 @@ const addPecaContainer = document.getElementById("addPeca-container");
 const addPecaPecas = document.getElementById("addPeca-pecas");
 let draggedPiece = null;
 
+let playerOneRating = null;
+let playerTwoRating = null;
+let playerOneRank = null;
+let playerTwoRank = null;
+let playerOneImage = null;
+let playerTwoImage = null;
+
+const plOneRating = document.querySelector(".playerOneRating");
+const plOneRank = document.querySelector(".playerOneRank");
+const plTwoRating = document.querySelector(".playerTwoRating");
+const plTwoRank = document.querySelector(".playerTwoRank");
+const plOneImage = document.querySelector(".playerOneImage");
+const plTwoImage = document.querySelector(".playerTwoImage");
+
 let myScorePoints = document.getElementById("my-score-points");
 let enemyScorePoints = document.getElementById("enemy-score-points");
 myScorePoints.textContent = 0;
@@ -514,7 +528,25 @@ const startGame = (playerTwo) => {
     waitingMessage.classList.add("hidden")
     playerBlack.classList.remove("hidden")
     room.classList.remove("hidden")
-    // aguardando.classList.add("hidden")
+
+    let game_time = null;
+    if (gameDetails.time <= 3) {
+        game_time = "bullet";
+    }
+    else if (gameDetails.time >= 5 && gameDetails.time <= 8) {
+        game_time = "blitz";
+    }
+    else {
+        game_time = "rapido";
+    }
+
+    playerTwoRating = playerTwo[`user_points_normal_${game_time}`];
+    playerTwoRank = playerTwo[`user_rank_normal_${game_time}`];
+    playerTwoImage = playerTwo.profileImage;
+
+    plTwoRating.innerText = playerTwoRating;
+    plTwoRank.innerText = playerTwoRank;
+    plTwoImage.src = playerTwoImage;
 
     displayChessPieces();
 
@@ -1975,6 +2007,25 @@ socket.on("receive-game-details", (details) => {
 
     let playerOne = gameDetails.players[0];
     gameHasTimer = gameDetails.time > 0
+
+    let game_time = null;
+    if (gameDetails.time <= 3) {
+        game_time = "bullet";
+    }
+    else if (gameDetails.time >= 5 && gameDetails.time <= 8) {
+        game_time = "blitz";
+    }
+    else {
+        game_time = "rapido";
+    }
+
+    playerOneRating = playerOne[`user_points_normal_${game_time}`];
+    playerOneRank = playerOne[`user_rank_normal_${game_time}`];
+    playerOneImage = playerOne.profileImage;
+
+    plOneRating.innerText = playerOneRating;
+    plOneRank.innerText = playerOneRank;
+    plOneImage.src = playerOneImage;
 
     if (!gameHasTimer) {
         playerLightTimer.classList.add("hidden")

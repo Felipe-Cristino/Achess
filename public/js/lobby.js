@@ -1,6 +1,7 @@
 // DOM Elements
 const lobby = document.getElementById("lobby");
 const username = document.getElementById("username");
+const imagemProfile = document.getElementById("imagem-profile");
 const btn1 = document.getElementById("btn1");
 const flex3 = document.querySelector(".flex3")
 const flex4 = document.querySelector(".flex4")
@@ -33,7 +34,8 @@ const fetchUserCallback = (data) => {
 
     lobby.classList.remove("hidden");
     username.innerText = user.username;
-    
+    imagemProfile.src = user.profileImage;
+
     rank_normal_rapido.innerText = user.user_rank_normal_rapido;
     points_normal_rapido.innerText = user.user_points_normal_rapido;
     rank_normal_blitz.innerText = user.user_rank_normal_blitz;

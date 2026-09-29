@@ -25,8 +25,8 @@ usernameInput.readOnly = true;
 // =========================================================
 
 // Variables
-let isAboutToChangeUsername = false;
-let isAboutToChangePassword = false;
+let mostradoChangeUsername = false;
+let mostradoChangePassword = false;
 
 let user;
 
@@ -68,10 +68,8 @@ const submitForm = (url, body) => {
         displayToast(err.message)
     })
     .finally(() => {
-        if(isAboutToChangeUsername){
+        if(mostradoChangeUsername){
             hideChangeUsername();
-            submitUsernameChangeBtn.disabled = false;
-            submitUsernameChangeBtn.classList.remove("disabled");
         }
         else{
             hideChangePassword();
@@ -85,9 +83,6 @@ const submitForm = (url, body) => {
 
 const handleUsernameSubmit = (e) => {
     e.preventDefault();
-
-    submitUsernameChangeBtn.disabled = true;
-    submitUsernameChangeBtn.classList.add('disabled');
 
     submitForm(`/api/user/username/${user.id}`, {username: usernameInput.value})
 }
@@ -109,7 +104,7 @@ const showChangeUsername = () => {
     changeUsernameBtn.classList.add("cancel");
     usernameFormSubmitBtn.classList.remove("hidden");
     usernameInputGroup.classList.remove("disabled");
-    isAboutToChangeUsername = true;
+    mostradoChangeUsername = true;
     usernameInput.readOnly = false;
 }
 
@@ -118,20 +113,16 @@ const hideChangeUsername = () => {
     changeUsernameBtn.classList.remove("cancel");
     usernameFormSubmitBtn.classList.add("hidden");
     usernameInputGroup.classList.add("disabled");
-    isAboutToChangeUsername = false;
+    mostradoChangeUsername = false;
     usernameInput.readOnly = true;
     usernameInput.value = user.username
 }
 
 const showChangePassword = () => {
-    if(isAboutToChangeUsername){
-        hideChangeUsername()
-    }
-
     changePasswordBtn.classList.add("hidden");
     passwordForm.classList.remove("hidden");
 
-    isAboutToChangePassword = true;
+    mostradoChangePassword = true;
 }
 
 const hideChangePassword = () => {
@@ -139,16 +130,14 @@ const hideChangePassword = () => {
     passwordForm.classList.add("hidden");
     oldPasswordInput.value = ""
     newPasswordInput.value = "";
+
+    mostradoChangePassword = false;
 }
 
 fetchData('/api/user-info', fetchUserCallback)
 
 changeUsernameBtn.addEventListener("click", () => {
-    if(isAboutToChangePassword){
-        hideChangePassword()
-    }
-
-    if(isAboutToChangeUsername){
+    if(mostradoChangeUsername){
         hideChangeUsername()
     }else{
         showChangeUsername()

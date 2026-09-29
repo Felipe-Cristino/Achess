@@ -17,6 +17,19 @@ const myScoreElement = document.getElementById("my-score")
 const enemyScoreElement = document.getElementById("enemy-score")
 let draggedPiece = null;
 
+let playerOneRating = null;
+let playerTwoRating = null;
+let playerOneRank = null;
+let playerTwoRank = null;
+let playerOneImage = null;
+let playerTwoImage = null;
+
+const plOneRating = document.querySelector(".playerOneRating");
+const plOneRank = document.querySelector(".playerOneRank");
+const plTwoRating = document.querySelector(".playerTwoRating");
+const plTwoRank = document.querySelector(".playerTwoRank");
+const plOneImage = document.querySelector(".playerOneImage");
+const plTwoImage = document.querySelector(".playerTwoImage");
 // =====================
 // Game Variables
 // =====================
@@ -44,7 +57,6 @@ let enemyScore = 0;
 let gameStartedAtTimestamp = null
 
 roomId = search[0].split("=")[1]
-// const aguardando = document.querySelector(".aguardando")
 // =====================
 // Functions
 // =====================
@@ -309,7 +321,25 @@ const startGame = (playerTwo) => {
     waitingMessage.classList.add("hidden")
     playerBlack.classList.remove("hidden")
     room.classList.remove("hidden")
-    // aguardando.classList.add("hidden")
+
+    let game_time = null;
+    if (gameDetails.time <= 3) {
+        game_time = "bullet";
+    }
+    else if (gameDetails.time >= 5 && gameDetails.time <= 8) {
+        game_time = "blitz";
+    }
+    else {
+        game_time = "rapido";
+    }
+
+    playerTwoRating = playerTwo[`user_points_normal_${game_time}`];
+    playerTwoRank = playerTwo[`user_rank_normal_${game_time}`];
+    playerTwoImage = playerTwo.profileImage;
+
+    plTwoRating.innerText = playerTwoRating;
+    plTwoRank.innerText = playerTwoRank;
+    plTwoImage.src = playerTwoImage;
 
     displayChessPieces();
 
@@ -1062,10 +1092,10 @@ const endGame = (playerOne, playerTwo, winner = null) => {
     let winningPoints = 0;
 
     let game_time = null;
-    if(gameDetails.time <= 3) {
+    if (gameDetails.time <= 3) {
         game_time = "bullet";
     }
-    else if(gameDetails.time >= 5 && gameDetails.time <= 8) {
+    else if (gameDetails.time >= 5 && gameDetails.time <= 8) {
         game_time = "blitz";
     }
     else {
@@ -1113,8 +1143,8 @@ const endGame = (playerOne, playerTwo, winner = null) => {
         }
     } else {
         if (playerOne[`user_points_normal_${game_time}`] > playerTwo[`user_points_normal_${game_time}`]) {
-            
-            winningPoints = parseInt((playerOne[`user_points_normal_${game_time}`] 
+
+            winningPoints = parseInt((playerOne[`user_points_normal_${game_time}`]
                 - playerTwo[`user_points_normal_${game_time}`]) * 1.4 / 100);
 
             if (winningPoints >= 9) {
@@ -1130,9 +1160,9 @@ const endGame = (playerOne, playerTwo, winner = null) => {
             myScoreElement.classList.add("positive-score")
             socket.emit("update-score", roomId, -Math.abs(winningPoints), winningPoints, playerOne, playerTwo, "normal", gameDetails.time);
         } else {
-            winningPoints = parseInt((playerTwo[`user_points_normal_${game_time}`] 
+            winningPoints = parseInt((playerTwo[`user_points_normal_${game_time}`]
                 - playerOne[`user_points_normal_${game_time}`]) * 1.4 / 100);
-                
+
             if (winningPoints >= 9) {
                 winningPoints = 9;
             }
@@ -1166,6 +1196,25 @@ socket.on("receive-game-details", (details) => {
 
     let playerOne = gameDetails.players[0];
     gameHasTimer = gameDetails.time > 0
+
+    let game_time = null;
+    if (gameDetails.time <= 3) {
+        game_time = "bullet";
+    }
+    else if (gameDetails.time >= 5 && gameDetails.time <= 8) {
+        game_time = "blitz";
+    }
+    else {
+        game_time = "rapido";
+    }
+
+    playerOneRating = playerOne[`user_points_normal_${game_time}`];
+    playerOneRank = playerOne[`user_rank_normal_${game_time}`];
+    playerOneImage = playerOne.profileImage;
+
+    plOneRating.innerText = playerOneRating;
+    plOneRank.innerText = playerOneRank;
+    plOneImage.src = playerOneImage;
 
     if (!gameHasTimer) {
         playerLightTimer.classList.add("hidden")
@@ -1247,7 +1296,7 @@ socket.on("time-ended", (winner, playerOne, playerTwo, ifDraw) => {
     }
 })
 
-socket.on("desconectado", (winner, playerOne, playerTwo)=>{
+socket.on("desconectado", (winner, playerOne, playerTwo) => {
     endGame(playerOne, playerTwo, winner);
 })
 

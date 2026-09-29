@@ -7,12 +7,13 @@ CREATE TABLE users(
 	id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(255) UNIQUE,
     email VARCHAR(255) UNIQUE,
-    password VARCHAR(255)
+    password VARCHAR(255),
+    profileImage VARCHAR(125)
 );
 
 CREATE TABLE user_info(
 	user_id INT,
-    user_rank ENUM('madeira', 'ferro', 'bronze', 'prata', 'ouro', 'platina', 'esmeralda', 'diamante', 'mestre', 'grao-mestre', 'challenger') DEFAULT 'prata',
+    user_rank ENUM('madeira', 'ferro', 'bronze', 'prata', 'ouro', 'platina', 'diamante', 'mestre', 'grao-mestre', 'challenger') DEFAULT 'prata',
     user_points INT DEFAULT 1500,
     game_mode ENUM('normal', 'funny') DEFAULT 'normal',
     game_time ENUM('rapido', 'blitz', 'bullet') DEFAULT 'blitz',
@@ -91,10 +92,8 @@ BEGIN
 		SET user_rank_1 := "prata";
     ELSEIF points_1 < 2100 THEN
 		SET user_rank_1 := "ouro";
-    ELSEIF points_1 < 2300 THEN
+    ELSEIF points_1 < 2400 THEN
 		SET user_rank_1 := "platina";
-    ELSEIF points_1 < 2500 THEN
-		SET user_rank_1 := "esmeralda";
     ELSEIF points_1 < 2650 THEN
 		SET user_rank_1 := "diamante";
     ELSEIF points_1 < 2800 THEN
@@ -115,10 +114,8 @@ BEGIN
 		SET user_rank_2 := "prata";
     ELSEIF points_2 < 2100 THEN
 		SET user_rank_2 := "ouro";
-    ELSEIF points_2 < 2300 THEN
+    ELSEIF points_2 < 2400 THEN
 		SET user_rank_2 := "platina";
-    ELSEIF points_2 < 2500 THEN
-		SET user_rank_2 := "esmeralda";
     ELSEIF points_2 < 2650 THEN
 		SET user_rank_2 := "diamante";
     ELSEIF points_2 < 2800 THEN

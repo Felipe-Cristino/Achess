@@ -71,7 +71,15 @@ exports.getStatsPage = (req, res) => {
         return res.redirect("/login")
     }
 
-    res.render("stats", { authorized: true });
+    res.render("stats", { authorized: true});
+}
+
+exports.getIconsPage = (req, res) => {
+    if (!req.cookies.token) {
+        return res.redirect("/login")
+    }
+
+    res.render("icons", { authorized: true });
 }
 
 exports.getPlayedGamesPage = (req, res) => {

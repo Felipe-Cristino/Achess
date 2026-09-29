@@ -1,7 +1,7 @@
 const {Router} = require("express")
 const { getRegisterPage, getLoginPage, getLobbyPage, getGamesPage,
     getGames2Page, getRoomPage1, getRoomPage2, getRoomPage3, getRoomPage4,
-     getStatsPage, getPlayedGamesPage, getProfilePage 
+     getStatsPage, getIconsPage, getPlayedGamesPage, getProfilePage 
 } = require("../../controllers/views")
 
 const router = Router()
@@ -25,6 +25,8 @@ router.get("/room3", getRoomPage3)
 router.get("/room4", getRoomPage4)
 
 router.get("/my-stats", getStatsPage)
+
+router.get("/my-icons", getIconsPage)
 
 router.get("/my-stats/played-games/:gameId", getPlayedGamesPage)
 
