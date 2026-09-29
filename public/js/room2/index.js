@@ -541,7 +541,7 @@ const startGame = (playerTwo) => {
         game_time = "blitz";
     }
     else {
-        game_time = "rapido";
+        game_time = "rapid";
     }
 
     playerTwoRating = playerTwo[`user_points_normal_${game_time}`];
@@ -1277,7 +1277,7 @@ const endGame = (playerOne, playerTwo, winner = null) => {
         game_time = "blitz";
     }
     else {
-        game_time = "rapido";
+        game_time = "rapid";
     }
 
     if (winner) {
@@ -2022,7 +2022,7 @@ socket.on("receive-game-details", (details) => {
         game_time = "blitz";
     }
     else {
-        game_time = "rapido";
+        game_time = "rapid";
     }
 
     playerOneRating = playerOne[`user_points_normal_${game_time}`];

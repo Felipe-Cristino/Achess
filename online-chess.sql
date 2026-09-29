@@ -13,10 +13,10 @@ CREATE TABLE users(
 
 CREATE TABLE user_info(
 	user_id INT,
-    user_rank ENUM('madeira', 'ferro', 'bronze', 'prata', 'ouro', 'platina', 'diamante', 'mestre', 'grao-mestre', 'challenger') DEFAULT 'prata',
+    user_rank ENUM('Wood', 'Iron', 'Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond', 'Master', 'Grand-Master', 'Challenger') DEFAULT 'Silver',
     user_points INT DEFAULT 1500,
     game_mode ENUM('normal', 'funny') DEFAULT 'normal',
-    game_time ENUM('rapido', 'blitz', 'bullet') DEFAULT 'blitz',
+    game_time ENUM('rapid', 'blitz', 'bullet') DEFAULT 'blitz',
     PRIMARY KEY (user_id, game_mode, game_time),
     KEY userID(user_id),
     CONSTRAINT userID FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
@@ -55,10 +55,10 @@ BEGIN
     VALUES
         (userId, 'normal', 'bullet'),
         (userId, 'normal', 'blitz'),
-        (userId, 'normal', 'rapido'),
+        (userId, 'normal', 'rapid'),
         (userId, 'funny', 'bullet'),
         (userId, 'funny', 'blitz'),
-        (userId, 'funny', 'rapido');
+        (userId, 'funny', 'rapid');
 
 END $$
 DELIMITER ;
@@ -76,54 +76,54 @@ CREATE PROCEDURE updateScores(
 BEGIN
 	  DECLARE userId_1 INT;
     DECLARE userId_2 INT;
-    DECLARE user_rank_1 VARCHAR(20) DEFAULT "prata";
-    DECLARE user_rank_2 VARCHAR(20) DEFAULT "prata";
+    DECLARE user_rank_1 VARCHAR(20) DEFAULT "Silver";
+    DECLARE user_rank_2 VARCHAR(20) DEFAULT "Silver";
     
     SELECT id INTO userId_1 FROM users WHERE username=username_1;
     SELECT id INTO userId_2 FROM users WHERE username=username_2;
     
     IF points_1 < 500 THEN
-		SET user_rank_1 := "madeira";
+		SET user_rank_1 := "Wood";
 	ELSEIF points_1 < 1000 THEN
-		SET user_rank_1 := "ferro";
+		SET user_rank_1 := "Iron";
 	ELSEIF points_1 < 1400 THEN
-		SET user_rank_1 := "bronze";
+		SET user_rank_1 := "Bronze";
     ELSEIF points_1 < 1800 THEN
-		SET user_rank_1 := "prata";
+		SET user_rank_1 := "Silver";
     ELSEIF points_1 < 2100 THEN
-		SET user_rank_1 := "ouro";
+		SET user_rank_1 := "Gold";
     ELSEIF points_1 < 2400 THEN
-		SET user_rank_1 := "platina";
+		SET user_rank_1 := "Platinum";
     ELSEIF points_1 < 2650 THEN
-		SET user_rank_1 := "diamante";
+		SET user_rank_1 := "Diamond";
     ELSEIF points_1 < 2800 THEN
-		SET user_rank_1 := "mestre";
+		SET user_rank_1 := "Master";
     ELSEIF points_1 < 2900 THEN
-		SET user_rank_1 := "grao-mestre";  
+		SET user_rank_1 := "Grand-Master";  
 	ELSE
-		SET user_rank_1 := "challenger";
+		SET user_rank_1 := "Challenger";
 	END IF;
     
     IF points_2 < 500 THEN
-		SET user_rank_2 := "madeira";
+		SET user_rank_2 := "Wood";
 	ELSEIF points_2 < 1000 THEN
-		SET user_rank_2 := "ferro";
+		SET user_rank_2 := "Iron";
 	ELSEIF points_2 < 1400 THEN
-		SET user_rank_2 := "bronze";
+		SET user_rank_2 := "Bronze";
     ELSEIF points_2 < 1800 THEN
-		SET user_rank_2 := "prata";
+		SET user_rank_2 := "Silver";
     ELSEIF points_2 < 2100 THEN
-		SET user_rank_2 := "ouro";
+		SET user_rank_2 := "Gold";
     ELSEIF points_2 < 2400 THEN
-		SET user_rank_2 := "platina";
+		SET user_rank_2 := "Platinum";
     ELSEIF points_2 < 2650 THEN
-		SET user_rank_2 := "diamante";
+		SET user_rank_2 := "Diamond";
     ELSEIF points_2 < 2800 THEN
-		SET user_rank_2 := "mestre";
+		SET user_rank_2 := "Master";
     ELSEIF points_2 < 2900 THEN
-		SET user_rank_2 := "grao-mestre";  
+		SET user_rank_2 := "Grand-Master";  
 	ELSE
-		SET user_rank_2 := "challenger";
+		SET user_rank_2 := "Challenger";
 	END IF;
     
     UPDATE user_info SET user_points=points_1, user_rank=user_rank_1 WHERE user_id=userId_1

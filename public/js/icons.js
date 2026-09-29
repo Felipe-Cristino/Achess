@@ -74,6 +74,9 @@ const submitForm = (url, body) => {
         setToastType("error");
         displayToast(err.message)
     })
+    .finally(() => {
+        window.location.href = "/";
+    });
 }
 
 fetchData('/api/user-info', fetchUserCallback)

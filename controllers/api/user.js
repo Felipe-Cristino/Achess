@@ -58,7 +58,7 @@ exports.register = (req, res) => {
                     let userId = result[0].id;
 
                     const payload = {
-                        id: userId, username, email
+                        id: userId, username, email, profileImage: null
                     };
 
                     jwt.sign(payload, jwtSecret, (err, token) => {
@@ -70,29 +70,29 @@ exports.register = (req, res) => {
 
                         res.cookie("profileImage", null, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
 
-                        res.cookie("user_rank_normal_rapido", 'prata', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-                        res.cookie("user_points_normal_rapido", 1500, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-                        res.cookie("user_brasao_normal_rapido", "/assets/brasoes/brasao-prata.jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                        res.cookie("user_rank_normal_rapid", 'Silver', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                        res.cookie("user_points_normal_rapid", 1500, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                        res.cookie("user_brasao_normal_rapid", "/assets/brasoes/brasao-silver.jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
 
-                        res.cookie("user_rank_normal_blitz", 'prata', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                        res.cookie("user_rank_normal_blitz", 'Silver', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
                         res.cookie("user_points_normal_blitz", 1500, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-                        res.cookie("user_brasao_normal_blitz", "/assets/brasoes/brasao-prata.jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                        res.cookie("user_brasao_normal_blitz", "/assets/brasoes/brasao-silver.jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
 
-                        res.cookie("user_rank_normal_bullet", 'prata', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                        res.cookie("user_rank_normal_bullet", 'Silver', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
                         res.cookie("user_points_normal_bullet", 1500, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-                        res.cookie("user_brasao_normal_bullet", "/assets/brasoes/brasao-prata.jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                        res.cookie("user_brasao_normal_bullet", "/assets/brasoes/brasao-silver.jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
 
-                        res.cookie("user_rank_funny_rapido", 'prata', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-                        res.cookie("user_points_funny_rapido", 1500, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-                        res.cookie("user_brasao_funny_rapido", "/assets/brasoes/brasao-prata.jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                        res.cookie("user_rank_funny_rapid", 'Silver', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                        res.cookie("user_points_funny_rapid", 1500, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                        res.cookie("user_brasao_funny_rapid", "/assets/brasoes/brasao-silver.jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
 
-                        res.cookie("user_rank_funny_blitz", 'prata', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                        res.cookie("user_rank_funny_blitz", 'Silver', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
                         res.cookie("user_points_funny_blitz", 1500, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-                        res.cookie("user_brasao_funny_blitz", "/assets/brasoes/brasao-prata.jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                        res.cookie("user_brasao_funny_blitz", "/assets/brasoes/brasao-silver.jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
 
-                        res.cookie("user_rank_funny_bullet", 'prata', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                        res.cookie("user_rank_funny_bullet", 'Silver', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
                         res.cookie("user_points_funny_bullet", 1500, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-                        res.cookie("user_brasao_funny_bullet", "/assets/brasoes/brasao-prata.jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                        res.cookie("user_brasao_funny_bullet", "/assets/brasoes/brasao-silver.jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
 
                         res.redirect("/?success=You have register your user successfully");
                     })
@@ -135,7 +135,7 @@ exports.login = (req, res) => {
             }
 
             query = `SELECT user_rank, user_points FROM user_info WHERE user_id=${user.id} 
-            AND game_mode IN ('normal', 'funny') AND game_time IN ('rapido', 'blitz', 'bullet')`;
+            AND game_mode IN ('normal', 'funny') AND game_time IN ('rapid', 'blitz', 'bullet')`;
 
             db.query(query, (err, result) => {
                 if (err) {
@@ -145,7 +145,8 @@ exports.login = (req, res) => {
                 let userInfo = result;
 
                 const payload = {
-                    id: user.id, username: user.username, email
+                    id: user.id, username: user.username, email, 
+                    profileImage: user.profileImage
                 };
 
                 jwt.sign(payload, jwtSecret, (err, token) => {
@@ -157,9 +158,9 @@ exports.login = (req, res) => {
 
                     res.cookie("profileImage", user.profileImage, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
 
-                    res.cookie("user_rank_normal_rapido", userInfo[0].user_rank, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-                    res.cookie("user_points_normal_rapido", userInfo[0].user_points, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-                    res.cookie("user_brasao_normal_rapido", "/assets/brasoes/brasao-" + userInfo[0].user_rank + ".jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                    res.cookie("user_rank_normal_rapid", userInfo[0].user_rank, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                    res.cookie("user_points_normal_rapid", userInfo[0].user_points, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                    res.cookie("user_brasao_normal_rapid", "/assets/brasoes/brasao-" + userInfo[0].user_rank + ".jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
 
                     res.cookie("user_rank_normal_blitz", userInfo[1].user_rank, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
                     res.cookie("user_points_normal_blitz", userInfo[1].user_points, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
@@ -169,9 +170,9 @@ exports.login = (req, res) => {
                     res.cookie("user_points_normal_bullet", userInfo[2].user_points, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
                     res.cookie("user_brasao_normal_bullet", "/assets/brasoes/brasao-" + userInfo[2].user_rank + ".jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
 
-                    res.cookie("user_rank_funny_rapido", userInfo[3].user_rank, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-                    res.cookie("user_points_funny_rapido", userInfo[3].user_points, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-                    res.cookie("user_brasao_funny_rapido", "/assets/brasoes/brasao-" + userInfo[3].user_rank + ".jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                    res.cookie("user_rank_funny_rapid", userInfo[3].user_rank, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                    res.cookie("user_points_funny_rapid", userInfo[3].user_points, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                    res.cookie("user_brasao_funny_rapid", "/assets/brasoes/brasao-" + userInfo[3].user_rank + ".jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
 
                     res.cookie("user_rank_funny_blitz", userInfo[4].user_rank, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
                     res.cookie("user_points_funny_blitz", userInfo[4].user_points, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
@@ -196,7 +197,7 @@ exports.getInfo = (req, res) => {
         jwt.verify(req.cookies.token, jwtSecret, (err, userPayload) => {
             if (err) throw err;
 
-            const { id, email, username } = userPayload
+            const { id, email, username, profileImage } = userPayload
 
             let user = {
                 id,
@@ -204,9 +205,9 @@ exports.getInfo = (req, res) => {
                 email,
                 profileImage: req.cookies.profileImage,
 
-                user_rank_normal_rapido: req.cookies.user_rank_normal_rapido,
-                user_points_normal_rapido: parseInt(req.cookies.user_points_normal_rapido),
-                user_brasao_normal_rapido: req.cookies.user_brasao_normal_rapido,
+                user_rank_normal_rapid: req.cookies.user_rank_normal_rapid,
+                user_points_normal_rapid: parseInt(req.cookies.user_points_normal_rapid),
+                user_brasao_normal_rapid: req.cookies.user_brasao_normal_rapid,
 
                 user_rank_normal_blitz: req.cookies.user_rank_normal_blitz,
                 user_points_normal_blitz: parseInt(req.cookies.user_points_normal_blitz),
@@ -216,9 +217,9 @@ exports.getInfo = (req, res) => {
                 user_points_normal_bullet: parseInt(req.cookies.user_points_normal_bullet),
                 user_brasao_normal_bullet: req.cookies.user_brasao_normal_bullet,
 
-                user_rank_funny_rapido: req.cookies.user_rank_funny_rapido,
-                user_points_funny_rapido: parseInt(req.cookies.user_points_funny_rapido),
-                user_brasao_funny_rapido: req.cookies.user_brasao_funny_rapido,
+                user_rank_funny_rapid: req.cookies.user_rank_funny_rapid,
+                user_points_funny_rapid: parseInt(req.cookies.user_points_funny_rapid),
+                user_brasao_funny_rapid: req.cookies.user_brasao_funny_rapid,
 
                 user_rank_funny_blitz: req.cookies.user_rank_funny_blitz,
                 user_points_funny_blitz: parseInt(req.cookies.user_points_funny_blitz),
@@ -230,7 +231,7 @@ exports.getInfo = (req, res) => {
             }
 
             const query = `SELECT user_rank, user_points FROM user_info WHERE user_id = ? 
-            AND game_mode IN ('normal', 'funny') AND game_time IN ('rapido', 'blitz', 'bullet')`;
+            AND game_mode IN ('normal', 'funny') AND game_time IN ('rapid', 'blitz', 'bullet')`;
 
             db.query(query, [user.id], (err, result) => {
                 if (err) {
@@ -239,9 +240,9 @@ exports.getInfo = (req, res) => {
 
                 const userInfo = result;
 
-                res.cookie("user_rank_normal_rapido", userInfo[0].user_rank, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-                res.cookie("user_points_normal_rapido", userInfo[0].user_points, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-                res.cookie("user_brasao_normal_rapido", "/assets/brasoes/brasao-" + userInfo[0].user_rank + ".jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                res.cookie("user_rank_normal_rapid", userInfo[0].user_rank, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                res.cookie("user_points_normal_rapid", userInfo[0].user_points, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                res.cookie("user_brasao_normal_rapid", "/assets/brasoes/brasao-" + userInfo[0].user_rank + ".jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
 
                 res.cookie("user_rank_normal_blitz", userInfo[1].user_rank, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
                 res.cookie("user_points_normal_blitz", userInfo[1].user_points, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
@@ -251,9 +252,9 @@ exports.getInfo = (req, res) => {
                 res.cookie("user_points_normal_bullet", userInfo[2].user_points, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
                 res.cookie("user_brasao_normal_bullet", "/assets/brasoes/brasao-" + userInfo[2].user_rank + ".jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
 
-                res.cookie("user_rank_funny_rapido", userInfo[3].user_rank, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-                res.cookie("user_points_funny_rapido", userInfo[3].user_points, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-                res.cookie("user_brasao_funny_rapido", "/assets/brasoes/brasao-" + userInfo[3].user_rank + ".jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                res.cookie("user_rank_funny_rapid", userInfo[3].user_rank, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                res.cookie("user_points_funny_rapid", userInfo[3].user_points, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                res.cookie("user_brasao_funny_rapid", "/assets/brasoes/brasao-" + userInfo[3].user_rank + ".jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
 
                 res.cookie("user_rank_funny_blitz", userInfo[4].user_rank, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
                 res.cookie("user_points_funny_blitz", userInfo[4].user_points, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
@@ -264,21 +265,21 @@ exports.getInfo = (req, res) => {
                 res.cookie("user_brasao_funny_bullet", "/assets/brasoes/brasao-" + userInfo[5].user_rank + ".jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
 
                 // Atualiza o objeto antes de enviar
-                user.user_rank_normal_rapido = userInfo[0].user_rank;
-                user.user_points_normal_rapido = userInfo[0].user_points;
-                user.user_brasao_normal_rapido = "/assets/brasoes/brasao-" + userInfo[0].user_rank + ".jpeg";
+                user.user_rank_normal_rapid = userInfo[0].user_rank;
+                user.user_points_normal_rapid = userInfo[0].user_points;
+                user.user_brasao_normal_rapid = "/assets/brasoes/brasao-" + userInfo[0].user_rank + ".jpeg";
 
                 user.user_rank_normal_blitz = userInfo[1].user_rank;
                 user.user_points_normal_blitz = userInfo[1].user_points;
-                user.user_brasao_normal_rapido = "/assets/brasoes/brasao-" + userInfo[1].user_rank + ".jpeg";
+                user.user_brasao_normal_blitz = "/assets/brasoes/brasao-" + userInfo[1].user_rank + ".jpeg";
 
                 user.user_rank_normal_bullet = userInfo[2].user_rank;
                 user.user_points_normal_bullet = userInfo[2].user_points;
                 user.user_brasao_normal_bullet = "/assets/brasoes/brasao-" + userInfo[2].user_rank + ".jpeg";
 
-                user.user_rank_funny_rapido = userInfo[3].user_rank;
-                user.user_points_funny_rapido = userInfo[3].user_points;
-                user.user_brasao_funny_rapido = "/assets/brasoes/brasao-" + userInfo[3].user_rank + ".jpeg";
+                user.user_rank_funny_rapid = userInfo[3].user_rank;
+                user.user_points_funny_rapid = userInfo[3].user_points;
+                user.user_brasao_funny_rapid = "/assets/brasoes/brasao-" + userInfo[3].user_rank + ".jpeg";
 
                 user.user_rank_funny_blitz = userInfo[4].user_rank;
                 user.user_points_funny_blitz = userInfo[4].user_points;
@@ -324,7 +325,8 @@ exports.changeUsername = (req, res) => {
                 const payload = {
                     id: req.user.id,
                     username,
-                    email: req.user.email
+                    email: req.user.email,
+                    profileImage: req.user.profileImage
                 }
 
                 jwt.sign(payload, jwtSecret, (err, token) => {
@@ -369,7 +371,8 @@ exports.changeEmail = (req, res) => {
                 const payload = {
                     id: req.user.id,
                     username: req.user.username,
-                    email
+                    email,
+                    profileImage: req.user.profileImage
                 }
 
                 jwt.sign(payload, jwtSecret, (err, token) => {
@@ -400,8 +403,11 @@ exports.changeProfileImage = (req, res) => {
             const payload = {
                 id: req.user.id,
                 username: req.user.username,
-                email: req.user.email
+                email: req.user.email,
+                profileImage: profileImage
             }
+
+            const user = payload;
 
             jwt.sign(payload, jwtSecret, (err, token) => {
                 if (err) throw err;
@@ -410,7 +416,7 @@ exports.changeProfileImage = (req, res) => {
 
                 res.cookie("profileImage", profileImage, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
 
-                res.json({ message: "Your profile image updated successfully!", username });
+                return res.json(user);
             })
         })
     } catch (err) {
@@ -459,15 +465,15 @@ exports.changePassword = (req, res) => {
 exports.logout = (req, res) => {
     res.clearCookie("token");
 
-    res.clearCookie("user_rank_normal_rapido");
-    res.clearCookie("user_points_normal_rapido");
+    res.clearCookie("user_rank_normal_rapid");
+    res.clearCookie("user_points_normal_rapid");
     res.clearCookie("user_rank_normal_blitz");
     res.clearCookie("user_points_normal_blitz");
     res.clearCookie("user_rank_normal_bullet");
     res.clearCookie("user_points_normal_bullet");
 
-    res.clearCookie("user_rank_funny_rapido");
-    res.clearCookie("user_points_funny_rapido");
+    res.clearCookie("user_rank_funny_rapid");
+    res.clearCookie("user_points_funny_rapid");
     res.clearCookie("user_rank_funny_blitz");
     res.clearCookie("user_points_funny_blitz");
     res.clearCookie("user_rank_funny_bullet");

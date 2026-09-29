@@ -445,7 +445,7 @@ io.on("connection", (socket) => {
             game_time = 'blitz';
         }
         else {
-            game_time = "rapido";
+            game_time = "rapid";
         }
 
         userOne[`user_points_${mode}_${game_time}`] += playerOneScore;

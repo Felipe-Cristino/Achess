@@ -1602,6 +1602,21 @@ tbody td img{
     margin-left: 100px;
     margin-right: -100px;
 }
+/* ============================================= */
+
+#profile-image-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#submit-profile-image-btn {
+    background-color: green;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 30px auto;
+}
 
 #lista {
     width: 1200px;
@@ -1629,13 +1644,6 @@ tbody td img{
 .selecionado {
     border: 5px solid red;
     border-radius: 50%;
-}
-
-#submit-profile-image-btn {
-    background-color: green;
-    color: white;
-    padding: 10px;
-    border-radius: 10px;
 }
 
 #imagem-profile {

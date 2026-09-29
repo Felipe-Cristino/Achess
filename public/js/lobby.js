@@ -6,15 +6,15 @@ const btn1 = document.getElementById("btn1");
 const flex3 = document.querySelector(".flex3")
 const flex4 = document.querySelector(".flex4")
 
-const rank_normal_rapido = document.getElementById("rank_normal_rapido");
-const points_normal_rapido = document.getElementById("points_normal_rapido");
+const rank_normal_rapid = document.getElementById("rank_normal_rapid");
+const points_normal_rapid = document.getElementById("points_normal_rapid");
 const rank_normal_blitz = document.getElementById("rank_normal_blitz");
 const points_normal_blitz = document.getElementById("points_normal_blitz");
 const rank_normal_bullet = document.getElementById("rank_normal_bullet");
 const points_normal_bullet = document.getElementById("points_normal_bullet");
 
-const rank_funny_rapido = document.getElementById("rank_funny_rapido");
-const points_funny_rapido = document.getElementById("points_funny_rapido");
+const rank_funny_rapid = document.getElementById("rank_funny_rapid");
+const points_funny_rapid = document.getElementById("points_funny_rapid");
 const rank_funny_blitz = document.getElementById("rank_funny_blitz");
 const points_funny_blitz = document.getElementById("points_funny_blitz");
 const rank_funny_bullet = document.getElementById("rank_funny_bullet");
@@ -36,15 +36,15 @@ const fetchUserCallback = (data) => {
     username.innerText = user.username;
     imagemProfile.src = user.profileImage;
 
-    rank_normal_rapido.innerText = user.user_rank_normal_rapido;
-    points_normal_rapido.innerText = user.user_points_normal_rapido;
+    rank_normal_rapid.innerText = user.user_rank_normal_rapid;
+    points_normal_rapid.innerText = user.user_points_normal_rapid;
     rank_normal_blitz.innerText = user.user_rank_normal_blitz;
     points_normal_blitz.innerText = user.user_points_normal_blitz;
     rank_normal_bullet.innerText = user.user_rank_normal_bullet;
     points_normal_bullet.innerText = user.user_points_normal_bullet;
 
-    rank_funny_rapido.innerText = user.user_rank_funny_rapido;
-    points_funny_rapido.innerText = user.user_points_funny_rapido;
+    rank_funny_rapid.innerText = user.user_rank_funny_rapid;
+    points_funny_rapid.innerText = user.user_points_funny_rapid;
     rank_funny_blitz.innerText = user.user_rank_funny_blitz;
     points_funny_blitz.innerText = user.user_points_funny_blitz;
     rank_funny_bullet.innerText = user.user_rank_funny_bullet;
