@@ -36,6 +36,10 @@ const plOneImage = document.querySelector(".playerOneImage");
 const plTwoImage = document.querySelector(".playerTwoImage");
 const plOneBrasao = document.querySelector(".playerOneBrasao");
 const plTwoBrasao = document.querySelector(".playerTwoBrasao");
+const brasaoLight = document.getElementById("brasao-light");
+const brasaoBlack = document.getElementById("brasao-black");
+let lightPodeUsarMaestria = true;
+let blackPodeUsarMaestria = true;
 
 let myScorePoints = document.getElementById("my-score-points");
 let enemyScorePoints = document.getElementById("enemy-score-points");
@@ -553,6 +557,7 @@ const startGame = (playerTwo) => {
     plTwoRank.innerText = playerTwoRank;
     plTwoImage.src = playerTwoImage;
     plTwoBrasao.src = playerTwoBrasao;
+    brasaoBlack.children[0].src = playerTwoBrasao;
 
     displayChessPieces();
 
@@ -1270,10 +1275,10 @@ const endGame = (playerOne, playerTwo, winner = null) => {
     let winningPoints = 0;
 
     let game_time = null;
-    if(gameDetails.time <= 3) {
+    if (gameDetails.time <= 3) {
         game_time = "bullet";
     }
-    else if(gameDetails.time >= 5 && gameDetails.time <= 8) {
+    else if (gameDetails.time >= 5 && gameDetails.time <= 8) {
         game_time = "blitz";
     }
     else {
@@ -1321,8 +1326,8 @@ const endGame = (playerOne, playerTwo, winner = null) => {
         }
     } else {
         if (playerOne[`user_points_normal_${game_time}`] > playerTwo[`user_points_normal_${game_time}`]) {
-            
-            winningPoints = parseInt((playerOne[`user_points_normal_${game_time}`] 
+
+            winningPoints = parseInt((playerOne[`user_points_normal_${game_time}`]
                 - playerTwo[`user_points_normal_${game_time}`]) * 1.4 / 100);
 
             if (winningPoints >= 9) {
@@ -1336,10 +1341,10 @@ const endGame = (playerOne, playerTwo, winner = null) => {
             enemyScoreElement.innerText = playerOne.username + " -="
                 + winningPoints + " pts";
             myScoreElement.classList.add("positive-score")
-            
+
             socket.emit("update-score", roomId, -Math.abs(winningPoints), winningPoints, playerOne, playerTwo, "funny", gameDetails.time);
         } else {
-            winningPoints = parseInt((playerTwo[`user_points_normal_${game_time}`] 
+            winningPoints = parseInt((playerTwo[`user_points_normal_${game_time}`]
                 - playerOne[`user_points_normal_${game_time}`]) * 1.4 / 100);
 
             if (winningPoints >= 9) {
@@ -2034,6 +2039,7 @@ socket.on("receive-game-details", (details) => {
     plOneRank.innerText = playerOneRank;
     plOneImage.src = playerOneImage;
     plOneBrasao.src = playerOneBrasao;
+    brasaoLight.children[0].src = playerOneBrasao;
 
     if (!gameHasTimer) {
         playerLightTimer.classList.add("hidden")
@@ -2218,5 +2224,57 @@ window.addEventListener("beforeunload", (event) => {
     if (!gameOver) {
         event.preventDefault();
         event.returnValue = "";
+    }
+});
+
+document.addEventListener("keydown", (event) => {
+    if (event.key.toLowerCase() === "z") {
+        if (player === "light") {
+
+            if (!lightPodeUsarMaestria) {
+                return;
+            }
+
+            lightPodeUsarMaestria = false;
+
+            socket.emit("spama-brasao", roomId, player);
+
+            setTimeout(() => {
+                lightPodeUsarMaestria = true;
+            }, 10000);
+        }
+        else {
+            if (!blackPodeUsarMaestria) {
+                return;
+            }
+
+            blackPodeUsarMaestria = false;
+
+            socket.emit("spama-brasao", roomId, player);
+
+            setTimeout(() => {
+                blackPodeUsarMaestria = true;
+            }, 10000);
+        }
+    }
+});
+
+socket.on("spama-brasao2", (player) => {
+    if (player === "light") {
+        brasaoLight.classList.remove("hidden");
+
+        setTimeout(() => {
+            brasaoLight.classList.add("hidden");
+        }, 2000);
+    }
+
+    else if (player === "black") {
+
+        brasaoBlack.classList.remove("hidden");
+
+        setTimeout(() => {
+            brasaoBlack.classList.add("hidden");
+        }, 2000);
+
     }
 });

@@ -520,6 +520,10 @@ io.on("connection", (socket) => {
 
     });
 
+    socket.on("spama-brasao", (roomId, player) => {
+        io.to(roomId).emit("spama-brasao2", player);
+    })
+
     socket.on("disconnect", () => {
         let socketId = socket.id;
 
