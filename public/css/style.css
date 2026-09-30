@@ -736,12 +736,19 @@ nav{
     font-size: 1.3rem;
 }
 
-.game .user span:first-child{
-    margin-right: 10px;
+#player-light, #player-black {
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #01365C;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    width: 200px;
 }
 
-.game .user span:last-child{
-    color: var(--bg-danger);
+#player-light > div > span, #player-black > div > span {
+    color: white;
 }
 
 .game button{
@@ -854,19 +861,16 @@ nav{
 
 .game-room{
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     padding: 50px 0;
     min-height: fit-content;
 }
 
-.board-and-users{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.gr-2 {
+    margin-left: -70px !important;
 }
 
-.board-and-users .user{
+.board-and-users{
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -874,21 +878,27 @@ nav{
 }
 
 .board-and-users .username{
-    color: var(--bg-danger);
+    color: white;
     font-weight: bold;
     font-size: 1.3rem;
 }
 
-.board-and-users .timer{
+.player-light-timer, .player-black-timer{
     display: inline-block;
     width: 100px;
     color: white;
-    background: var(--main-color-darker);
+    background: black;
     padding: 5px;
     border-radius: 3px;
     font-weight: 600;
     font-size: 1.4rem;
     text-align: center;
+}
+
+.flex8 {
+    display: flex;
+    align-items: center;
+    gap: 30px;
 }
 
 .waiting-message{
@@ -901,12 +911,16 @@ nav{
 }
 
 .chess-board{
-    width: 500px;
-    height: 500px;
+    width: 580px;
+    height: 580px;
     display: grid;
-    grid-template-rows: repeat(8, calc(500px / 8));
-    grid-template-columns: repeat(8, calc(500px / 8));
+    grid-template-rows: repeat(8, calc(580px / 8));
+    grid-template-columns: repeat(8, calc(580px / 8));
     margin: 35px;
+}
+
+.cb-1 {
+    margin-left: 50px !important;
 }
 
 .chess-board .box{
@@ -950,7 +964,7 @@ nav{
     top: 50%;
     left: -25%;
     transform: translateY(-50%);
-    color: white;
+    color: black;
     font-size: 1rem;
     font-weight: 300;
 }
@@ -1028,7 +1042,7 @@ nav{
     left: 50%;
     bottom: -35%;
     transform: translateX(-50%);
-    color: white;
+    color: black;
     font-size: 1rem;
     font-weight: 300;
 }
@@ -1482,7 +1496,6 @@ tbody td img{
     align-items: center;  
     height: 100vh;
     margin-left: -290px;
-    margin-top: 25px;
 }
 
 .light-cards, .black-cards {
@@ -1522,12 +1535,8 @@ tbody td img{
     height: 100%;
 }
 
-.b-a-u2, .chess-board2, .user2 {
-    margin-left: 80px !important;
-}
-
-.gr-1 {
-    position: relative;
+.chess-board2 {
+    margin-left: 60px !important;
 }
 
 .c-p1 {
@@ -1536,12 +1545,8 @@ tbody td img{
     right: -60px;
 }
 
-.b-a-u1 {
-    margin-left: -180px !important;
-}
-
 .c-p2 {
-    margin-left: -20px !important;
+    margin-left: -30px !important;
     flex-shrink: 0;
 }
 
@@ -1592,15 +1597,12 @@ tbody td img{
     z-index: 1;
 }
 /* ================================================================================= */
-.pontuacao {
-    color: black;
+.flex7 {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    white-space: nowrap;
-    margin-left: 100px;
-    margin-right: -100px;
+    justify-content: center;
+    gap: 40px;
+    margin-left: -45px;
 }
 /* ============================================= */
 
@@ -1682,3 +1684,5 @@ tbody td img{
     width: 40px;
     height: 40px;
 }
+
+/* ======================================= */

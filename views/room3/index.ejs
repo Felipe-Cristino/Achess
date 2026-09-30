@@ -3,102 +3,100 @@
     <div class="container">
         <%- include('../include/partials/spinner') %>
             <p class="waiting-message" id="waiting-message">Waiting for someone to connect...</p>
-            <div class="game-room hidden" id="game-room">
-                <div class="pontuacao">
-                    <div></div>
-                    <div>Enemy score = <span id="enemy-score-points"></span></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div>My score = <span id="my-score-points"></span></div>
-                    <div></div>
-                </div>
-                <div class="board-and-users b-a-u2">
-                    <div class="user user2" id="player-black">
-                        <span class="username"></span>
-                        <img class="playerTwoImage" src="">
-                        <span class="playerTwoRating"></span>
-                        <span class="playerTwoRank"></span>
+            <div class="game-room gr-2 hidden" id="game-room">
+                <div class="flex7">
+                    <div class="user" id="player-black">
+                        <div class="flex8">
+                            <span class="username"></span>
+                            <img class="playerTwoImage" src="">
+                        </div>
+                        <div class="flex8">
+                            <span class="playerTwoRating"></span>
+                            <span class="playerTwoRank"></span>
+                        </div>
                         <img class="playerTwoBrasao" src="">
-                        <span class="timer"></span>
+                        <div>Enemy score = <span id="enemy-score-points"></span></div>
+                        <span class="player-black-timer"></span>
                     </div>
-
-                    <div class="chess-board chess-board2">
-                        <div class="box display-position-left" id="A-8"></div>
-                        <div class="box" id="B-8"></div>
-                        <div class="box" id="C-8"></div>
-                        <div class="box" id="D-8"></div>
-                        <div class="box" id="E-8"></div>
-                        <div class="box" id="F-8"></div>
-                        <div class="box" id="G-8"></div>
-                        <div class="box" id="H-8"></div>
-                        <div class="box display-position-left" id="A-7"></div>
-                        <div class="box" id="B-7"></div>
-                        <div class="box" id="C-7"></div>
-                        <div class="box" id="D-7"></div>
-                        <div class="box" id="E-7"></div>
-                        <div class="box" id="F-7"></div>
-                        <div class="box" id="G-7"></div>
-                        <div class="box" id="H-7"></div>
-                        <div class="box display-position-left" id="A-6"></div>
-                        <div class="box" id="B-6"></div>
-                        <div class="box" id="C-6"></div>
-                        <div class="box" id="D-6"></div>
-                        <div class="box" id="E-6"></div>
-                        <div class="box" id="F-6"></div>
-                        <div class="box" id="G-6"></div>
-                        <div class="box" id="H-6"></div>
-                        <div class="box display-position-left" id="A-5"></div>
-                        <div class="box" id="B-5"></div>
-                        <div class="box" id="C-5"></div>
-                        <div class="box" id="D-5"></div>
-                        <div class="box" id="E-5"></div>
-                        <div class="box" id="F-5"></div>
-                        <div class="box" id="G-5"></div>
-                        <div class="box" id="H-5"></div>
-                        <div class="box display-position-left" id="A-4"></div>
-                        <div class="box" id="B-4"></div>
-                        <div class="box" id="C-4"></div>
-                        <div class="box" id="D-4"></div>
-                        <div class="box" id="E-4"></div>
-                        <div class="box" id="F-4"></div>
-                        <div class="box" id="G-4"></div>
-                        <div class="box" id="H-4"></div>
-                        <div class="box display-position-left" id="A-3"></div>
-                        <div class="box" id="B-3"></div>
-                        <div class="box" id="C-3"></div>
-                        <div class="box" id="D-3"></div>
-                        <div class="box" id="E-3"></div>
-                        <div class="box" id="F-3"></div>
-                        <div class="box" id="G-3"></div>
-                        <div class="box" id="H-3"></div>
-                        <div class="box display-position-left" id="A-2"></div>
-                        <div class="box" id="B-2"></div>
-                        <div class="box" id="C-2"></div>
-                        <div class="box" id="D-2"></div>
-                        <div class="box" id="E-2"></div>
-                        <div class="box" id="F-2"></div>
-                        <div class="box" id="G-2"></div>
-                        <div class="box" id="H-2"></div>
-                        <div class="box display-position-left display-position-bottom" id="A-1"></div>
-                        <div class="box display-position-bottom" id="B-1"></div>
-                        <div class="box display-position-bottom" id="C-1"></div>
-                        <div class="box display-position-bottom" id="D-1"></div>
-                        <div class="box display-position-bottom" id="E-1"></div>
-                        <div class="box display-position-bottom" id="F-1"></div>
-                        <div class="box display-position-bottom" id="G-1"></div>
-                        <div class="box display-position-bottom" id="H-1"></div>
-                    </div>
-
-                    <div class="user user2" id="player-light">
-                        <span class="username"></span>
-                        <img class="playerOneImage" src="">
-                        <span class="playerOneRating"></span>
-                        <span class="playerOneRank"></span>
+                    <div class="user" id="player-light">
+                        <span class="player-light-timer"></span>
+                        <div class="flex8">
+                            <span class="username"></span>
+                            <img class="playerOneImage" src="">
+                        </div>
+                        <div class="flex8">
+                            <span class="playerOneRating"></span>
+                            <span class="playerOneRank"></span>
+                        </div>
                         <img class="playerOneBrasao" src="">
-                        <span class="timer"></span>
+                        <div>My score = <span id="my-score-points"></span></div>
                     </div>
+                </div>
+                <div class="chess-board chess-board2">
+                    <div class="box display-position-left" id="A-8"></div>
+                    <div class="box" id="B-8"></div>
+                    <div class="box" id="C-8"></div>
+                    <div class="box" id="D-8"></div>
+                    <div class="box" id="E-8"></div>
+                    <div class="box" id="F-8"></div>
+                    <div class="box" id="G-8"></div>
+                    <div class="box" id="H-8"></div>
+                    <div class="box display-position-left" id="A-7"></div>
+                    <div class="box" id="B-7"></div>
+                    <div class="box" id="C-7"></div>
+                    <div class="box" id="D-7"></div>
+                    <div class="box" id="E-7"></div>
+                    <div class="box" id="F-7"></div>
+                    <div class="box" id="G-7"></div>
+                    <div class="box" id="H-7"></div>
+                    <div class="box display-position-left" id="A-6"></div>
+                    <div class="box" id="B-6"></div>
+                    <div class="box" id="C-6"></div>
+                    <div class="box" id="D-6"></div>
+                    <div class="box" id="E-6"></div>
+                    <div class="box" id="F-6"></div>
+                    <div class="box" id="G-6"></div>
+                    <div class="box" id="H-6"></div>
+                    <div class="box display-position-left" id="A-5"></div>
+                    <div class="box" id="B-5"></div>
+                    <div class="box" id="C-5"></div>
+                    <div class="box" id="D-5"></div>
+                    <div class="box" id="E-5"></div>
+                    <div class="box" id="F-5"></div>
+                    <div class="box" id="G-5"></div>
+                    <div class="box" id="H-5"></div>
+                    <div class="box display-position-left" id="A-4"></div>
+                    <div class="box" id="B-4"></div>
+                    <div class="box" id="C-4"></div>
+                    <div class="box" id="D-4"></div>
+                    <div class="box" id="E-4"></div>
+                    <div class="box" id="F-4"></div>
+                    <div class="box" id="G-4"></div>
+                    <div class="box" id="H-4"></div>
+                    <div class="box display-position-left" id="A-3"></div>
+                    <div class="box" id="B-3"></div>
+                    <div class="box" id="C-3"></div>
+                    <div class="box" id="D-3"></div>
+                    <div class="box" id="E-3"></div>
+                    <div class="box" id="F-3"></div>
+                    <div class="box" id="G-3"></div>
+                    <div class="box" id="H-3"></div>
+                    <div class="box display-position-left" id="A-2"></div>
+                    <div class="box" id="B-2"></div>
+                    <div class="box" id="C-2"></div>
+                    <div class="box" id="D-2"></div>
+                    <div class="box" id="E-2"></div>
+                    <div class="box" id="F-2"></div>
+                    <div class="box" id="G-2"></div>
+                    <div class="box" id="H-2"></div>
+                    <div class="box display-position-left display-position-bottom" id="A-1"></div>
+                    <div class="box display-position-bottom" id="B-1"></div>
+                    <div class="box display-position-bottom" id="C-1"></div>
+                    <div class="box display-position-bottom" id="D-1"></div>
+                    <div class="box display-position-bottom" id="E-1"></div>
+                    <div class="box display-position-bottom" id="F-1"></div>
+                    <div class="box display-position-bottom" id="G-1"></div>
+                    <div class="box display-position-bottom" id="H-1"></div>
                 </div>
 
                 <div class="captured-pieces c-p2">
