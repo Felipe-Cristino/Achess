@@ -116,9 +116,53 @@ io.on("connection", (socket) => {
 
             if (reply) {
                 let room = JSON.parse(reply);
-                let details = { players: room.players, time: room.time }
 
-                socket.emit("receive-game-details", details)
+                if (room.players[1]) {
+
+                    let query = `
+                SELECT pieces, board 
+                FROM user_config 
+                WHERE user_id = ?
+            `;
+
+                    db.query(query, [room.players[1].id], (err, result) => {
+
+                        if (err) throw err;
+
+                        room.config = result[0];
+                       
+                        let details = {
+                            players: room.players,
+                            config: room.config,
+                            time: room.time
+                        };
+
+                        socket.emit("receive-game-details", details);
+                    });
+                }
+
+                else {
+                    let query = `
+                SELECT pieces, board 
+                FROM user_config 
+                WHERE user_id = ?
+            `;
+
+                    db.query(query, [room.players[0].id], (err, result) => {
+
+                        if (err) throw err;
+
+                        room.config = result[0];
+                        
+                        let details = {
+                            players: room.players,
+                            config: room.config,
+                            time: room.time
+                        };
+
+                        socket.emit("receive-game-details", details);
+                    });
+                }
             }
         })
     })
@@ -438,10 +482,10 @@ io.on("connection", (socket) => {
 
         let game_time = null;
 
-        if(time <= 3) {
+        if (time <= 3) {
             game_time = 'bullet';
         }
-        else if(time > 3 && time <= 8) {
+        else if (time > 3 && time <= 8) {
             game_time = 'blitz';
         }
         else {
@@ -449,8 +493,8 @@ io.on("connection", (socket) => {
         }
 
         userOne[`user_points_${mode}_${game_time}`] += playerOneScore;
-        userTwo[`user_points_${mode}_${game_time}`]  += playerTwoScore;
-        
+        userTwo[`user_points_${mode}_${game_time}`] += playerTwoScore;
+
         let query = `
                     CALL updateScores(
                         '${userOne.username}',

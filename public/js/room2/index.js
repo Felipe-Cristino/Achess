@@ -875,10 +875,10 @@ const setPiecesToPromote = () => {
     if (player === 'light') {
         let pieces = ["knight", "bishop", "rook", "queen"];
         let icons = [
-            "../assets/chess-pieces/light/chess-knight-light.svg",
-            "../assets/chess-pieces/light/chess-bishop-light.svg",
-            "../assets/chess-pieces/light/chess-rook-light.svg",
-            "../assets/chess-pieces/light/chess-queen-light.svg"
+            "../assets/chess-pieces/square/light/chess-knight-light.svg",
+            "../assets/chess-pieces/square/light/chess-bishop-light.svg",
+            "../assets/chess-pieces/square/light/chess-rook-light.svg",
+            "../assets/chess-pieces/square/light/chess-queen-light.svg"
         ];
 
         let i = 0;
@@ -897,10 +897,10 @@ const setPiecesToPromote = () => {
     } else {
         let pieces = ["knight", "bishop", "rook", "queen"];
         let icons = [
-            "../assets/chess-pieces/black/chess-knight-black.svg",
-            "../assets/chess-pieces/black/chess-bishop-black.svg",
-            "../assets/chess-pieces/black/chess-rook-black.svg",
-            "../assets/chess-pieces/black/chess-queen-black.svg"
+            "../assets/chess-pieces/square/black/chess-knight-black.svg",
+            "../assets/chess-pieces/square/black/chess-bishop-black.svg",
+            "../assets/chess-pieces/square/black/chess-rook-black.svg",
+            "../assets/chess-pieces/square/black/chess-queen-black.svg"
         ];
 
         let i = 0;
@@ -953,9 +953,9 @@ const setAddPieces = () => {
     if (player === 'light') {
         let pieces = ["knight", "bishop", "rook"];
         let icons = [
-            "../assets/chess-pieces/light/chess-knight-light.svg",
-            "../assets/chess-pieces/light/chess-bishop-light.svg",
-            "../assets/chess-pieces/light/chess-rook-light.svg",
+            "../assets/chess-pieces/square/light/chess-knight-light.svg",
+            "../assets/chess-pieces/square/light/chess-bishop-light.svg",
+            "../assets/chess-pieces/square/light/chess-rook-light.svg",
         ];
 
         let i = 0;
@@ -974,9 +974,9 @@ const setAddPieces = () => {
     } else {
         let pieces = ["knight", "bishop", "rook"];
         let icons = [
-            "../assets/chess-pieces/black/chess-knight-black.svg",
-            "../assets/chess-pieces/black/chess-bishop-black.svg",
-            "../assets/chess-pieces/black/chess-rook-black.svg",
+            "../assets/chess-pieces/square/black/chess-knight-black.svg",
+            "../assets/chess-pieces/square/black/chess-bishop-black.svg",
+            "../assets/chess-pieces/square/black/chess-rook-black.svg",
         ];
 
         let i = 0;
@@ -1101,11 +1101,11 @@ const setImpedePieces = async (player) => {
     if (player === 'light') {
         let pieces = ["knight", "bishop", "rook", "queen", "king"];
         let icons = [
-            "../assets/chess-pieces/light/chess-knight-light.svg",
-            "../assets/chess-pieces/light/chess-bishop-light.svg",
-            "../assets/chess-pieces/light/chess-rook-light.svg",
-            "../assets/chess-pieces/light/chess-queen-light.svg",
-            "../assets/chess-pieces/light/chess-king-light.svg",
+            "../assets/chess-pieces/square/light/chess-knight-light.svg",
+            "../assets/chess-pieces/square/light/chess-bishop-light.svg",
+            "../assets/chess-pieces/square/light/chess-rook-light.svg",
+            "../assets/chess-pieces/square/light/chess-queen-light.svg",
+            "../assets/chess-pieces/square/light/chess-king-light.svg",
         ];
 
         let i = 0;
@@ -1124,11 +1124,11 @@ const setImpedePieces = async (player) => {
     } else {
         let pieces = ["knight", "bishop", "rook", "queen", "king"];
         let icons = [
-            "../assets/chess-pieces/black/chess-knight-black.svg",
-            "../assets/chess-pieces/black/chess-bishop-black.svg",
-            "../assets/chess-pieces/black/chess-rook-black.svg",
-            "../assets/chess-pieces/black/chess-queen-black.svg",
-            "../assets/chess-pieces/black/chess-king-black.svg",
+            "../assets/chess-pieces/square/black/chess-knight-black.svg",
+            "../assets/chess-pieces/square/black/chess-bishop-black.svg",
+            "../assets/chess-pieces/square/black/chess-rook-black.svg",
+            "../assets/chess-pieces/square/black/chess-queen-black.svg",
+            "../assets/chess-pieces/square/black/chess-king-black.svg",
         ];
 
         let i = 0;
