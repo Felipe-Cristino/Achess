@@ -145,7 +145,7 @@ exports.login = (req, res) => {
                 let userInfo = result;
 
                 const payload = {
-                    id: user.id, username: user.username, email, 
+                    id: user.id, username: user.username, email,
                     profileImage: user.profileImage
                 };
 
@@ -395,7 +395,7 @@ exports.changeProfileImage = (req, res) => {
 
         const { profileImage } = req.body;
 
-        query = `UPDATE users SET profileImage='${profileImage}' WHERE id=${req.user.id}`;
+        let query = `UPDATE users SET profileImage='${profileImage}' WHERE id=${req.user.id}`;
 
         db.query(query, (err) => {
             if (err) throw err;
@@ -420,6 +420,25 @@ exports.changeProfileImage = (req, res) => {
             })
         })
     } catch (err) {
+        console.log(err)
+        res.status(500).json({ error: err.message })
+    }
+}
+
+exports.configStyles = (req, res) => {
+    try {
+
+        const { chosenPiece, chosenBoard } = req.body;
+
+        let query = `UPDATE user_config SET pieces = ?, board = ? WHERE user_id = ?`;
+
+        db.query(query, [chosenPiece, chosenBoard, req.user.id], (err) => {
+            if (err) throw err;
+
+            res.json({ message: "Your config styles is ready!" });
+        });
+    }
+    catch (err) {
         console.log(err)
         res.status(500).json({ error: err.message })
     }

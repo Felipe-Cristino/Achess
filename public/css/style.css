@@ -1698,3 +1698,57 @@ tbody td img{
     width: 400px;
     height: 400px;
 }
+
+/* ====================================== */
+
+#config-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: black;
+    font-size: 2em;
+    margin-top: 50px;
+}
+
+.piece-config, .board-config {
+    width: 60px;
+    height: 60px;
+}
+
+.flex9, .flex10 {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.flex10 {
+    margin-top: 20px;
+    gap: 20px;
+}
+
+.selecionado2 {
+    border: 2px solid green;
+    border-radius: 10px;
+}
+
+#green {
+    background-color: green;
+}
+
+#blue {
+    background-color: blue;
+}
+
+#choose-op {
+    color: white;
+    background-color: green;
+    font-size: 2rem;
+    padding: 15px;
+    border-radius: 15px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#config-form > h2 {
+    color: red;
+}

@@ -1,0 +1,36 @@
+<%- include('../include/header') %>
+
+    <div class="container">
+        <%- include('../include/partials/responseMessage') %>
+            <form id="config-form">
+                <h1>Styles</h1>
+                <h2>Pieces</h2>
+                <div id="square" class="flex9">
+                    <h5>Default Pieces</h5>
+                    <img class="piece-config" src="/assets/chess-pieces/square/black/chess-knight-black.svg">
+                </div>
+                <div id="chromePlated" class="flex9">
+                    <h5>Default Chrome-Plated Pieces</h5>
+                    <img class="piece-config" src="/assets/chess-pieces/chromePlated/black/chess-knight-black.svg">
+                </div>
+                <h2>Chess Board</h2>
+                <div id="green-board" class="flex10">
+                    <h5>Default Board</h5>
+                    <p id="green" class="board-config"></p>
+                </div>
+                <div id="blue-board" class="flex10">
+                    <h5>Blue Board</h5>
+                    <p id="blue" class="board-config"></p>
+                </div>
+                <button id="choose-op">Choose Options</button>
+            </form>
+    </div>
+    <%- include('../include/partials/chat') %>
+
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="js/spinner.js"></script>
+        <script src="js/index.js"></script>
+        <script src="js/config.js"></script>
+        <script src="js/responseMessage.js"></script>
+
+        <%- include('../include/footer') %>

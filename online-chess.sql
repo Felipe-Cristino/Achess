@@ -22,6 +22,14 @@ CREATE TABLE user_info(
     CONSTRAINT userID FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
+CREATE TABLE user_config(
+  user_id INT,
+    pieces VARCHAR(31) DEFAULT 'square',
+    board VARCHAR(31) DEFAULT 'green',
+    KEY userID2(user_id),
+    CONSTRAINT userID2 FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
 CREATE TABLE games(
 	id INT AUTO_INCREMENT PRIMARY KEY,
     timer VARCHAR(2),
@@ -60,6 +68,10 @@ BEGIN
         (userId, 'funny', 'blitz'),
         (userId, 'funny', 'rapid');
 
+    INSERT INTO user_config (user_id, pieces, board)
+    VALUES
+        (userId, 'square', 'green-board');
+
 END $$
 DELIMITER ;
 
@@ -93,7 +105,9 @@ BEGIN
     ELSEIF points_1 < 2100 THEN
 		SET user_rank_1 := "Gold";
     ELSEIF points_1 < 2400 THEN
-		SET user_rank_1 := "Platinum";
+		SET user_rank_1 := "Platinum 1";
+    ELSEIF points_1 < 2550 THEN
+		SET user_rank_1 := "Platinum 2";
     ELSEIF points_1 < 2650 THEN
 		SET user_rank_1 := "Diamond";
     ELSEIF points_1 < 2800 THEN
@@ -101,7 +115,7 @@ BEGIN
     ELSEIF points_1 < 2900 THEN
 		SET user_rank_1 := "Grand-Master";  
 	ELSE
-		SET user_rank_1 := "Challenger";
+		SET user_rank_1 := "Titan";
 	END IF;
     
     IF points_2 < 500 THEN
@@ -115,7 +129,9 @@ BEGIN
     ELSEIF points_2 < 2100 THEN
 		SET user_rank_2 := "Gold";
     ELSEIF points_2 < 2400 THEN
-		SET user_rank_2 := "Platinum";
+		SET user_rank_2 := "Platinum 1";
+    ELSEIF points_2 < 2550 THEN
+		SET user_rank_2 := "Platinum 2";
     ELSEIF points_2 < 2650 THEN
 		SET user_rank_2 := "Diamond";
     ELSEIF points_2 < 2800 THEN
@@ -123,7 +139,7 @@ BEGIN
     ELSEIF points_2 < 2900 THEN
 		SET user_rank_2 := "Grand-Master";  
 	ELSE
-		SET user_rank_2 := "Challenger";
+		SET user_rank_2 := "Titan";
 	END IF;
     
     UPDATE user_info SET user_points=points_1, user_rank=user_rank_1 WHERE user_id=userId_1

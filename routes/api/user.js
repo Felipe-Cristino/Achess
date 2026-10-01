@@ -1,6 +1,6 @@
 const {Router} = require("express");
 const { check } = require("express-validator");
-const { register, login, getInfo, deleteAccount, changeUsername, changeEmail, changeProfileImage, changePassword, logout } = require("../../controllers/api/user");
+const { register, login, getInfo, deleteAccount, changeUsername, changeEmail, changeProfileImage, configStyles, changePassword, logout } = require("../../controllers/api/user");
 const {isAuthorized} = require("../../middlewares/user")
 
 const router = Router();
@@ -30,6 +30,9 @@ router.put("/user/email/:userId", isAuthorized, [
 
 router.put("/user/profileImage/:userId", isAuthorized, [
 ], changeProfileImage);
+
+router.put("/user/configStyles/:userId", isAuthorized, [
+], configStyles);
 
 router.put("/user/password/:userId", isAuthorized, [
     check('oldPassword', "Old password is required").notEmpty(),

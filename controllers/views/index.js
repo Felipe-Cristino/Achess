@@ -82,6 +82,14 @@ exports.getIconsPage = (req, res) => {
     res.render("icons", { authorized: true });
 }
 
+exports.getConfigPage = (req, res) => {
+    if (!req.cookies.token) {
+        return res.redirect("/login")
+    }
+
+    res.render("config", { authorized: true });
+}
+
 exports.getPlayedGamesPage = (req, res) => {
     if (!req.cookies.token) {
         return res.redirect("/login")

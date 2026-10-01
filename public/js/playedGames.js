@@ -29,7 +29,7 @@ const displayGameMoves = (moves) => {
                 <td>${to}</td>
                 <td>${time ?? '-'}</td>
                 <td>
-                    <img src="../../assets/chess-icons/${pieceColor}/chess-${piece}-${pieceColor}.svg" alt=""Checc Piece" >
+                    <img src="../../assets/chess-pieces/${pieceColor}/chess-${piece}-${pieceColor}.svg" alt=""Checc Piece" >
                 </td>
             </tr>
         `
