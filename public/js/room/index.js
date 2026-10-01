@@ -1628,8 +1628,6 @@ socket.on("receive-game-details", (details) => {
         playerOneBoard = gameDetails.config.board;
     }
 
-    console.log(playerOnePieces);
-
     let game_time = null;
     if (gameDetails.time <= 3) {
         game_time = "bullet";
