@@ -1,5 +1,5 @@
-let chosenPiece = null;
-let chosenBoard = null;
+let chosenPiece = "square";
+let chosenBoard = "green-board";
 const piecesConfig = document.querySelectorAll(".flex9");
 const boardConfig = document.querySelectorAll(".flex10");
 const configForm = document.getElementById("config-form");
@@ -48,10 +48,6 @@ const submitForm = (url, body) => {
     .then(data => {
         if(data.error){
             throw Error(data.error);
-        }
-
-        if(body.imagemProfile){
-            user.imagemProfile = body.imagemProfile;
         }
 
         setToastType('success');

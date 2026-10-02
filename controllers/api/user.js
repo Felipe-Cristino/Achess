@@ -3,12 +3,15 @@ const bcrypt = require("bcryptjs")
 const db = require("../../config/db");
 const { validationResult } = require("express-validator");
 const redisClient = require("../../config/redis");
+const axios = require('axios');
 
 const dotenv = require("dotenv")
 
 dotenv.config()
 
 const jwtSecret = process.env.JWT_SECRET || "secret";
+
+const SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY;
 
 exports.register = (req, res) => {
     try {
@@ -105,7 +108,7 @@ exports.register = (req, res) => {
     }
 }
 
-exports.login = (req, res) => {
+exports.login = async (req, res) => {
     try {
         const errors = validationResult(req);
 
@@ -113,7 +116,25 @@ exports.login = (req, res) => {
             return res.redirect("/login?error=" + errors.array()[0].msg)
         }
 
-        const { email, password } = req.body;
+        const { email, password, recaptchaToken } = req.body;
+        //=========================================================
+        const response = await axios.post(
+            'https://www.google.com/recaptcha/api/siteverify',
+            null,
+            {
+                params: {
+                    secret: SECRET_KEY,
+                    response: recaptchaToken
+                }
+            }
+        );
+
+        const { success, score } = response.data;
+
+        if (!success || score < 0.5) {
+            return res.send('reCAPTCHA verification failed. Please try again.');
+        }
+        //========================================================
 
         let query = `SELECT * FROM users WHERE email='${email}'`;
 
