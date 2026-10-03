@@ -75,27 +75,27 @@ exports.register = (req, res) => {
 
                         res.cookie("user_rank_normal_rapid", 'Silver', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
                         res.cookie("user_points_normal_rapid", 1500, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-                        res.cookie("user_brasao_normal_rapid", "/assets/brasoes/brasao-silver.jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                        res.cookie("user_brasao_normal_rapid", "/assets/brasoes/brasao-Silver.jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
 
                         res.cookie("user_rank_normal_blitz", 'Silver', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
                         res.cookie("user_points_normal_blitz", 1500, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-                        res.cookie("user_brasao_normal_blitz", "/assets/brasoes/brasao-silver.jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                        res.cookie("user_brasao_normal_blitz", "/assets/brasoes/brasao-Silver.jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
 
                         res.cookie("user_rank_normal_bullet", 'Silver', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
                         res.cookie("user_points_normal_bullet", 1500, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-                        res.cookie("user_brasao_normal_bullet", "/assets/brasoes/brasao-silver.jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                        res.cookie("user_brasao_normal_bullet", "/assets/brasoes/brasao-Silver.jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
 
                         res.cookie("user_rank_funny_rapid", 'Silver', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
                         res.cookie("user_points_funny_rapid", 1500, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-                        res.cookie("user_brasao_funny_rapid", "/assets/brasoes/brasao-silver.jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                        res.cookie("user_brasao_funny_rapid", "/assets/brasoes/brasao-Silver.jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
 
                         res.cookie("user_rank_funny_blitz", 'Silver', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
                         res.cookie("user_points_funny_blitz", 1500, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-                        res.cookie("user_brasao_funny_blitz", "/assets/brasoes/brasao-silver.jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                        res.cookie("user_brasao_funny_blitz", "/assets/brasoes/brasao-Silver.jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
 
                         res.cookie("user_rank_funny_bullet", 'Silver', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
                         res.cookie("user_points_funny_bullet", 1500, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-                        res.cookie("user_brasao_funny_bullet", "/assets/brasoes/brasao-silver.jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+                        res.cookie("user_brasao_funny_bullet", "/assets/brasoes/brasao-Silver.jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
 
                         res.redirect("/?success=You have register your user successfully");
                     })

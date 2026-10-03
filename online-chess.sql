@@ -13,7 +13,7 @@ CREATE TABLE users(
 
 CREATE TABLE user_info(
 	user_id INT,
-    user_rank ENUM('Wood', 'Iron', 'Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond', 'Master', 'Grand-Master', 'Challenger') DEFAULT 'Silver',
+    user_rank ENUM('Wood', 'Iron', 'Bronze', 'Silver', 'Gold', 'Platinum-1', 'Platinum-2', 'Diamond', 'Master', 'Grand-Master', 'Titan') DEFAULT 'Silver',
     user_points INT DEFAULT 1500,
     game_mode ENUM('normal', 'funny') DEFAULT 'normal',
     game_time ENUM('rapid', 'blitz', 'bullet') DEFAULT 'blitz',
@@ -25,7 +25,7 @@ CREATE TABLE user_info(
 CREATE TABLE user_config(
   user_id INT,
     pieces VARCHAR(31) DEFAULT 'square',
-    board VARCHAR(31) DEFAULT 'green',
+    board VARCHAR(31) DEFAULT 'green-board',
     KEY userID2(user_id),
     CONSTRAINT userID2 FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
 );
@@ -105,9 +105,9 @@ BEGIN
     ELSEIF points_1 < 2100 THEN
 		SET user_rank_1 := "Gold";
     ELSEIF points_1 < 2400 THEN
-		SET user_rank_1 := "Platinum 1";
+		SET user_rank_1 := "Platinum-1";
     ELSEIF points_1 < 2550 THEN
-		SET user_rank_1 := "Platinum 2";
+		SET user_rank_1 := "Platinum-2";
     ELSEIF points_1 < 2650 THEN
 		SET user_rank_1 := "Diamond";
     ELSEIF points_1 < 2800 THEN
@@ -129,9 +129,9 @@ BEGIN
     ELSEIF points_2 < 2100 THEN
 		SET user_rank_2 := "Gold";
     ELSEIF points_2 < 2400 THEN
-		SET user_rank_2 := "Platinum 1";
+		SET user_rank_2 := "Platinum-1";
     ELSEIF points_2 < 2550 THEN
-		SET user_rank_2 := "Platinum 2";
+		SET user_rank_2 := "Platinum-2";
     ELSEIF points_2 < 2650 THEN
 		SET user_rank_2 := "Diamond";
     ELSEIF points_2 < 2800 THEN
