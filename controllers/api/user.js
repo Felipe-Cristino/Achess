@@ -4,8 +4,9 @@ const db = require("../../config/db");
 const { validationResult } = require("express-validator");
 const redisClient = require("../../config/redis");
 const axios = require('axios');
-
+const mysql = require("mysql2/promise");
 const dotenv = require("dotenv")
+const transporter = require("../../config/email");
 
 dotenv.config()
 
@@ -13,7 +14,103 @@ const jwtSecret = process.env.JWT_SECRET || "secret";
 
 const SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY;
 
-exports.register = (req, res) => {
+// exports.register = (req, res) => {
+//     try {
+//         const errors = validationResult(req);
+
+//         if (!errors.isEmpty()) {
+//             return res.redirect("/register?error=" + errors.array()[0].msg)
+//         }
+
+//         const { username, email, password, confirmPassword } = req.body;
+
+//         if (password !== confirmPassword) {
+//             return res.redirect("/register?error=Passwords do not match!");
+//         }
+
+//         let query = `SELECT id FROM users WHERE username='${username}' OR email='${email}'`;
+
+//         db.query(query, async (err, result) => {
+//             if (err) {
+//                 throw err;
+//             }
+
+//             if (result.length > 0) {
+//                 return res.redirect("/register?error=Username or email is aleardy taken!");
+//             }
+
+//             const encryptedPassword = await bcrypt.hash(password, 10);
+
+//             query = `CALL createUser('${username}', '${email}', '${encryptedPassword}')`;
+
+//             db.query(query, (err) => {
+//                 if (err) {
+//                     throw err;
+//                 }
+
+//                 query = `SELECT id FROM users WHERE email='${email}'`;
+
+//                 db.query(query, (err, result) => {
+//                     if (err) {
+//                         throw err;
+//                     }
+
+//                     if (result.length === 0) {
+//                         return res.redirect("/register?error=Something went wrong!");
+//                     }
+
+//                     let userId = result[0].id;
+
+//                     const payload = {
+//                         id: userId, username, email, profileImage: null
+//                     };
+
+//                     jwt.sign(payload, jwtSecret, (err, token) => {
+//                         if (err) {
+//                             throw err;
+//                         }
+
+//                         res.cookie("token", token, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+
+//                         res.cookie("profileImage", null, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+
+//                         res.cookie("user_rank_normal_rapid", 'Silver', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+//                         res.cookie("user_points_normal_rapid", 1500, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+//                         res.cookie("user_brasao_normal_rapid", "/assets/brasoes/brasao-Silver.jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+
+//                         res.cookie("user_rank_normal_blitz", 'Silver', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+//                         res.cookie("user_points_normal_blitz", 1500, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+//                         res.cookie("user_brasao_normal_blitz", "/assets/brasoes/brasao-Silver.jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+
+//                         res.cookie("user_rank_normal_bullet", 'Silver', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+//                         res.cookie("user_points_normal_bullet", 1500, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+//                         res.cookie("user_brasao_normal_bullet", "/assets/brasoes/brasao-Silver.jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+
+//                         res.cookie("user_rank_funny_rapid", 'Silver', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+//                         res.cookie("user_points_funny_rapid", 1500, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+//                         res.cookie("user_brasao_funny_rapid", "/assets/brasoes/brasao-Silver.jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+
+//                         res.cookie("user_rank_funny_blitz", 'Silver', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+//                         res.cookie("user_points_funny_blitz", 1500, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+//                         res.cookie("user_brasao_funny_blitz", "/assets/brasoes/brasao-Silver.jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+
+//                         res.cookie("user_rank_funny_bullet", 'Silver', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+//                         res.cookie("user_points_funny_bullet", 1500, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+//                         res.cookie("user_brasao_funny_bullet", "/assets/brasoes/brasao-Silver.jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+
+//                         res.redirect("/?success=You have register your user successfully");
+//                     })
+//                 })
+//             })
+//         })
+//     } catch (err) {
+//         console.log(err)
+//         res.redirect("/register?error=Something went wrong!");
+//     }
+// }
+
+exports.register = async (req, res) => {
+
     try {
         const errors = validationResult(req);
 
@@ -27,85 +124,159 @@ exports.register = (req, res) => {
             return res.redirect("/register?error=Passwords do not match!");
         }
 
-        let query = `SELECT id FROM users WHERE username='${username}' OR email='${email}'`;
+        const db = mysql.createPool({
+            host: "localhost",
+            user: "felipebc",
+            password: "abfelipe12",
+            database: "achess"
+        });
 
-        db.query(query, async (err, result) => {
+        const [result] = await db.query
+            ("SELECT id FROM users WHERE username = ? OR email = ?", [username, email]);
+
+        if (result.length > 0) {
+            return res.redirect("/register?error=Username or email is aleardy taken!");
+        }
+
+        const encryptedPassword = await bcrypt.hash(password, 10);
+
+        const [result2] = await db.query("CALL createUser(?, ?, ?)",
+            [username, email, encryptedPassword]);
+
+        const userId = result2[0][0].userId;
+        console.log("Oi1: " + userId);
+        // 2. Gerar código
+        const codigo = Math.floor(100000 + Math.random() * 900000);
+
+        // 3. Salvar código
+        await db.query(
+            "UPDATE users SET verification_code = ? WHERE id = ?",
+            [codigo, userId]
+        );
+
+        // 4. Enviar e-mail
+        await transporter.sendMail({
+            from: process.env.EMAIL_USER,
+            to: email,
+            subject: "Confirme seu e-mail",
+            html: `
+                <h2>Bem-vindo ao Achess!</h2>
+
+                <p>Seu código de confirmação é:</p>
+
+                <h1>${codigo}</h1>
+
+                <p>Digite esse código no site para confirmar sua conta.</p>
+            `
+        });
+
+        // res.json({
+        //     success: true,
+        //     message: "Usuário criado. Verifique seu e-mail."
+        // });
+
+        return res.redirect("/verifyEmail");
+        //===========================================================
+    } catch (error) {
+
+        console.error(error);
+
+        res.status(500).json({
+            error: "Erro ao criar usuário"
+        });
+    }
+};
+
+exports.verifyEmail = async (req, res) => {
+
+    const { userId, codigoInformado } = req.body;
+
+    const db = mysql.createPool({
+        host: "localhost",
+        user: "felipebc",
+        password: "abfelipe12",
+        database: "achess"
+    });
+
+    const [rows] = await db.query(
+        "SELECT * FROM users WHERE id = ?",
+        [userId]
+    );
+
+    if (rows.length === 0) {
+        return res.status(404).json({
+            error: "Usuário não encontrado"
+        });
+    }
+
+    const user = rows[0];
+
+    if (String(codigoInformado) !== String(user.verification_code)) {
+        return res.status(400).json({
+            error: "Código inválido"
+        });
+    }
+
+    await db.query(
+        `UPDATE users 
+         SET email_verified = 1, verification_code = NULL 
+         WHERE id = ?`,
+        [userId]
+    );
+
+    let query = `SELECT id FROM users WHERE email='${email}'`;
+
+    db.query(query, (err, result) => {
+        if (err) {
+            throw err;
+        }
+
+        if (result.length === 0) {
+            return res.redirect("/register?error=Something went wrong!");
+        }
+
+        let userId = result[0].id;
+
+        const payload = {
+            id: userId, username, email, profileImage: null
+        };
+
+        jwt.sign(payload, jwtSecret, (err, token) => {
             if (err) {
                 throw err;
             }
 
-            if (result.length > 0) {
-                return res.redirect("/register?error=Username or email is aleardy taken!");
-            }
+            res.cookie("token", token, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
 
-            const encryptedPassword = await bcrypt.hash(password, 10);
+            res.cookie("profileImage", null, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
 
-            query = `CALL createUser('${username}', '${email}', '${encryptedPassword}')`;
+            res.cookie("user_rank_normal_rapid", 'Silver', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+            res.cookie("user_points_normal_rapid", 1500, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+            res.cookie("user_brasao_normal_rapid", "/assets/brasoes/brasao-Silver.jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
 
-            db.query(query, (err) => {
-                if (err) {
-                    throw err;
-                }
+            res.cookie("user_rank_normal_blitz", 'Silver', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+            res.cookie("user_points_normal_blitz", 1500, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+            res.cookie("user_brasao_normal_blitz", "/assets/brasoes/brasao-Silver.jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
 
-                query = `SELECT id FROM users WHERE email='${email}'`;
+            res.cookie("user_rank_normal_bullet", 'Silver', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+            res.cookie("user_points_normal_bullet", 1500, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+            res.cookie("user_brasao_normal_bullet", "/assets/brasoes/brasao-Silver.jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
 
-                db.query(query, (err, result) => {
-                    if (err) {
-                        throw err;
-                    }
+            res.cookie("user_rank_funny_rapid", 'Silver', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+            res.cookie("user_points_funny_rapid", 1500, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+            res.cookie("user_brasao_funny_rapid", "/assets/brasoes/brasao-Silver.jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
 
-                    if (result.length === 0) {
-                        return res.redirect("/register?error=Something went wrong!");
-                    }
+            res.cookie("user_rank_funny_blitz", 'Silver', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+            res.cookie("user_points_funny_blitz", 1500, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+            res.cookie("user_brasao_funny_blitz", "/assets/brasoes/brasao-Silver.jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
 
-                    let userId = result[0].id;
+            res.cookie("user_rank_funny_bullet", 'Silver', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+            res.cookie("user_points_funny_bullet", 1500, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
+            res.cookie("user_brasao_funny_bullet", "/assets/brasoes/brasao-Silver.jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
 
-                    const payload = {
-                        id: userId, username, email, profileImage: null
-                    };
-
-                    jwt.sign(payload, jwtSecret, (err, token) => {
-                        if (err) {
-                            throw err;
-                        }
-
-                        res.cookie("token", token, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-
-                        res.cookie("profileImage", null, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-
-                        res.cookie("user_rank_normal_rapid", 'Silver', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-                        res.cookie("user_points_normal_rapid", 1500, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-                        res.cookie("user_brasao_normal_rapid", "/assets/brasoes/brasao-Silver.jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-
-                        res.cookie("user_rank_normal_blitz", 'Silver', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-                        res.cookie("user_points_normal_blitz", 1500, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-                        res.cookie("user_brasao_normal_blitz", "/assets/brasoes/brasao-Silver.jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-
-                        res.cookie("user_rank_normal_bullet", 'Silver', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-                        res.cookie("user_points_normal_bullet", 1500, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-                        res.cookie("user_brasao_normal_bullet", "/assets/brasoes/brasao-Silver.jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-
-                        res.cookie("user_rank_funny_rapid", 'Silver', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-                        res.cookie("user_points_funny_rapid", 1500, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-                        res.cookie("user_brasao_funny_rapid", "/assets/brasoes/brasao-Silver.jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-
-                        res.cookie("user_rank_funny_blitz", 'Silver', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-                        res.cookie("user_points_funny_blitz", 1500, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-                        res.cookie("user_brasao_funny_blitz", "/assets/brasoes/brasao-Silver.jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-
-                        res.cookie("user_rank_funny_bullet", 'Silver', { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-                        res.cookie("user_points_funny_bullet", 1500, { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-                        res.cookie("user_brasao_funny_bullet", "/assets/brasoes/brasao-Silver.jpeg", { maxAge: 1000 * 60 * 60 * 24 * 30 * 6, httpOnly: true, secure: false, sameSite: "strict" })
-
-                        res.redirect("/?success=You have register your user successfully");
-                    })
-                })
-            })
+            res.redirect("/?success=You have register your user successfully");
         })
-    } catch (err) {
-        console.log(err)
-        res.redirect("/register?error=Something went wrong!");
-    }
+    });
 }
 
 exports.login = async (req, res) => {

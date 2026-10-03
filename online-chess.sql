@@ -8,7 +8,9 @@ CREATE TABLE users(
     username VARCHAR(255) UNIQUE,
     email VARCHAR(255) UNIQUE,
     password VARCHAR(255),
-    profileImage VARCHAR(125)
+    profileImage VARCHAR(125) DEFAULT NULL,
+    verification_code VARCHAR(10) DEFAULT NULL,
+    email_verified BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE user_info(
@@ -56,8 +58,11 @@ CREATE PROCEDURE createUser(
 BEGIN
 	DECLARE userId INT;
     
-    INSERT INTO users(username, email, password) VALUES(_username, _email, _password);
-    SELECT id INTO userId FROM users WHERE username=_username;
+    INSERT INTO users(username, email, password) 
+    VALUES(_username, _email, _password);
+    -- SELECT id INTO userId FROM users WHERE username=_username;
+
+    SET userId = LAST_INSERT_ID();
 
     INSERT INTO user_info (user_id, game_mode, game_time)
     VALUES
@@ -71,6 +76,8 @@ BEGIN
     INSERT INTO user_config (user_id, pieces, board)
     VALUES
         (userId, 'square', 'green-board');
+
+    SELECT userId AS userId;
 
 END $$
 DELIMITER ;

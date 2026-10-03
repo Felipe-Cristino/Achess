@@ -1,6 +1,6 @@
 const {Router} = require("express");
 const { check } = require("express-validator");
-const { register, login, getInfo, deleteAccount, changeUsername, changeEmail, changeProfileImage, configStyles, changePassword, logout } = require("../../controllers/api/user");
+const { register, verifyEmail, login, getInfo, deleteAccount, changeUsername, changeEmail, changeProfileImage, configStyles, changePassword, logout } = require("../../controllers/api/user");
 const {isAuthorized} = require("../../middlewares/user")
 
 const router = Router();
@@ -12,6 +12,9 @@ router.post("/register", [
     check('password', "Password is required").notEmpty(),
     check('confirmPassword', "Please confirm your password").notEmpty(),
 ], register)
+
+router.post("/verifyEmail", [
+], verifyEmail)
 
 router.post("/login", [
     check('email', "Email is required").notEmpty(),
