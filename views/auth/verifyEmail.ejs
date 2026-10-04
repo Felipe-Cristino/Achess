@@ -11,8 +11,9 @@
     <h1>Confirme seu e-mail</h1>
     <p> Enviamos um código de confirmação para o seu e-mail. </p>
     <form action="/api/verifyEmail" method="POST">
+        <input type="hidden" name="userId" value="<%= userId %>">
         <label for="codigo"> Código de confirmação: </label>
-        <input type="text" id="codigo" name="codigo" placeholder="Digite o código" maxlength="6" required>
+        <input type="text" id="codigo" name="codigoInformado" placeholder="Digite o código" maxlength="6" required>
         <button type="submit">Confirmar e-mail </button>
     </form>
 </body>
