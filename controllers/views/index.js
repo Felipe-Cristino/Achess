@@ -1,3 +1,6 @@
+const jwt = require("jsonwebtoken");
+const mysql = require("mysql2/promise");
+
 exports.getRegisterPage = (req, res) => {
     if (req.cookies.token) {
         return res.redirect("/")
@@ -46,32 +49,156 @@ exports.getGames2Page = (req, res) => {
     res.render("games2", { authorized: true });
 }
 
-exports.getRoomPage1 = (req, res) => {
-    if (!req.cookies.token) {
-        return res.redirect("/login")
+exports.getRoomPage1 = async (req, res) => {
+    try {
+        const token = req.cookies.token;
+
+        if (!token) {
+            return res.redirect("/login");
+        }
+
+        // Decodifica e verifica o JWT
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        // Pega o ID que foi colocado no JWT
+        const userId = decoded.id;
+
+        const db = mysql.createPool({
+            host: "localhost",
+            user: "felipebc",
+            password: "abfelipe12",
+            database: "achess"
+        });
+
+        const [result] = await db.query(
+            "SELECT board FROM user_config WHERE user_id = ?",
+            [userId]
+        );
+
+        const playerOneBoard = result[0]?.board;
+
+        res.render("room1", {
+            playerOneBoard, authorized: true
+        });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Erro ao buscar configuração");
     }
-    res.render("room1", { authorized: true });
+};
+
+exports.getRoomPage2 = async (req, res) => {
+    try {
+        const token = req.cookies.token;
+
+        if (!token) {
+            return res.redirect("/login");
+        }
+
+        // Decodifica e verifica o JWT
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        // Pega o ID que foi colocado no JWT
+        const userId = decoded.id;
+
+        const db = mysql.createPool({
+            host: "localhost",
+            user: "felipebc",
+            password: "abfelipe12",
+            database: "achess"
+        });
+
+        const [result] = await db.query(
+            "SELECT board FROM user_config WHERE user_id = ?",
+            [userId]
+        );
+
+        const playerTwoBoard = result[0]?.board;
+
+        res.render("room2", {
+            playerTwoBoard, authorized: true
+        });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Erro ao buscar configuração");
+    }
 }
 
-exports.getRoomPage2 = (req, res) => {
-    if (!req.cookies.token) {
-        return res.redirect("/login")
+exports.getRoomPage3 = async (req, res) => {
+    try {
+        const token = req.cookies.token;
+
+        if (!token) {
+            return res.redirect("/login");
+        }
+
+        // Decodifica e verifica o JWT
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        // Pega o ID que foi colocado no JWT
+        const userId = decoded.id;
+
+        const db = mysql.createPool({
+            host: "localhost",
+            user: "felipebc",
+            password: "abfelipe12",
+            database: "achess"
+        });
+
+        const [result] = await db.query(
+            "SELECT board FROM user_config WHERE user_id = ?",
+            [userId]
+        );
+
+        const playerOneBoard = result[0]?.board;
+
+        res.render("room3", {
+            playerOneBoard, authorized: true
+        });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Erro ao buscar configuração");
     }
-    res.render("room2", { authorized: true });
 }
 
-exports.getRoomPage3 = (req, res) => {
-    if (!req.cookies.token) {
-        return res.redirect("/login")
-    }
-    res.render("room3", { authorized: true });
-}
+exports.getRoomPage4 = async (req, res) => {
+    try {
+        const token = req.cookies.token;
 
-exports.getRoomPage4 = (req, res) => {
-    if (!req.cookies.token) {
-        return res.redirect("/login")
+        if (!token) {
+            return res.redirect("/login");
+        }
+
+        // Decodifica e verifica o JWT
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        // Pega o ID que foi colocado no JWT
+        const userId = decoded.id;
+
+        const db = mysql.createPool({
+            host: "localhost",
+            user: "felipebc",
+            password: "abfelipe12",
+            database: "achess"
+        });
+
+        const [result] = await db.query(
+            "SELECT board FROM user_config WHERE user_id = ?",
+            [userId]
+        );
+
+        const playerTwoBoard = result[0]?.board;
+
+        res.render("room4", {
+            playerTwoBoard, authorized: true
+        });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Erro ao buscar configuração");
     }
-    res.render("room4", { authorized: true });
 }
 
 exports.getStatsPage = (req, res) => {
@@ -79,7 +206,7 @@ exports.getStatsPage = (req, res) => {
         return res.redirect("/login")
     }
 
-    res.render("stats", { authorized: true});
+    res.render("stats", { authorized: true });
 }
 
 exports.getIconsPage = (req, res) => {

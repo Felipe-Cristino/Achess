@@ -518,13 +518,16 @@ exports.configStyles = (req, res) => {
 
         const { chosenPiece, chosenBoard } = req.body;
 
-        let query = `UPDATE user_config SET pieces = ?, board = ? WHERE user_id = ?`;
+        const query = ` UPDATE user_config SET pieces = ?, board = ? WHERE user_id = ? `;
 
-        db.query(query, [chosenPiece, chosenBoard, req.user.id], (err) => {
-            if (err) throw err;
-
-            res.json({ message: "Your config styles is ready!" });
-        });
+        db.query(query, [chosenPiece, chosenBoard, req.user.id],
+            (err) => {
+                if (err) {
+                    console.log(err);
+                    return res.status(500).json({ error: err.message });
+                }
+                res.json({ message: "Your config styles is ready!" });
+            });
     }
     catch (err) {
         console.log(err)

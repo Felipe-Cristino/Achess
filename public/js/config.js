@@ -5,8 +5,8 @@ const boardConfig = document.querySelectorAll(".flex10");
 const configForm = document.getElementById("config-form");
 let user;
 
-piecesConfig.forEach((piece)=>{
-    piece.addEventListener("click", ()=>{
+piecesConfig.forEach((piece) => {
+    piece.addEventListener("click", () => {
 
         piecesConfig.forEach((p) => {
             p.classList.remove("selecionado2");
@@ -17,8 +17,8 @@ piecesConfig.forEach((piece)=>{
     });
 });
 
-boardConfig.forEach((board)=>{
-    board.addEventListener("click", ()=>{
+boardConfig.forEach((board) => {
+    board.addEventListener("click", () => {
 
         boardConfig.forEach((b) => {
             b.classList.remove("selecionado2");
@@ -30,7 +30,7 @@ boardConfig.forEach((board)=>{
 });
 
 const fetchUserCallback = (data) => {
-    
+
     user = data;
     socket.emit('user-connected', user);
     hideSpinner()
@@ -44,22 +44,22 @@ const submitForm = (url, body) => {
             "Content-Type": "application/json"
         }
     })
-    .then(res => res.json())
-    .then(data => {
-        if(data.error){
-            throw Error(data.error);
-        }
+        .then(res => res.json())
+        .then(data => {
+            if (data.error) {
+                throw Error(data.error);
+            }
 
-        setToastType('success');
-        displayToast(data.message);
-    })
-    .catch(err => {
-        setToastType("error");
-        displayToast(err.message)
-    })
-    .finally(() => {
-        window.location.href = "/";
-    });
+            setToastType('success');
+            displayToast(data.message);
+        })
+        .catch(err => {
+            setToastType("error");
+            displayToast(err.message)
+        })
+        .finally(() => {
+            window.location.href = "/";
+        });
 }
 
 fetchData('/api/user-info', fetchUserCallback)
@@ -67,7 +67,7 @@ fetchData('/api/user-info', fetchUserCallback)
 const handleConfigSubmit = (e) => {
     e.preventDefault();
 
-    submitForm(`/api/user/configStyles/${user.id}`, {chosenPiece, chosenBoard});
+    submitForm(`/api/user/configStyles/${user.id}`, { chosenPiece, chosenBoard });
 }
 
 configForm.addEventListener("submit", handleConfigSubmit);

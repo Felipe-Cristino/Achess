@@ -205,7 +205,7 @@ nav{
     font-size: 2.5rem;
     font-weight: bold;
     font-family:'Times New Roman', Times, serif;
-    color: var(--main-color-green);
+    color: #036B3A;
 }
 
 .auth-form h1 img{
@@ -933,7 +933,7 @@ nav{
     position: relative;
 }
 
-.chess-board .box:nth-child(-2n+8), 
+/* .chess-board .box:nth-child(-2n+8), 
 .chess-board .box:nth-child(8) ~ .box:nth-child(-2n+15), 
 .chess-board .box:nth-child(16) ~ .box:nth-child(-2n+24),
 .chess-board .box:nth-child(24) ~ .box:nth-child(-2n+31),
@@ -942,6 +942,28 @@ nav{
 .chess-board .box:nth-child(48) ~ .box:nth-child(-2n+56),
 .chess-board .box:nth-child(56) ~ .box:nth-child(-2n+63) {
     background: var(--main-color-green);
+} */
+
+.chess-board.green-board .box:nth-child(-2n+8), 
+.chess-board.green-board .box:nth-child(8) ~ .box:nth-child(-2n+15), 
+.chess-board.green-board .box:nth-child(16) ~ .box:nth-child(-2n+24),
+.chess-board.green-board .box:nth-child(24) ~ .box:nth-child(-2n+31),
+.chess-board.green-board .box:nth-child(32) ~ .box:nth-child(-2n+40),
+.chess-board.green-board .box:nth-child(40) ~ .box:nth-child(-2n+47),
+.chess-board.green-board .box:nth-child(48) ~ .box:nth-child(-2n+56),
+.chess-board.green-board .box:nth-child(56) ~ .box:nth-child(-2n+63) {
+    background: var(--main-color-green);
+}
+
+.chess-board.blue-board .box:nth-child(-2n+8), 
+.chess-board.blue-board .box:nth-child(8) ~ .box:nth-child(-2n+15), 
+.chess-board.blue-board .box:nth-child(16) ~ .box:nth-child(-2n+24),
+.chess-board.blue-board .box:nth-child(24) ~ .box:nth-child(-2n+31),
+.chess-board.blue-board .box:nth-child(32) ~ .box:nth-child(-2n+40),
+.chess-board.blue-board .box:nth-child(40) ~ .box:nth-child(-2n+47),
+.chess-board.blue-board .box:nth-child(48) ~ .box:nth-child(-2n+56),
+.chess-board.blue-board .box:nth-child(56) ~ .box:nth-child(-2n+63) {
+    background: blue;
 }
 
 .box .piece{
@@ -1751,4 +1773,28 @@ tbody td img{
 
 #config-form > h2 {
     color: red;
+}
+
+/* verifyEmail ======================================= */
+
+#body-verify {
+    width: 800px;
+    color: black;
+    text-align: center;
+    margin: 50px auto;
+    font-size: 2rem;
+    line-height: 2em;
+}
+
+#verify-button {
+    background-color: green;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#codigo {
+    width: 200px;
+    height: 40px;
+    padding: 10px;
 }
