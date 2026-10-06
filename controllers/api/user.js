@@ -205,7 +205,7 @@ exports.login = async (req, res) => {
 
         let query = "SELECT * FROM users WHERE email = ?";
 
-        db.query(query, email, async (err, result) => {
+        db.query(query, [email], async (err, result) => {
             if (err) {
                 throw err;
             }
@@ -225,7 +225,7 @@ exports.login = async (req, res) => {
             query = `SELECT user_rank, user_points FROM user_info WHERE user_id = ? 
             AND game_mode IN ('normal', 'funny') AND game_time IN ('rapid', 'blitz', 'bullet')`;
 
-            db.query(query, user.id, (err, result) => {
+            db.query(query, [user.id], (err, result) => {
                 if (err) {
                     throw err;
                 }
@@ -398,7 +398,7 @@ exports.changeUsername = (req, res) => {
 
         let query = "SELECT id FROM users WHERE username = ?";
 
-        db.query(query, username, (err, result) => {
+        db.query(query, [username], (err, result) => {
             if (err) throw err;
 
             if (result.length > 0) {
@@ -444,7 +444,7 @@ exports.changeEmail = (req, res) => {
 
         let query = "SELECT id FROM users WHERE email = ?";
 
-        db.query(query, email, (err, result) => {
+        db.query(query, [email], (err, result) => {
             if (err) throw err;
 
             if (result.length > 0) {
@@ -547,7 +547,7 @@ exports.changePassword = (req, res) => {
 
         let query = "SELECT password FROM users WHERE id = ?";
 
-        db.query(query, req.user.id, async (err, result) => {
+        db.query(query, [req.user.id], async (err, result) => {
             if (err) throw err;
 
             const isMatch = await bcrypt.compare(oldPassword, result[0].password);
@@ -596,7 +596,7 @@ exports.deleteAccount = (req, res) => {
     try {
         let query = "DELETE FROM users WHERE id = ?";
 
-        db.query(query, req.user.id, (err) => {
+        db.query(query, [req.user.id], (err) => {
             if (err) throw err;
 
             res.json({ message: "Account deleted successfully" })
