@@ -1483,7 +1483,7 @@ const performElPassant = (currentPlayer, prevPawnPosition, newPawnPosition) => {
 
 // Draw Logic
 const checkForDraw = () => {
-    const pawnsBlack = blackCapturedPieces.querySelectorAll('li img[src*="pawn"]');
+    const pawnsBlack = blackCapturedPieces.SelectorAll('li img[src*="pawn"]');
     const quantidadePeoesBlackCaptured = pawnsBlack.length;
     const rooksBlack = blackCapturedPieces.querySelectorAll('li img[src*="rook"]');
     const quantidadeTorresBlackCaptured = rooksBlack.length;
@@ -1552,8 +1552,8 @@ const endGame = (playerOne, playerTwo, winner = null) => {
 
             socket.emit("update-score", roomId, winningPoints, -Math.abs(winningPoints), playerOne, playerTwo, "normal", gameDetails.time);
         } else {
-            winnerScore = playerOne[`user_points_normal_${game_time}`];
-            loserScore = playerTwo[`user_points_normal_${game_time}`];
+            winnerScore = playerTwo[`user_points_normal_${game_time}`];
+            loserScore = playerOne[`user_points_normal_${game_time}`];
 
             winningPoints = parseInt(10 + ((loserScore - winnerScore) * 1.4 / 100));
             if (winningPoints > 19) {

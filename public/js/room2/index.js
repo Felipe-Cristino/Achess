@@ -1725,8 +1725,8 @@ const endGame = (playerOne, playerTwo, winner = null) => {
 
             socket.emit("update-score", roomId, winningPoints, -Math.abs(winningPoints), playerOne, playerTwo, "funny", gameDetails.time);
         } else {
-            winnerScore = playerOne[`user_points_funny_${game_time}`];
-            loserScore = playerTwo[`user_points_funny_${game_time}`];
+            winnerScore = playerTwo[`user_points_funny_${game_time}`];
+            loserScore = playerOne[`user_points_funny_${game_time}`];
 
             winningPoints = parseInt(10 + ((loserScore - winnerScore) * 1.4 / 100));
             if (winningPoints > 19) {

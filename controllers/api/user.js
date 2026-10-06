@@ -203,9 +203,9 @@ exports.login = async (req, res) => {
         }
         //========================================================
 
-        let query = `SELECT * FROM users WHERE email='${email}'`;
+        let query = "SELECT * FROM users WHERE email = ?";
 
-        db.query(query, async (err, result) => {
+        db.query(query, email, async (err, result) => {
             if (err) {
                 throw err;
             }
@@ -222,10 +222,10 @@ exports.login = async (req, res) => {
                 return res.redirect("/login?error=Email or password is incorrect!");
             }
 
-            query = `SELECT user_rank, user_points FROM user_info WHERE user_id=${user.id} 
+            query = `SELECT user_rank, user_points FROM user_info WHERE user_id = ? 
             AND game_mode IN ('normal', 'funny') AND game_time IN ('rapid', 'blitz', 'bullet')`;
 
-            db.query(query, (err, result) => {
+            db.query(query, user.id, (err, result) => {
                 if (err) {
                     throw err;
                 }
@@ -396,18 +396,18 @@ exports.changeUsername = (req, res) => {
 
         const { username } = req.body;
 
-        let query = `SELECT id FROM users WHERE username='${username}'`;
+        let query = "SELECT id FROM users WHERE username = ?";
 
-        db.query(query, (err, result) => {
+        db.query(query, username, (err, result) => {
             if (err) throw err;
 
             if (result.length > 0) {
                 return res.status(400).json({ error: "Username is already taken" })
             }
 
-            query = `UPDATE users SET username='${username}' WHERE id=${req.user.id}`;
+            query = "UPDATE users SET username = ? WHERE id = ?";
 
-            db.query(query, (err) => {
+            db.query(query, [username, req.user.id], (err) => {
                 if (err) throw err;
 
                 const payload = {
@@ -442,18 +442,18 @@ exports.changeEmail = (req, res) => {
 
         const { email } = req.body;
 
-        let query = `SELECT id FROM users WHERE email='${email}'`;
+        let query = "SELECT id FROM users WHERE email = ?";
 
-        db.query(query, (err, result) => {
+        db.query(query, email, (err, result) => {
             if (err) throw err;
 
             if (result.length > 0) {
                 return res.status(400).json({ error: "Email is already taken" })
             }
 
-            query = `UPDATE users SET email='${email}' WHERE id=${req.user.id}`;
+            query = "UPDATE users SET email = ? WHERE id = ?";
 
-            db.query(query, (err) => {
+            db.query(query, [email, req.user.id], (err) => {
                 if (err) throw err;
 
                 const payload = {
@@ -483,9 +483,9 @@ exports.changeProfileImage = (req, res) => {
 
         const { profileImage } = req.body;
 
-        let query = `UPDATE users SET profileImage='${profileImage}' WHERE id=${req.user.id}`;
+        let query = "UPDATE users SET profileImage = ? WHERE id = ?";
 
-        db.query(query, (err) => {
+        db.query(query, [profileImage, req.user.id], (err) => {
             if (err) throw err;
 
             const payload = {
@@ -545,9 +545,9 @@ exports.changePassword = (req, res) => {
 
         const { oldPassword, newPassword } = req.body;
 
-        let query = `SELECT password FROM users WHERE id=${req.user.id}`;
+        let query = "SELECT password FROM users WHERE id = ?";
 
-        db.query(query, async (err, result) => {
+        db.query(query, req.user.id, async (err, result) => {
             if (err) throw err;
 
             const isMatch = await bcrypt.compare(oldPassword, result[0].password);
@@ -558,9 +558,9 @@ exports.changePassword = (req, res) => {
 
             const encryptedPassword = await bcrypt.hash(newPassword, 10)
 
-            query = `UPDATE users SET password='${encryptedPassword}' WHERE id=${req.user.id}`;
+            query = "UPDATE users SET password = ? WHERE id = ?";
 
-            db.query(query, (err) => {
+            db.query(query, [encryptedPassword, req.user.id], (err) => {
                 if (err) throw err;
 
                 res.json({ message: "Your password updated successfully!" });
@@ -594,9 +594,9 @@ exports.logout = (req, res) => {
 
 exports.deleteAccount = (req, res) => {
     try {
-        let query = `DELETE FROM users WHERE id=${req.user.id}`
+        let query = "DELETE FROM users WHERE id = ?";
 
-        db.query(query, (err) => {
+        db.query(query, req.user.id, (err) => {
             if (err) throw err;
 
             res.json({ message: "Account deleted successfully" })

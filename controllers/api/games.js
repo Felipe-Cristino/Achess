@@ -45,9 +45,9 @@ exports.getGameMoves = (req, res) => {
 
                 res.json(moves)
             }else{
-                let query = `SELECT moves FROM games WHERE id=${gameId}`;
+                let query = "SELECT moves FROM games WHERE id = ?";
 
-                db.query(query, (err, result) => {
+                db.query(query, [gameId], (err, result) => {
                     if(err) throw err;
 
                     if(result.length === 0){
