@@ -555,7 +555,7 @@ io.on("connection", (socket) => {
 
     socket.on("add-piece", ({ roomId, piece, img, corPeca, boxId }) => {
 
-        socket.to(roomId).emit("add-piece", {
+        io.to(roomId).emit("add-piece", {
             piece,
             img,
             corPeca,
@@ -566,6 +566,10 @@ io.on("connection", (socket) => {
 
     socket.on("spama-brasao", (roomId, player) => {
         io.to(roomId).emit("spama-brasao2", player);
+    })
+
+    socket.on("show-card", (roomId, carta) => {
+        io.to(roomId).emit("show-card2", carta);
     })
 
     socket.on("disconnect", () => {

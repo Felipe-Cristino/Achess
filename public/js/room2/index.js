@@ -964,10 +964,10 @@ const startGame = (playerTwo) => {
     playerTwoPieces = gameDetails.config.pieces;
     playerTwoBoard = gameDetails.config.board;
 
-    playerTwoRating = playerTwo[`user_points_normal_${game_time}`];
-    playerTwoRank = playerTwo[`user_rank_normal_${game_time}`];
+    playerTwoRating = playerTwo[`user_points_funny_${game_time}`];
+    playerTwoRank = playerTwo[`user_rank_funny_${game_time}`];
     playerTwoImage = playerTwo.profileImage;
-    playerTwoBrasao = playerTwo[`user_brasao_normal_${game_time}`];
+    playerTwoBrasao = playerTwo[`user_brasao_funny_${game_time}`];
 
     plTwoRating.innerText = playerTwoRating;
     plTwoRank.innerText = playerTwoRank;
@@ -1707,8 +1707,8 @@ const endGame = (playerOne, playerTwo, winner = null) => {
     if (winner) {
 
         if (winner === playerOne.username) {
-            winnerScore = playerOne[`user_points_normal_${game_time}`];
-            loserScore = playerTwo[`user_points_normal_${game_time}`];
+            winnerScore = playerOne[`user_points_funny_${game_time}`];
+            loserScore = playerTwo[`user_points_funny_${game_time}`];
 
             winningPoints = parseInt(10 + ((loserScore - winnerScore) * 1.4 / 100));
             if (winningPoints > 19) {
@@ -1725,8 +1725,8 @@ const endGame = (playerOne, playerTwo, winner = null) => {
 
             socket.emit("update-score", roomId, winningPoints, -Math.abs(winningPoints), playerOne, playerTwo, "funny", gameDetails.time);
         } else {
-            winnerScore = playerOne[`user_points_normal_${game_time}`];
-            loserScore = playerTwo[`user_points_normal_${game_time}`];
+            winnerScore = playerOne[`user_points_funny_${game_time}`];
+            loserScore = playerTwo[`user_points_funny_${game_time}`];
 
             winningPoints = parseInt(10 + ((loserScore - winnerScore) * 1.4 / 100));
             if (winningPoints > 19) {
@@ -1744,10 +1744,10 @@ const endGame = (playerOne, playerTwo, winner = null) => {
             socket.emit("update-score", roomId, -Math.abs(winningPoints), winningPoints, playerOne, playerTwo, "funny", gameDetails.time);
         }
     } else {
-        if (playerOne[`user_points_normal_${game_time}`] > playerTwo[`user_points_normal_${game_time}`]) {
+        if (playerOne[`user_points_funny_${game_time}`] > playerTwo[`user_points_funny_${game_time}`]) {
 
-            winningPoints = parseInt((playerOne[`user_points_normal_${game_time}`]
-                - playerTwo[`user_points_normal_${game_time}`]) * 1.4 / 100);
+            winningPoints = parseInt((playerOne[`user_points_funny_${game_time}`]
+                - playerTwo[`user_points_funny_${game_time}`]) * 1.4 / 100);
 
             if (winningPoints >= 9) {
                 winningPoints = 9;
@@ -1763,8 +1763,8 @@ const endGame = (playerOne, playerTwo, winner = null) => {
 
             socket.emit("update-score", roomId, -Math.abs(winningPoints), winningPoints, playerOne, playerTwo, "funny", gameDetails.time);
         } else {
-            winningPoints = parseInt((playerTwo[`user_points_normal_${game_time}`]
-                - playerOne[`user_points_normal_${game_time}`]) * 1.4 / 100);
+            winningPoints = parseInt((playerTwo[`user_points_funny_${game_time}`]
+                - playerOne[`user_points_funny_${game_time}`]) * 1.4 / 100);
 
             if (winningPoints >= 9) {
                 winningPoints = 9;
@@ -2143,12 +2143,7 @@ const listenersCartas = (lightCards, blackCards,
         if (lance >= waitLanceEspLight && estagioCarta01Light === 2
             && myTurn && lance % 2 === 0
         ) {
-            showCard.children[0].src = carta01LightImg;
-            showCard.classList.remove("hidden");
-            setTimeout(() => {
-                showCard.classList.add("hidden")
-                showCard.children[0].src = "";
-            }, 2000)
+            socket.emit("show-card", roomId, carta01LightImg);
             carta01LightCard.remove();
             efeitoCartasEsp(carta01LightNum);
 
@@ -2163,12 +2158,7 @@ const listenersCartas = (lightCards, blackCards,
         if (lance >= waitLanceEspLight && estagioCarta02Light === 2
             && myTurn && lance % 2 === 0
         ) {
-            showCard.children[0].src = carta02LightImg;
-            showCard.classList.remove("hidden");
-            setTimeout(() => {
-                showCard.classList.add("hidden")
-                showCard.children[0].src = "";
-            }, 2000)
+            socket.emit("show-card", roomId, carta02LightImg);
             carta02LightCard.remove();
             efeitoCartasEsp(carta02LightNum);
         }
@@ -2186,12 +2176,7 @@ const listenersCartas = (lightCards, blackCards,
         if (lance >= waitLanceCommonLight && estagioCarta03Light === 2
             && myTurn && lance % 2 === 1
         ) {
-            showCard.children[0].src = carta03LightImg;
-            showCard.classList.remove("hidden");
-            setTimeout(() => {
-                showCard.classList.add("hidden")
-                showCard.children[0].src = "";
-            }, 2000)
+            socket.emit("show-card", roomId, carta03LightImg);
             carta03LightCard.remove();
             efeitoCartas(carta03LightNum);
 
@@ -2206,12 +2191,7 @@ const listenersCartas = (lightCards, blackCards,
         if (lance >= waitLanceCommonLight && estagioCarta04Light === 2
             && myTurn && lance % 2 === 1
         ) {
-            showCard.children[0].src = carta04LightImg;
-            showCard.classList.remove("hidden");
-            setTimeout(() => {
-                showCard.classList.add("hidden")
-                showCard.children[0].src = "";
-            }, 2000)
+            socket.emit("show-card", roomId, carta04LightImg);
             carta04LightCard.remove();
             efeitoCartas(carta04LightNum);
 
@@ -2226,12 +2206,7 @@ const listenersCartas = (lightCards, blackCards,
         if (lance >= waitLanceCommonLight && estagioCarta05Light === 2
             && myTurn && lance % 2 === 1
         ) {
-            showCard.children[0].src = carta05LightImg;
-            showCard.classList.remove("hidden");
-            setTimeout(() => {
-                showCard.classList.add("hidden")
-                showCard.children[0].src = "";
-            }, 2000)
+            socket.emit("show-card", roomId, carta05LightImg);
             carta05LightCard.remove();
             efeitoCartas(carta05LightNum);
         }
@@ -2251,12 +2226,7 @@ const listenersCartas = (lightCards, blackCards,
         if (lance >= waitLanceEspBlack && estagioCarta01Black === 2
             && myTurn && lance % 2 === 0
         ) {
-            showCard.children[0].src = carta01BlackImg;
-            showCard.classList.remove("hidden");
-            setTimeout(() => {
-                showCard.classList.add("hidden")
-                showCard.children[0].src = "";
-            }, 2000)
+            socket.emit("show-card", roomId, carta01BlackImg);
             carta01BlackCard.remove();
             efeitoCartasEsp(carta01BlackNum);
 
@@ -2271,12 +2241,7 @@ const listenersCartas = (lightCards, blackCards,
         if (lance >= waitLanceEspBlack && estagioCarta02Black === 2
             && myTurn && lance % 2 === 0
         ) {
-            showCard.children[0].src = carta02BlackImg;
-            showCard.classList.remove("hidden");
-            setTimeout(() => {
-                showCard.classList.add("hidden")
-                showCard.children[0].src = "";
-            }, 2000)
+            socket.emit("show-card", roomId, carta02BlackImg);
             carta02BlackCard.remove();
             efeitoCartasEsp(carta02BlackNum);
         }
@@ -2294,12 +2259,7 @@ const listenersCartas = (lightCards, blackCards,
         if (lance >= waitLanceCommonBlack && estagioCarta03Black === 2
             && myTurn && lance % 2 === 1
         ) {
-            showCard.children[0].src = carta03BlackImg;
-            showCard.classList.remove("hidden");
-            setTimeout(() => {
-                showCard.classList.add("hidden")
-                showCard.children[0].src = "";
-            }, 2000)
+            socket.emit("show-card", roomId, carta03BlackImg);
             carta03BlackCard.remove();
             efeitoCartas(carta03BlackNum);
 
@@ -2314,12 +2274,7 @@ const listenersCartas = (lightCards, blackCards,
         if (lance >= waitLanceCommonBlack && estagioCarta04Black === 2
             && myTurn && lance % 2 === 1
         ) {
-            showCard.children[0].src = carta04BlackImg;
-            showCard.classList.remove("hidden");
-            setTimeout(() => {
-                showCard.classList.add("hidden")
-                showCard.children[0].src = "";
-            }, 2000)
+            socket.emit("show-card", roomId, carta04BlackImg);
             carta04BlackCard.remove();
             efeitoCartas(carta04BlackNum);
 
@@ -2334,12 +2289,7 @@ const listenersCartas = (lightCards, blackCards,
         if (lance >= waitLanceCommonBlack && estagioCarta05Black === 2
             && myTurn && lance % 2 === 1
         ) {
-            showCard.children[0].src = carta05BlackImg;
-            showCard.classList.remove("hidden");
-            setTimeout(() => {
-                showCard.classList.add("hidden")
-                showCard.children[0].src = "";
-            }, 2000)
+            socket.emit("show-card", roomId, carta05BlackImg);
             carta05BlackCard.remove();
             efeitoCartas(carta05BlackNum);
         }
@@ -2452,10 +2402,10 @@ socket.on("receive-game-details", (details) => {
         game_time = "rapid";
     }
 
-    playerOneRating = playerOne[`user_points_normal_${game_time}`];
-    playerOneRank = playerOne[`user_rank_normal_${game_time}`];
+    playerOneRating = playerOne[`user_points_funny_${game_time}`];
+    playerOneRank = playerOne[`user_rank_funny_${game_time}`];
     playerOneImage = playerOne.profileImage;
-    playerOneBrasao = playerOne[`user_brasao_normal_${game_time}`];
+    playerOneBrasao = playerOne[`user_brasao_funny_${game_time}`];
 
     plOneRating.innerText = playerOneRating;
     plOneRank.innerText = playerOneRank;
@@ -2641,14 +2591,6 @@ socket.on("add-piece", ({ piece, img, corPeca, boxId }) => {
     box.appendChild(div);
 });
 
-window.addEventListener("beforeunload", (event) => {
-
-    if (!gameOver) {
-        event.preventDefault();
-        event.returnValue = "";
-    }
-});
-
 document.addEventListener("keydown", (event) => {
     if (event.key.toLowerCase() === "z") {
         if (player === "light") {
@@ -2698,5 +2640,22 @@ socket.on("spama-brasao2", (player) => {
             brasaoBlack.classList.add("hidden");
         }, 2000);
 
+    }
+});
+
+socket.on("show-card2", (carta) => {
+    showCard.children[0].src = carta;
+    showCard.classList.remove("hidden");
+    setTimeout(() => {
+        showCard.classList.add("hidden")
+        showCard.children[0].src = "";
+    }, 2000)
+})
+
+window.addEventListener("beforeunload", (event) => {
+
+    if (!gameOver) {
+        event.preventDefault();
+        event.returnValue = "";
     }
 });

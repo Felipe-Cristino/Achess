@@ -1640,6 +1640,10 @@ tbody td img{
     padding: 10px;
     border-radius: 10px;
     margin: 30px auto;
+    font-size: 1.3em;
+    padding: 10px;
+    width: 270px;
+    height: 60px;
 }
 
 #lista {
@@ -1659,8 +1663,8 @@ tbody td img{
 }
 
 #lista > li > img {
-    width: 280px;
-    height: 280px;
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
     cursor: pointer;
 }
@@ -1727,9 +1731,23 @@ tbody td img{
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: black;
+    color: white;
     font-size: 2em;
-    margin-top: 50px;
+    margin: 50px auto;
+    background: #01365C;
+    border-radius: 10px;
+    width: 600px;
+}
+
+#config-form > h1 {
+    color: yellow;
+} 
+
+#styles-hr {
+    width: 80%;
+    height: 4px;
+    background-color: white;
+    margin: 20px 0;
 }
 
 .piece-config, .board-config {
@@ -1743,6 +1761,10 @@ tbody td img{
     cursor: pointer;
 }
 
+.flex9 > h5, .flex10 > h5 {
+    padding: 10px;
+}
+
 .flex10 {
     margin-top: 20px;
     gap: 20px;
@@ -1751,6 +1773,9 @@ tbody td img{
 .selecionado2 {
     border: 2px solid green;
     border-radius: 10px;
+    box-shadow: 0 0 5px yellow,
+            0 0 15px yellow,
+            0 0 30px yellow;
 }
 
 #green {
@@ -1772,7 +1797,7 @@ tbody td img{
 }
 
 #config-form > h2 {
-    color: red;
+    color: green;
 }
 
 /* verifyEmail ======================================= */
