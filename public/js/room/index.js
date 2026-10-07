@@ -1090,10 +1090,10 @@ const canMakeMove = ({ currentBox, boxToMove }, { piece, pieceToRemove, pieceToR
 }
 
 const capturePiece = (pieceToRemove) => {
-    let pawnImg = pieceToRemove.children[0];
+    let pecaImg = pieceToRemove.children[0];
 
     let li = document.createElement('li')
-    li.appendChild(pawnImg);
+    li.appendChild(pecaImg);
 
     if (pieceToRemove.classList.contains('black')) {
         blackCapturedPieces.appendChild(li);
@@ -1483,7 +1483,7 @@ const performElPassant = (currentPlayer, prevPawnPosition, newPawnPosition) => {
 
 // Draw Logic
 const checkForDraw = () => {
-    const pawnsBlack = blackCapturedPieces.SelectorAll('li img[src*="pawn"]');
+    const pawnsBlack = blackCapturedPieces.querySelectorAll('li img[src*="pawn"]');
     const quantidadePeoesBlackCaptured = pawnsBlack.length;
     const rooksBlack = blackCapturedPieces.querySelectorAll('li img[src*="rook"]');
     const quantidadeTorresBlackCaptured = rooksBlack.length;

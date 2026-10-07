@@ -182,7 +182,7 @@ function createLightPieces() {
             {
                 position: "E-1",
                 icon: `../assets/chess-pieces/${playerOnePieces}/light/chess-king-light.svg`,
-                points: 5,
+                points: 6,
                 piece: 'king'
             },
             {
@@ -282,7 +282,7 @@ function createLightPieces() {
             {
                 position: "E-1",
                 icon: `../assets/chess-pieces/${playerTwoPieces}/light/chess-king-light.svg`,
-                points: 5,
+                points: 6,
                 piece: 'king'
             },
             {
@@ -702,12 +702,11 @@ const removePiece = (piece) => {
                 box: peca.parentNode.id,
                 peca: {
                     points: peca.dataset.points,
-                    img: peca.children[0],
+                    img: peca.children[0].getAttribute("src"),
                     color: enemy
                 }
             });
 
-            peca.remove();
             break;
         }
     }
@@ -1162,10 +1161,10 @@ function generatePositionKey() {
 }
 
 const capturePiece = (pieceToRemove) => {
-    let pawnImg = pieceToRemove.children[0];
+    let pecaImg = pieceToRemove.children[0];
 
     let li = document.createElement('li')
-    li.appendChild(pawnImg);
+    li.appendChild(pecaImg);
 
     if (pieceToRemove.classList.contains('black')) {
         blackCapturedPieces.appendChild(li);
@@ -1444,58 +1443,18 @@ const addPecasListener = () => {
                 return;
             }
 
-            const div = document.createElement("div");
-            div.appendChild(elementoPeca);
-            div.dataset.piece = peca.dataset.piece;
-            if (peca.dataset.piece === "knight") {
-                div.dataset.points = 3;
-            }
-            if (peca.dataset.piece === "bishop") {
-                div.dataset.points = 4;
-            }
-            if (peca.dataset.piece === "rook") {
-                div.dataset.points = 5;
-            }
-            div.classList.add("piece");
             let corPeca = null;
+
             if (elementoPeca.getAttribute("src").includes("light")) {
-                div.classList.add("light");
                 corPeca = "light";
-                addPieceImpedidoLight = true;
             } else {
-                div.classList.add("black");
                 corPeca = "black";
-                addPieceImpedidoBlack = true;
             }
-            box.appendChild(div);
-
-            box.addEventListener("click", (e) => {
-                if (addPieceImpedidoLight) {
-                    return;
-                }
-
-                if (addPieceImpedidoBlack) {
-                    return;
-                }
-
-                onClickPiece(e)
-            });
-            box.addEventListener("dragstart", (e) => {
-                if (addPieceImpedidoLight) {
-                    return;
-                }
-
-                if (addPieceImpedidoBlack) {
-                    return;
-                }
-
-                onClickPiece(e)
-            });
 
             socket.emit("add-piece", {
                 roomId,
                 piece: peca.dataset.piece,
-                img: div.children[0].getAttribute("src"),
+                img: elementoPeca.getAttribute("src"),
                 corPeca: corPeca,
                 boxId: box.id
             });
@@ -2525,13 +2484,14 @@ socket.on("piece-points-updated", ({ piece, color, newPoints }) => {
 });
 
 socket.on("remove-piece", (box, peca) => {
+
     const boxPeca = document.getElementById(box);
-
+    
     let li = document.createElement('li')
-    let pawnImg = document.createElement("img");
-    pawnImg.src = peca.img;
+    let pecaImg = document.createElement("img");
+    pecaImg.src = peca.img;
 
-    li.appendChild(pawnImg);
+    li.appendChild(pecaImg);
 
     if (peca.color === 'black') {
         blackCapturedPieces.appendChild(li);
@@ -2558,7 +2518,7 @@ socket.on("remove-piece", (box, peca) => {
             }
         }
     }
-
+    
     boxPeca.innerHTML = "";
 });
 
@@ -2574,13 +2534,38 @@ socket.on("add-piece", ({ piece, img, corPeca, boxId }) => {
         return;
     }
 
-    const elementoPeca = document.createElement("img");
+    let imagem = img;
+    let array1 = [];
 
-    elementoPeca.src = img;
+    if (corPeca === "light" && player === "black") {
+        array1 = imagem.split("/");
+        imagem = `${array1[0]}/${array1[1]}/${array1[2]}/${playerTwoPieces}/${array1[4]}/${array1[5]}`;
+    }
+
+    if (corPeca === "black" && player === "light") {
+        array1 = imagem.split("/");
+        imagem = `${array1[0]}/${array1[1]}/${array1[2]}/${playerOnePieces}/${array1[4]}/${array1[5]}`;
+    }
+
+    const elementoPeca = document.createElement("img");
+    elementoPeca.src = imagem;
+
     const div = document.createElement("div");
     div.appendChild(elementoPeca);
-    div.dataset.piece = piece;
+
+    div.setAttribute("data-piece", piece);
+    if (piece === "knight") {
+        div.setAttribute("data-points", 3);
+    }
+    if (piece === "bishop") {
+        div.setAttribute("data-points", 4);
+    }
+    if (piece === "rook") {
+        div.setAttribute("data-points", 5);
+    }
+
     div.classList.add("piece");
+
     if (corPeca === "light") {
         div.classList.add("light")
     }
@@ -2589,6 +2574,29 @@ socket.on("add-piece", ({ piece, img, corPeca, boxId }) => {
     }
 
     box.appendChild(div);
+
+    box.addEventListener("click", (e) => {
+        if (corPeca === "light" && addPieceImpedidoLight) {
+            return;
+        }
+
+        if (corPeca === "black" && addPieceImpedidoBlack) {
+            return;
+        }
+
+        onClickPiece(e)
+    });
+    box.addEventListener("dragstart", (e) => {
+        if (corPeca === "light" && addPieceImpedidoLight) {
+            return;
+        }
+
+        if (corPeca === "black" && addPieceImpedidoBlack) {
+            return;
+        }
+
+        onClickPiece(e)
+    });
 });
 
 document.addEventListener("keydown", (event) => {
