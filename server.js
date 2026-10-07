@@ -251,9 +251,6 @@ io.on("connection", (socket) => {
             if (reply) {
                 let rooms = JSON.parse(reply);
 
-                if (rank === 'all') {
-                    socket.emit("receive-rooms", rooms)
-                }
             } else {
                 socket.emit("receive-rooms", [])
             }

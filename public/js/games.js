@@ -17,7 +17,7 @@ let user;
 let gameId = null;
 
 
-const intervals = [0, 1, 3, 5, 10, 15, 30, 45, 60]
+const intervals = [1, 2, 3, 5, 8, 10, 15, 20, 30]
 
 // Functions
 const fetchUserCallback = (data) => {
@@ -41,28 +41,28 @@ const handleCreateRoomFormSubmit = e => {
     createRoomFormContainer.classList.add("hidden")
 }
 
-const displayRooms = rooms => {
-    gamesList.innerHTML = "";
+// const displayRooms = rooms => {
+//     gamesList.innerHTML = "";
 
-    rooms.forEach(room => {
-        let {username, user_rank} = room.players[0];
-        let numberOfPlayersInRoom = room.players[1] ? 2 : 1
+//     rooms.forEach(room => {
+//         let {username, user_rank} = room.players[0];
+//         let numberOfPlayersInRoom = room.players[1] ? 2 : 1
 
-        gamesList.innerHTML += `
-            <li class='game' id='${room.id}'>
-                <div class="user">
-                    <span>${username}</span>
-                    <span>( ${user_rank.charAt(0).toUpperCase() + user_rank.slice(1)} )</span>
-                </div>
+//         gamesList.innerHTML += `
+//             <li class='game' id='${room.id}'>
+//                 <div class="user">
+//                     <span>${username}</span>
+//                     <span>( ${user_rank.charAt(0).toUpperCase() + user_rank.slice(1)} )</span>
+//                 </div>
 
-                <div class="users-in-room">${numberOfPlayersInRoom} / 2</div>
+//                 <div class="users-in-room">${numberOfPlayersInRoom} / 2</div>
 
-                <button ${numberOfPlayersInRoom === 2 ? "class='disabled'" : ""}>Join</button>
-                <div>Normal Game | ${room.id} | ${room.time}</div>
-            </li>
-        `
-    })
-}
+//                 <button ${numberOfPlayersInRoom === 2 ? "class='disabled'" : ""}>Join</button>
+//                 <div>Normal Game | ${room.id} | ${room.time}</div>
+//             </li>
+//         `
+//     })
+// }
 
 fetchData('/api/user-info', fetchUserCallback)
 

@@ -84,9 +84,6 @@ let cartaImpedidoNumLight = 0;
 let cartaImpedidoPecaBlack = null;
 let cartaImpedidoNumBlack = 0;
 
-let addPieceImpedidoLight = false;
-let addPieceImpedidoBlack = false;
-
 let timeBlindMovesLight = 0;
 let timeBlindMovesBlack = 0;
 let blindBoolLight = false;
@@ -1007,11 +1004,9 @@ const move = (e) => {
     hidePossibleMoves();
 
     let pieceToRemove = null;
-    let pieceToRemovePieceImg = null;
 
     if (boxToMove.children.length > 0) {
         pieceToRemove = boxToMove.children[0];
-        pieceToRemovePieceImg = pieceToRemove.children[0]
     }
 
     currentBox.innerHTML = "";
@@ -1059,8 +1054,6 @@ const move = (e) => {
     cartaImpedidoNumBlack -= 1;
     cartaImpedidoCorLight = true;
     cartaImpedidoCorBlack = true;
-    addPieceImpedidoLight = false;
-    addPieceImpedidoBlack = false;
 
     let cor = null;
 
@@ -1948,48 +1941,69 @@ const switchCartas = (cartaNum) => {
 const efeitoCartasEsp = (cartaNum) => {
     switch (cartaNum) {
 
+        // case 1:
+        // case 2:
+        // case 3:
+        //     timer.addTime(60);
+        //     break;
+
+        // case 4:
+        // case 5:
+        // case 6:
+        //     setAddPieces();
+        //     break;
+
+        // case 7:
+        //     superCavalo("bishop");
+        //     break;
+        // case 8:
+        //     superCavalo("rook");
+        //     break;
+        // case 9:
+        //     superKing("rook");
+        //     break;
+
+        // case 10:
+        // case 11:
+        // case 12:
+        //     cartaImpedido(enemy);
+        //     break;
+
+        // case 13:
+        // case 14:
+        // case 15:
+        //     blindMoves();
+        //     break;
+
+        // case 16:
+        //     halfPoints("queen", 1 / 2);
+        //     break;
+        // case 17:
+        //     halfPoints("rook", 0);
+        //     break;
+        // case 18:
+        //     halfPoints("king", 0);
+        //     break;
+
         case 1:
         case 2:
         case 3:
-            timer.addTime(60);
-            break;
-
         case 4:
         case 5:
         case 6:
-            setAddPieces();
-            break;
-
         case 7:
-            superCavalo("bishop");
-            break;
         case 8:
-            superCavalo("rook");
-            break;
         case 9:
-            superKing("rook");
-            break;
-
         case 10:
         case 11:
         case 12:
-            cartaImpedido(enemy);
-            break;
-
         case 13:
         case 14:
         case 15:
-            blindMoves();
-            break;
-
         case 16:
-            halfPoints("queen", 1 / 2);
-            break;
         case 17:
-            halfPoints("rook", 0);
-            break;
         case 18:
-            halfPoints("king", 0);
+            setAddPieces();
             break;
 
         default:
@@ -2486,7 +2500,7 @@ socket.on("piece-points-updated", ({ piece, color, newPoints }) => {
 socket.on("remove-piece", (box, peca) => {
 
     const boxPeca = document.getElementById(box);
-    
+
     let li = document.createElement('li')
     let pecaImg = document.createElement("img");
     pecaImg.src = peca.img;
@@ -2518,7 +2532,7 @@ socket.on("remove-piece", (box, peca) => {
             }
         }
     }
-    
+
     boxPeca.innerHTML = "";
 });
 
@@ -2575,27 +2589,35 @@ socket.on("add-piece", ({ piece, img, corPeca, boxId }) => {
 
     box.appendChild(div);
 
+    let addPieceImpedidoLight = true;
+    let addPieceImpedidoBlack = true;
+
     box.addEventListener("click", (e) => {
         if (corPeca === "light" && addPieceImpedidoLight) {
+            addPieceImpedidoLight = false;
             return;
         }
 
         if (corPeca === "black" && addPieceImpedidoBlack) {
+            addPieceImpedidoBlack = false;
             return;
         }
 
-        onClickPiece(e)
+        onClickPiece(e);
     });
+
     box.addEventListener("dragstart", (e) => {
         if (corPeca === "light" && addPieceImpedidoLight) {
+            addPieceImpedidoLight = false; // bloqueia só este clique
             return;
         }
 
         if (corPeca === "black" && addPieceImpedidoBlack) {
+            addPieceImpedidoBlack = false;
             return;
         }
 
-        onClickPiece(e)
+        onClickPiece(e);
     });
 });
 
