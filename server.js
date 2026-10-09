@@ -196,69 +196,49 @@ io.on("connection", (socket) => {
             if (reply) {
                 let rooms = JSON.parse(reply);
 
-                let roomFull = rooms.find(room => room.players[0] !== null
-                    && room.players[1] !== null && room.gameFinished === true
-                )
+                let roomFull = rooms.find(room => {
+                    room?.players[0] !== null
+                        && room?.players[1] !== null && room?.gameFinished === true
+                });
+                
                 if (roomFull) {
                     removeRoom(roomFull.id);
                 }
 
-                let room = rooms.find(room => room.players[1] === null
-                    && room.time === time);
+                let game_time = null;
 
-                if (room && room.players[0].username === user.username) {
-                    removeRoom(room.id)
-                    let id = Math.floor(Math.random() * 10001);
-                    let room2 = rooms.find(room => room.id === id)
-                    if (room2) {
-                        window.location.href = window.location.origin + "/lobby";
-                    }
-                    createRoom(id, user, time, mode)
-                    socket.emit("room-created", id)
+                if (time <= 3) {
+                    game_time = 'bullet';
+                }
+                else if (time > 3 && time <= 8) {
+                    game_time = 'blitz';
+                }
+                else {
+                    game_time = "rapid";
                 }
 
-                if (room && room.players[0] &&
-                    room.players[0].username !== user.username
-                    && room.mode === mode && room.time === time) {
+                let pointsColumn = `user_points_${mode}_${game_time}`;
+                let user_points = user[pointsColumn];
 
-                    let game_time = null;
+                let room = rooms.find(room => {
+                    room?.players?.[0] != null &&
+                        room?.players?.[1] === null &&
+                        room?.time === time &&
+                        room?.mode === mode &&
+                        Math.abs(room?.users_points?.[0] - user_points) <= 400
+                });
 
-                    if (time <= 3) {
-                        game_time = 'bullet';
-                    }
-                    else if (time > 3 && time <= 8) {
-                        game_time = 'blitz';
-                    }
-                    else {
-                        game_time = "rapid";
-                    }
-
-                    let pointsColumn = `user_points_${mode}_${game_time}`;
-                    let user_points = user[pointsColumn];
-
-                    // console.log(room.users_points[0]);
-                    // let ratingDiff = Math.abs(room.users_points[0] - user_points);
-                    let ratingDiff = 400;
-
-                    if (ratingDiff <= 400) {
-                        joinRoom(room.id, user);
-                        socket.emit("room-joined", room.id);
-                    }
-
-                    else {
-                        let id = Math.floor(Math.random() * 10001);
-                        let room2 = rooms.find(room => room.id === id)
-                        if (room2) {
-                            window.location.href = window.location.origin + "/lobby";
-                        }
-                        createRoom(id, user, time, mode)
-                        socket.emit("room-created", id)
-                    }
-                } else {
+                if (room) {
+                    console.log("Oi1")
+                    joinRoom(room.id, user);
+                    socket.emit("room-joined", room.id);
+                }
+                else {
                     let id = Math.floor(Math.random() * 10001);
-                    let room2 = rooms.find(room => room.id === id)
+                    let room2 = rooms.find(room => room?.id === id)
                     if (room2) {
                         window.location.href = window.location.origin + "/lobby";
+                        return;
                     }
                     createRoom(id, user, time, mode)
                     socket.emit("room-created", id)
@@ -268,6 +248,7 @@ io.on("connection", (socket) => {
                 let room2 = rooms.find(room => room.id === id)
                 if (room2) {
                     window.location.href = window.location.origin + "/lobby";
+                    return;
                 }
                 createRoom(id, user, time, mode)
                 socket.emit("room-created", id)
