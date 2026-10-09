@@ -130,7 +130,7 @@ io.on("connection", (socket) => {
                         if (err) throw err;
 
                         room.config = result[0];
-                       
+
                         let details = {
                             players: room.players,
                             config: room.config,
@@ -153,7 +153,7 @@ io.on("connection", (socket) => {
                         if (err) throw err;
 
                         room.config = result[0];
-                        
+
                         let details = {
                             players: room.players,
                             config: room.config,
@@ -219,9 +219,41 @@ io.on("connection", (socket) => {
 
                 if (room && room.players[0] &&
                     room.players[0].username !== user.username
-                    && room.mode === mode) {
-                    joinRoom(room.id, user, mode);
-                    socket.emit("room-joined", room.id);
+                    && room.mode === mode && room.time === time) {
+
+                    let game_time = null;
+
+                    if (time <= 3) {
+                        game_time = 'bullet';
+                    }
+                    else if (time > 3 && time <= 8) {
+                        game_time = 'blitz';
+                    }
+                    else {
+                        game_time = "rapid";
+                    }
+
+                    let pointsColumn = `user_points_${mode}_${game_time}`;
+                    let user_points = user[pointsColumn];
+
+                    // console.log(room.users_points[0]);
+                    // let ratingDiff = Math.abs(room.users_points[0] - user_points);
+                    let ratingDiff = 400;
+
+                    if (ratingDiff <= 400) {
+                        joinRoom(room.id, user);
+                        socket.emit("room-joined", room.id);
+                    }
+
+                    else {
+                        let id = Math.floor(Math.random() * 10001);
+                        let room2 = rooms.find(room => room.id === id)
+                        if (room2) {
+                            window.location.href = window.location.origin + "/lobby";
+                        }
+                        createRoom(id, user, time, mode)
+                        socket.emit("room-created", id)
+                    }
                 } else {
                     let id = Math.floor(Math.random() * 10001);
                     let room2 = rooms.find(room => room.id === id)
@@ -230,7 +262,6 @@ io.on("connection", (socket) => {
                     }
                     createRoom(id, user, time, mode)
                     socket.emit("room-created", id)
-
                 }
             } else {
                 let id = Math.floor(Math.random() * 10001);
@@ -244,15 +275,12 @@ io.on("connection", (socket) => {
         })
     })
 
-    socket.on('get-rooms', (rank) => {
+    socket.on('get-rooms', () => {
         redisClient.get("rooms", (err, reply) => {
             if (err) throw err;
 
-            if (reply) {
-                let rooms = JSON.parse(reply);
-
-            } else {
-                socket.emit("receive-rooms", [])
+            if (!reply) {
+                socket.emit("receive-rooms")
             }
         })
     })
@@ -296,6 +324,7 @@ io.on("connection", (socket) => {
     })
 
     socket.on('check', (roomId) => {
+        io.to(roomId).emit("check-sound");
         socket.to(roomId).emit('king-is-attacked')
     })
 
@@ -525,6 +554,7 @@ io.on("connection", (socket) => {
                 playerOne = room.players[0];
                 playerTwo = room.players[1];
             }
+            io.to(roomId).emit("checkmate-sound");
             io.to(roomId).emit("users-points", winner, playerOne, playerTwo);
         })
     })

@@ -1,0 +1,87 @@
+[33mf0d23ef[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m)[m HEAD@{0}: reset: moving to HEAD~1
+[33ma862001[m[33m ([m[1;31morigin/master[m[33m)[m HEAD@{1}: reset: moving to HEAD~1
+[33m0723e9d[m HEAD@{2}: reset: moving to HEAD~1
+[33m65f69e0[m HEAD@{3}: reset: moving to HEAD~1
+[33m3a61898[m HEAD@{4}: commit: sexagesimo quinto
+[33m65f69e0[m HEAD@{5}: commit: sexagesimo quarto
+[33m0723e9d[m HEAD@{6}: commit: sexagesimo terceiro
+[33ma862001[m[33m ([m[1;31morigin/master[m[33m)[m HEAD@{7}: commit: sexagesimo segundo
+[33mf0d23ef[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m)[m HEAD@{8}: commit: sexagesimo primeiro
+[33mf948f2b[m HEAD@{9}: commit: sexagesimo
+[33m5a2d846[m HEAD@{10}: commit: quinquagesimo nono
+[33me7c1cfa[m HEAD@{11}: commit: quinquagesimo oitavo
+[33m540ebe4[m HEAD@{12}: commit: quinquagesimo setimo
+[33m496e6ad[m HEAD@{13}: commit: quinquagesimo sexto
+[33ma83f938[m HEAD@{14}: commit: quinquagesimo quinto
+[33m2443903[m HEAD@{15}: commit: quinquagesimo quarto
+[33m2d0adb3[m HEAD@{16}: commit: quinquagesimo terceiro
+[33mad0c4dd[m HEAD@{17}: reset: moving to HEAD~1
+[33m1f607be[m HEAD@{18}: commit: quinquagesimo terceiro
+[33mad0c4dd[m HEAD@{19}: reset: moving to HEAD~1
+[33maf49e41[m HEAD@{20}: commit: quinquagesimo terceiro
+[33mad0c4dd[m HEAD@{21}: reset: moving to HEAD~1
+[33m870cb28[m HEAD@{22}: commit: quinquagesimo terceiro
+[33mad0c4dd[m HEAD@{23}: commit: quinquagesimo segundo
+[33mbc651fd[m HEAD@{24}: commit: quinquagesimo primeiro
+[33m893d9ef[m HEAD@{25}: commit: quinquagesimo
+[33m5d5cb37[m HEAD@{26}: commit: quadragesimo nono
+[33m19b0a16[m HEAD@{27}: commit: quadragesimo oitavo
+[33m593248a[m HEAD@{28}: commit: quadragesimo setimo
+[33m4944d03[m HEAD@{29}: commit: quadragesimo sexto
+[33m99e1b75[m HEAD@{30}: commit: quadragesimo quinto
+[33mad5add3[m HEAD@{31}: commit: quadragesimo quarto
+[33m80f9885[m HEAD@{32}: commit: quadragesimo terceiro
+[33m1827990[m HEAD@{33}: commit: quadragesimo segundo
+[33m879acb6[m HEAD@{34}: reset: moving to HEAD~1
+[33m8018d9f[m HEAD@{35}: commit: quadragesimo primeiro
+[33m879acb6[m HEAD@{36}: commit: quadragesimo
+[33mfed8e7d[m HEAD@{37}: commit: trigesimo nono
+[33m2e23499[m HEAD@{38}: commit: trigesimo oitavo
+[33m0982568[m HEAD@{39}: commit: trigesimo setimo
+[33m06a2a3c[m HEAD@{40}: commit: trigesimo sexto
+[33md719578[m HEAD@{41}: commit: trigesimo quinto
+[33m98acee1[m HEAD@{42}: commit: trigesimo quarto
+[33m9129d1a[m HEAD@{43}: commit: trigesimo terceiro
+[33mb5740e3[m HEAD@{44}: commit: trigesimo segundo
+[33ma440b0c[m HEAD@{45}: commit: trigesimo primeiro
+[33md77a940[m HEAD@{46}: commit: trigesimo
+[33mc58da46[m HEAD@{47}: commit: vigesimo nono
+[33m81f3d1b[m HEAD@{48}: commit: vigesimo oitavo
+[33m6f0540e[m HEAD@{49}: commit: vigesimo setimo
+[33m8322f03[m HEAD@{50}: commit: vigesimo sexto
+[33md9cb995[m HEAD@{51}: commit: vigesimo quinto
+[33m699b201[m HEAD@{52}: commit: vigesimo quarto
+[33m9d180cb[m HEAD@{53}: commit: vigesimo terceiro
+[33ma4f4311[m HEAD@{54}: commit: vigesimo segundo
+[33m754da4b[m HEAD@{55}: commit: vigesimo primeiro
+[33mf0c0a47[m HEAD@{56}: reset: moving to HEAD~1
+[33m21d629e[m HEAD@{57}: commit: vigesimo primeiro
+[33mf0c0a47[m HEAD@{58}: commit: vigesimo
+[33m05a35c2[m HEAD@{59}: commit: decimo nono
+[33mcf49327[m HEAD@{60}: commit: decimo oitavo
+[33maf83d74[m HEAD@{61}: commit: decimo setimo
+[33mfc7165c[m HEAD@{62}: commit: decimo sexto
+[33m57249bb[m HEAD@{63}: commit: decimo quinto
+[33ma7223c7[m HEAD@{64}: commit: decimo quarto
+[33m1e511f6[m HEAD@{65}: commit: decimo terceiro
+[33m109c1df[m HEAD@{66}: commit: decimo segundo
+[33m78c3e27[m HEAD@{67}: commit: decimo primeiro
+[33m838e0b3[m HEAD@{68}: commit: decimo
+[33maf01d8e[m HEAD@{69}: commit: nono
+[33mbffd4fb[m HEAD@{70}: commit: oitavo
+[33m6f08064[m HEAD@{71}: commit: setimo
+[33mf5788ec[m HEAD@{72}: commit: sexto
+[33md698959[m HEAD@{73}: commit: quinto
+[33m2d2345f[m HEAD@{74}: commit: quarto
+[33mff0b9ee[m HEAD@{75}: reset: moving to HEAD~1
+[33m944a6ac[m HEAD@{76}: commit: quarto
+[33mff0b9ee[m HEAD@{77}: reset: moving to HEAD~1
+[33m7c2ce8f[m HEAD@{78}: commit: quarto
+[33mff0b9ee[m HEAD@{79}: reset: moving to HEAD~1
+[33m485dab8[m HEAD@{80}: commit: quarto
+[33mff0b9ee[m HEAD@{81}: commit: terceiro
+[33m7bc302b[m HEAD@{82}: reset: moving to HEAD~1
+[33m3622ca2[m HEAD@{83}: commit: terceiro
+[33m7bc302b[m HEAD@{84}: commit: segundo
+[33m65c9954[m HEAD@{85}: Branch: renamed refs/heads/master to refs/heads/master
+[33m65c9954[m HEAD@{87}: commit (initial): primeiro

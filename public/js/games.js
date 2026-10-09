@@ -24,7 +24,7 @@ const fetchUserCallback = (data) => {
     user = data;
 
     socket.emit("user-connected", user);
-    socket.emit('get-rooms', "all")
+    socket.emit('get-rooms')
 
     gamesDivElement.classList.remove("hidden")
 
@@ -41,42 +41,13 @@ const handleCreateRoomFormSubmit = e => {
     createRoomFormContainer.classList.add("hidden")
 }
 
-// const displayRooms = rooms => {
-//     gamesList.innerHTML = "";
-
-//     rooms.forEach(room => {
-//         let {username, user_rank} = room.players[0];
-//         let numberOfPlayersInRoom = room.players[1] ? 2 : 1
-
-//         gamesList.innerHTML += `
-//             <li class='game' id='${room.id}'>
-//                 <div class="user">
-//                     <span>${username}</span>
-//                     <span>( ${user_rank.charAt(0).toUpperCase() + user_rank.slice(1)} )</span>
-//                 </div>
-
-//                 <div class="users-in-room">${numberOfPlayersInRoom} / 2</div>
-
-//                 <button ${numberOfPlayersInRoom === 2 ? "class='disabled'" : ""}>Join</button>
-//                 <div>Normal Game | ${room.id} | ${room.time}</div>
-//             </li>
-//         `
-//     })
-// }
-
 fetchData('/api/user-info', fetchUserCallback)
 
 // Listeners
-socket.on('receive-rooms', rooms => {
-    if(rooms.length > 0){
-        noGamesMessage.classList.add("hidden");
-        gamesList.classList.remove('hidden');
-
-        // displayRooms(rooms);
-    }else{
-        gamesList.classList.add('hidden');
-        noGamesMessage.classList.remove('hidden')
-    }
+socket.on('receive-rooms', () => {
+    
+    gamesList.classList.add('hidden');
+    noGamesMessage.classList.remove('hidden');
 })
 
 socket.on("room-created", (id) => {

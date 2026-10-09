@@ -1,9 +1,24 @@
 const redisClient = require("../config/redis");
 
 const createRoom = (roomId, user, time, mode) => {
-    let room = { id: roomId, players: [null, null], moves: [], time, gameStarted: false, mode: mode}
-    
-    room.players[0] = user
+    let room = { id: roomId, players: [null, null], users_points: [null, null], moves: [], time: time, gameStarted: false, mode: mode }
+
+    room.players[0] = user;
+
+    let game_time = null;
+
+    if (time <= 3) {
+        game_time = 'bullet';
+    }
+    else if (time > 3 && time <= 8) {
+        game_time = 'blitz';
+    }
+    else {
+        game_time = "rapid";
+    }
+
+    const pointsColumn = `user_points_${mode}_${game_time}`;
+    room.users_points[0] = user[pointsColumn];
 
     redisClient.set(roomId, JSON.stringify(room));
 
@@ -58,7 +73,7 @@ const createRoom = (roomId, user, time, mode) => {
     })
 }
 
-const joinRoom = (roomId, user, mode) => {
+const joinRoom = (roomId, user) => {
     redisClient.get(roomId, (err, reply) => {
         if (err) throw err;
 
@@ -66,7 +81,7 @@ const joinRoom = (roomId, user, mode) => {
             let room = JSON.parse(reply);
 
             room.players[1] = user;
-            
+
             redisClient.set(roomId, JSON.stringify(room));
 
             redisClient.get('roomIndices', (err, reply) => {
@@ -80,8 +95,8 @@ const joinRoom = (roomId, user, mode) => {
 
                         if (reply) {
                             let rooms = JSON.parse(reply);
-                            
-                            if(rooms[roomIndices[roomId]] && 
+
+                            if (rooms[roomIndices[roomId]] &&
                                 rooms[roomIndices[roomId]]?.players) {
                                 rooms[roomIndices[roomId]].players[1] = user;
                             }
@@ -111,7 +126,7 @@ const removeRoom = (roomId) => {
 
                     rooms.splice(roomIndices[roomId], 1)
                     delete roomIndices[roomId];
-                    
+
                     redisClient.set('rooms', JSON.stringify(rooms));
                     redisClient.set('roomIndices', JSON.stringify(roomIndices));
                 }

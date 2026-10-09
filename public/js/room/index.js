@@ -89,97 +89,97 @@ function createLightPieces() {
         return [
             {
                 position: "A-1",
-                icon: `../assets/chess-pieces/${playerOnePieces}/light/chess-rook-light.svg`,
+                icon: `../assets/chess-pieces/${playerOnePieces}/light/chess-rook.svg`,
                 points: 5,
                 piece: 'rook'
             },
             {
                 position: "B-1",
-                icon: `../assets/chess-pieces/${playerOnePieces}/light/chess-knight-light.svg`,
+                icon: `../assets/chess-pieces/${playerOnePieces}/light/chess-knight.svg`,
                 points: 3,
                 piece: 'knight'
             },
             {
                 position: "C-1",
-                icon: `../assets/chess-pieces/${playerOnePieces}/light/chess-bishop-light.svg`,
+                icon: `../assets/chess-pieces/${playerOnePieces}/light/chess-bishop.svg`,
                 points: 4,
                 piece: 'bishop'
             },
             {
                 position: "D-1",
-                icon: `../assets/chess-pieces/${playerOnePieces}/light/chess-queen-light.svg`,
+                icon: `../assets/chess-pieces/${playerOnePieces}/light/chess-queen.svg`,
                 points: 9,
                 piece: 'queen'
             },
             {
                 position: "E-1",
-                icon: `../assets/chess-pieces/${playerOnePieces}/light/chess-king-light.svg`,
-                points: 5,
+                icon: `../assets/chess-pieces/${playerOnePieces}/light/chess-king.svg`,
+                points: 6,
                 piece: 'king'
             },
             {
                 position: "F-1",
-                icon: `../assets/chess-pieces/${playerOnePieces}/light/chess-bishop-light.svg`,
+                icon: `../assets/chess-pieces/${playerOnePieces}/light/chess-bishop.svg`,
                 points: 4,
                 piece: 'bishop'
             },
             {
                 position: "G-1",
-                icon: `../assets/chess-pieces/${playerOnePieces}/light/chess-knight-light.svg`,
+                icon: `../assets/chess-pieces/${playerOnePieces}/light/chess-knight.svg`,
                 points: 3,
                 piece: 'knight'
             },
             {
                 position: "H-1",
-                icon: `../assets/chess-pieces/${playerOnePieces}/light/chess-rook-light.svg`,
+                icon: `../assets/chess-pieces/${playerOnePieces}/light/chess-rook.svg`,
                 points: 5,
                 piece: 'rook'
             },
             {
                 position: "A-2",
-                icon: `../assets/chess-pieces/${playerOnePieces}/light/chess-pawn-light.svg`,
+                icon: `../assets/chess-pieces/${playerOnePieces}/light/chess-pawn.svg`,
                 points: 1,
                 piece: 'pawn'
             },
             {
                 position: "B-2",
-                icon: `../assets/chess-pieces/${playerOnePieces}/light/chess-pawn-light.svg`,
+                icon: `../assets/chess-pieces/${playerOnePieces}/light/chess-pawn.svg`,
                 points: 1,
                 piece: 'pawn'
             },
             {
                 position: "C-2",
-                icon: `../assets/chess-pieces/${playerOnePieces}/light/chess-pawn-light.svg`,
+                icon: `../assets/chess-pieces/${playerOnePieces}/light/chess-pawn.svg`,
                 points: 1,
                 piece: 'pawn'
             },
             {
                 position: "D-2",
-                icon: `../assets/chess-pieces/${playerOnePieces}/light/chess-pawn-light.svg`,
+                icon: `../assets/chess-pieces/${playerOnePieces}/light/chess-pawn.svg`,
                 points: 1,
                 piece: 'pawn'
             },
             {
                 position: "E-2",
-                icon: `../assets/chess-pieces/${playerOnePieces}/light/chess-pawn-light.svg`,
+                icon: `../assets/chess-pieces/${playerOnePieces}/light/chess-pawn.svg`,
                 points: 1,
                 piece: 'pawn'
             },
             {
                 position: "F-2",
-                icon: `../assets/chess-pieces/${playerOnePieces}/light/chess-pawn-light.svg`,
+                icon: `../assets/chess-pieces/${playerOnePieces}/light/chess-pawn.svg`,
                 points: 1,
                 piece: 'pawn'
             },
             {
                 position: "G-2",
-                icon: `../assets/chess-pieces/${playerOnePieces}/light/chess-pawn-light.svg`,
+                icon: `../assets/chess-pieces/${playerOnePieces}/light/chess-pawn.svg`,
                 points: 1,
                 piece: 'pawn'
             },
             {
                 position: "H-2",
-                icon: `../assets/chess-pieces/${playerOnePieces}/light/chess-pawn-light.svg`,
+                icon: `../assets/chess-pieces/${playerOnePieces}/light/chess-pawn.svg`,
                 points: 1,
                 piece: 'pawn'
             }
@@ -189,97 +189,97 @@ function createLightPieces() {
         return [
             {
                 position: "A-1",
-                icon: `../assets/chess-pieces/${playerTwoPieces}/light/chess-rook-light.svg`,
+                icon: `../assets/chess-pieces/${playerTwoPieces}/light/chess-rook.svg`,
                 points: 5,
                 piece: 'rook'
             },
             {
                 position: "B-1",
-                icon: `../assets/chess-pieces/${playerTwoPieces}/light/chess-knight-light.svg`,
+                icon: `../assets/chess-pieces/${playerTwoPieces}/light/chess-knight.svg`,
                 points: 3,
                 piece: 'knight'
             },
             {
                 position: "C-1",
-                icon: `../assets/chess-pieces/${playerTwoPieces}/light/chess-bishop-light.svg`,
+                icon: `../assets/chess-pieces/${playerTwoPieces}/light/chess-bishop.svg`,
                 points: 4,
                 piece: 'bishop'
             },
             {
                 position: "D-1",
-                icon: `../assets/chess-pieces/${playerTwoPieces}/light/chess-queen-light.svg`,
+                icon: `../assets/chess-pieces/${playerTwoPieces}/light/chess-queen.svg`,
                 points: 9,
                 piece: 'queen'
             },
             {
                 position: "E-1",
-                icon: `../assets/chess-pieces/${playerTwoPieces}/light/chess-king-light.svg`,
-                points: 5,
+                icon: `../assets/chess-pieces/${playerTwoPieces}/light/chess-king.svg`,
+                points: 6,
                 piece: 'king'
             },
             {
                 position: "F-1",
-                icon: `../assets/chess-pieces/${playerTwoPieces}/light/chess-bishop-light.svg`,
+                icon: `../assets/chess-pieces/${playerTwoPieces}/light/chess-bishop.svg`,
                 points: 4,
                 piece: 'bishop'
             },
             {
                 position: "G-1",
-                icon: `../assets/chess-pieces/${playerTwoPieces}/light/chess-knight-light.svg`,
+                icon: `../assets/chess-pieces/${playerTwoPieces}/light/chess-knight.svg`,
                 points: 3,
                 piece: 'knight'
             },
             {
                 position: "H-1",
-                icon: `../assets/chess-pieces/${playerTwoPieces}/light/chess-rook-light.svg`,
+                icon: `../assets/chess-pieces/${playerTwoPieces}/light/chess-rook.svg`,
                 points: 5,
                 piece: 'rook'
             },
             {
                 position: "A-2",
-                icon: `../assets/chess-pieces/${playerTwoPieces}/light/chess-pawn-light.svg`,
+                icon: `../assets/chess-pieces/${playerTwoPieces}/light/chess-pawn.svg`,
                 points: 1,
                 piece: 'pawn'
             },
             {
                 position: "B-2",
-                icon: `../assets/chess-pieces/${playerTwoPieces}/light/chess-pawn-light.svg`,
+                icon: `../assets/chess-pieces/${playerTwoPieces}/light/chess-pawn.svg`,
                 points: 1,
                 piece: 'pawn'
             },
             {
                 position: "C-2",
-                icon: `../assets/chess-pieces/${playerTwoPieces}/light/chess-pawn-light.svg`,
+                icon: `../assets/chess-pieces/${playerTwoPieces}/light/chess-pawn.svg`,
                 points: 1,
                 piece: 'pawn'
             },
             {
                 position: "D-2",
-                icon: `../assets/chess-pieces/${playerTwoPieces}/light/chess-pawn-light.svg`,
+                icon: `../assets/chess-pieces/${playerTwoPieces}/light/chess-pawn.svg`,
                 points: 1,
                 piece: 'pawn'
             },
             {
                 position: "E-2",
-                icon: `../assets/chess-pieces/${playerTwoPieces}/light/chess-pawn-light.svg`,
+                icon: `../assets/chess-pieces/${playerTwoPieces}/light/chess-pawn.svg`,
                 points: 1,
                 piece: 'pawn'
             },
             {
                 position: "F-2",
-                icon: `../assets/chess-pieces/${playerTwoPieces}/light/chess-pawn-light.svg`,
+                icon: `../assets/chess-pieces/${playerTwoPieces}/light/chess-pawn.svg`,
                 points: 1,
                 piece: 'pawn'
             },
             {
                 position: "G-2",
-                icon: `../assets/chess-pieces/${playerTwoPieces}/light/chess-pawn-light.svg`,
+                icon: `../assets/chess-pieces/${playerTwoPieces}/light/chess-pawn.svg`,
                 points: 1,
                 piece: 'pawn'
             },
             {
                 position: "H-2",
-                icon: `../assets/chess-pieces/${playerTwoPieces}/light/chess-pawn-light.svg`,
+                icon: `../assets/chess-pieces/${playerTwoPieces}/light/chess-pawn.svg`,
                 points: 1,
                 piece: 'pawn'
             }
@@ -293,97 +293,97 @@ function createBlackPieces() {
         return [
             {
                 position: "A-8",
-                icon: `../assets/chess-pieces/${playerTwoPieces}/black/chess-rook-black.svg`,
+                icon: `../assets/chess-pieces/${playerTwoPieces}/black/chess-rook.svg`,
                 points: 5,
                 piece: 'rook'
             },
             {
                 position: "B-8",
-                icon: `../assets/chess-pieces/${playerTwoPieces}/black/chess-knight-black.svg`,
+                icon: `../assets/chess-pieces/${playerTwoPieces}/black/chess-knight.svg`,
                 points: 3,
                 piece: 'knight'
             },
             {
                 position: "C-8",
-                icon: `../assets/chess-pieces/${playerTwoPieces}/black/chess-bishop-black.svg`,
+                icon: `../assets/chess-pieces/${playerTwoPieces}/black/chess-bishop.svg`,
                 points: 4,
                 piece: 'bishop'
             },
             {
                 position: "D-8",
-                icon: `../assets/chess-pieces/${playerTwoPieces}/black/chess-queen-black.svg`,
+                icon: `../assets/chess-pieces/${playerTwoPieces}/black/chess-queen.svg`,
                 points: 9,
                 piece: 'queen'
             },
             {
                 position: "E-8",
-                icon: `../assets/chess-pieces/${playerTwoPieces}/black/chess-king-black.svg`,
+                icon: `../assets/chess-pieces/${playerTwoPieces}/black/chess-king.svg`,
                 points: 5,
                 piece: 'king'
             },
             {
                 position: "F-8",
-                icon: `../assets/chess-pieces/${playerTwoPieces}/black/chess-bishop-black.svg`,
+                icon: `../assets/chess-pieces/${playerTwoPieces}/black/chess-bishop.svg`,
                 points: 4,
                 piece: 'bishop'
             },
             {
                 position: "G-8",
-                icon: `../assets/chess-pieces/${playerTwoPieces}/black/chess-knight-black.svg`,
+                icon: `../assets/chess-pieces/${playerTwoPieces}/black/chess-knight.svg`,
                 points: 3,
                 piece: 'knight'
             },
             {
                 position: "H-8",
-                icon: `../assets/chess-pieces/${playerTwoPieces}/black/chess-rook-black.svg`,
+                icon: `../assets/chess-pieces/${playerTwoPieces}/black/chess-rook.svg`,
                 points: 5,
                 piece: 'rook'
             },
             {
                 position: "A-7",
-                icon: `../assets/chess-pieces/${playerTwoPieces}/black/chess-pawn-black.svg`,
+                icon: `../assets/chess-pieces/${playerTwoPieces}/black/chess-pawn.svg`,
                 points: 1,
                 piece: 'pawn'
             },
             {
                 position: "B-7",
-                icon: `../assets/chess-pieces/${playerTwoPieces}/black/chess-pawn-black.svg`,
+                icon: `../assets/chess-pieces/${playerTwoPieces}/black/chess-pawn.svg`,
                 points: 1,
                 piece: 'pawn'
             },
             {
                 position: "C-7",
-                icon: `../assets/chess-pieces/${playerTwoPieces}/black/chess-pawn-black.svg`,
+                icon: `../assets/chess-pieces/${playerTwoPieces}/black/chess-pawn.svg`,
                 points: 1,
                 piece: 'pawn'
             },
             {
                 position: "D-7",
-                icon: `../assets/chess-pieces/${playerTwoPieces}/black/chess-pawn-black.svg`,
+                icon: `../assets/chess-pieces/${playerTwoPieces}/black/chess-pawn.svg`,
                 points: 1,
                 piece: 'pawn'
             },
             {
                 position: "E-7",
-                icon: `../assets/chess-pieces/${playerTwoPieces}/black/chess-pawn-black.svg`,
+                icon: `../assets/chess-pieces/${playerTwoPieces}/black/chess-pawn.svg`,
                 points: 1,
                 piece: 'pawn'
             },
             {
                 position: "F-7",
-                icon: `../assets/chess-pieces/${playerTwoPieces}/black/chess-pawn-black.svg`,
+                icon: `../assets/chess-pieces/${playerTwoPieces}/black/chess-pawn.svg`,
                 points: 1,
                 piece: 'pawn'
             },
             {
                 position: "G-7",
-                icon: `../assets/chess-pieces/${playerTwoPieces}/black/chess-pawn-black.svg`,
+                icon: `../assets/chess-pieces/${playerTwoPieces}/black/chess-pawn.svg`,
                 points: 1,
                 piece: 'pawn'
             },
             {
                 position: "H-7",
-                icon: `../assets/chess-pieces/${playerTwoPieces}/black/chess-pawn-black.svg`,
+                icon: `../assets/chess-pieces/${playerTwoPieces}/black/chess-pawn.svg`,
                 points: 1,
                 piece: 'pawn'
             }
@@ -393,97 +393,97 @@ function createBlackPieces() {
         return [
             {
                 position: "A-8",
-                icon: `../assets/chess-pieces/${playerOnePieces}/black/chess-rook-black.svg`,
+                icon: `../assets/chess-pieces/${playerOnePieces}/black/chess-rook.svg`,
                 points: 5,
                 piece: 'rook'
             },
             {
                 position: "B-8",
-                icon: `../assets/chess-pieces/${playerOnePieces}/black/chess-knight-black.svg`,
+                icon: `../assets/chess-pieces/${playerOnePieces}/black/chess-knight.svg`,
                 points: 3,
                 piece: 'knight'
             },
             {
                 position: "C-8",
-                icon: `../assets/chess-pieces/${playerOnePieces}/black/chess-bishop-black.svg`,
+                icon: `../assets/chess-pieces/${playerOnePieces}/black/chess-bishop.svg`,
                 points: 4,
                 piece: 'bishop'
             },
             {
                 position: "D-8",
-                icon: `../assets/chess-pieces/${playerOnePieces}/black/chess-queen-black.svg`,
+                icon: `../assets/chess-pieces/${playerOnePieces}/black/chess-queen.svg`,
                 points: 9,
                 piece: 'queen'
             },
             {
                 position: "E-8",
-                icon: `../assets/chess-pieces/${playerOnePieces}/black/chess-king-black.svg`,
+                icon: `../assets/chess-pieces/${playerOnePieces}/black/chess-king.svg`,
                 points: 5,
                 piece: 'king'
             },
             {
                 position: "F-8",
-                icon: `../assets/chess-pieces/${playerOnePieces}/black/chess-bishop-black.svg`,
+                icon: `../assets/chess-pieces/${playerOnePieces}/black/chess-bishop.svg`,
                 points: 4,
                 piece: 'bishop'
             },
             {
                 position: "G-8",
-                icon: `../assets/chess-pieces/${playerOnePieces}/black/chess-knight-black.svg`,
+                icon: `../assets/chess-pieces/${playerOnePieces}/black/chess-knight.svg`,
                 points: 3,
                 piece: 'knight'
             },
             {
                 position: "H-8",
-                icon: `../assets/chess-pieces/${playerOnePieces}/black/chess-rook-black.svg`,
+                icon: `../assets/chess-pieces/${playerOnePieces}/black/chess-rook.svg`,
                 points: 5,
                 piece: 'rook'
             },
             {
                 position: "A-7",
-                icon: `../assets/chess-pieces/${playerOnePieces}/black/chess-pawn-black.svg`,
+                icon: `../assets/chess-pieces/${playerOnePieces}/black/chess-pawn.svg`,
                 points: 1,
                 piece: 'pawn'
             },
             {
                 position: "B-7",
-                icon: `../assets/chess-pieces/${playerOnePieces}/black/chess-pawn-black.svg`,
+                icon: `../assets/chess-pieces/${playerOnePieces}/black/chess-pawn.svg`,
                 points: 1,
                 piece: 'pawn'
             },
             {
                 position: "C-7",
-                icon: `../assets/chess-pieces/${playerOnePieces}/black/chess-pawn-black.svg`,
+                icon: `../assets/chess-pieces/${playerOnePieces}/black/chess-pawn.svg`,
                 points: 1,
                 piece: 'pawn'
             },
             {
                 position: "D-7",
-                icon: `../assets/chess-pieces/${playerOnePieces}/black/chess-pawn-black.svg`,
+                icon: `../assets/chess-pieces/${playerOnePieces}/black/chess-pawn.svg`,
                 points: 1,
                 piece: 'pawn'
             },
             {
                 position: "E-7",
-                icon: `../assets/chess-pieces/${playerOnePieces}/black/chess-pawn-black.svg`,
+                icon: `../assets/chess-pieces/${playerOnePieces}/black/chess-pawn.svg`,
                 points: 1,
                 piece: 'pawn'
             },
             {
                 position: "F-7",
-                icon: `../assets/chess-pieces/${playerOnePieces}/black/chess-pawn-black.svg`,
+                icon: `../assets/chess-pieces/${playerOnePieces}/black/chess-pawn.svg`,
                 points: 1,
                 piece: 'pawn'
             },
             {
                 position: "G-7",
-                icon: `../assets/chess-pieces/${playerOnePieces}/black/chess-pawn-black.svg`,
+                icon: `../assets/chess-pieces/${playerOnePieces}/black/chess-pawn.svg`,
                 points: 1,
                 piece: 'pawn'
             },
             {
                 position: "H-7",
-                icon: `../assets/chess-pieces/${playerOnePieces}/black/chess-pawn-black.svg`,
+                icon: `../assets/chess-pieces/${playerOnePieces}/black/chess-pawn.svg`,
                 points: 1,
                 piece: 'pawn'
             }
@@ -1331,10 +1331,10 @@ const setPiecesToPromote = () => {
     if (player === 'light') {
         let pieces = ["knight", "bishop", "rook", "queen"];
         let icons = [
-            `../assets/chess-pieces/${playerOnePieces}/light/chess-knight-light.svg`,
-            `../assets/chess-pieces/${playerOnePieces}/light/chess-bishop-light.svg`,
-            `../assets/chess-pieces/${playerOnePieces}/light/chess-rook-light.svg`,
-            `../assets/chess-pieces/${playerOnePieces}/light/chess-queen-light.svg`
+            `../assets/chess-pieces/${playerOnePieces}/light/chess-knight.svg`,
+            `../assets/chess-pieces/${playerOnePieces}/light/chess-bishop.svg`,
+            `../assets/chess-pieces/${playerOnePieces}/light/chess-rook.svg`,
+            `../assets/chess-pieces/${playerOnePieces}/light/chess-queen.svg`
         ];
 
         let i = 0;
@@ -1353,10 +1353,10 @@ const setPiecesToPromote = () => {
     } else {
         let pieces = ["knight", "bishop", "rook", "queen"];
         let icons = [
-            `../assets/chess-pieces/${playerTwoPieces}/black/chess-knight-black.svg`,
-            `../assets/chess-pieces/${playerTwoPieces}/black/chess-bishop-black.svg`,
-            `../assets/chess-pieces/${playerTwoPieces}/black/chess-rook-black.svg`,
-            `../assets/chess-pieces/${playerTwoPieces}/black/chess-queen-black.svg`
+            `../assets/chess-pieces/${playerTwoPieces}/black/chess-knight.svg`,
+            `../assets/chess-pieces/${playerTwoPieces}/black/chess-bishop.svg`,
+            `../assets/chess-pieces/${playerTwoPieces}/black/chess-rook.svg`,
+            `../assets/chess-pieces/${playerTwoPieces}/black/chess-queen.svg`
         ];
 
         let i = 0;
@@ -1727,6 +1727,16 @@ socket.on("time-ended", (winner, playerOne, playerTwo, ifDraw) => {
     } else {
         endGame(playerOne, playerTwo, winner);
     }
+})
+
+socket.on("checkmate-sound", () => {
+    const som = new Audio("/assets/sounds/som-xequeMate.mpeg");
+    som.play();
+})
+
+socket.on("check-sound", () => {
+    const som = new Audio("/assets/sounds/som-xeque.mpeg");
+    som.play();
 })
 
 socket.on("desconectado", (winner, playerOne, playerTwo) => {
