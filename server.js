@@ -190,52 +190,74 @@ io.on("connection", (socket) => {
     })
 
     socket.on("join-random", (user, time, mode) => {
-        redisClient.get("rooms", (err, reply) => {
-            if (err) throw err;
+        function retornaAoInicio() {
+            redisClient.get("rooms", (err, reply) => {
+                if (err) throw err;
 
-            if (reply) {
-                let rooms = JSON.parse(reply);
+                if (reply) {
+                    let rooms = JSON.parse(reply);
 
-                let roomFull = rooms.find(room => {
-                    room?.players[0] !== null
+                    let roomFull = rooms.find(room =>
+                        room?.players[0] !== null
                         && room?.players[1] !== null && room?.gameFinished === true
-                });
-                
-                if (roomFull) {
-                    removeRoom(roomFull.id);
-                }
+                    );
 
-                let game_time = null;
+                    if (roomFull) {
+                        removeRoom(roomFull.id);
+                        retornaAoInicio();
+                    }
 
-                if (time <= 3) {
-                    game_time = 'bullet';
-                }
-                else if (time > 3 && time <= 8) {
-                    game_time = 'blitz';
-                }
-                else {
-                    game_time = "rapid";
-                }
+                    let game_time = null;
 
-                let pointsColumn = `user_points_${mode}_${game_time}`;
-                let user_points = user[pointsColumn];
+                    if (time <= 3) {
+                        game_time = 'bullet';
+                    }
+                    else if (time > 3 && time <= 8) {
+                        game_time = 'blitz';
+                    }
+                    else {
+                        game_time = "rapid";
+                    }
 
-                let room = rooms.find(room => {
-                    room?.players?.[0] != null &&
-                        room?.players?.[1] === null &&
+                    let pointsColumn = `user_points_${mode}_${game_time}`;
+                    let user_points = user[pointsColumn];
+
+                    let room1 = rooms.find(room =>
+                        room?.players?.[0].username === user.username
+                        && room?.time === time && room?.mode === mode
+                    )
+
+                    if (room1) {
+                        removeRoom(room1.id);
+                        retornaAoInicio();
+                    }
+                  
+                    let room3 = rooms.find(room =>
+                        room?.players?.[0] != null &&
+                        room?.players?.[0].username !== user.username &&
+                        room?.players?.[1] == null &&
                         room?.time === time &&
                         room?.mode === mode &&
                         Math.abs(room?.users_points?.[0] - user_points) <= 400
-                });
+                    );
 
-                if (room) {
-                    console.log("Oi1")
-                    joinRoom(room.id, user);
-                    socket.emit("room-joined", room.id);
-                }
-                else {
+                    if (room3) {
+                        joinRoom(room3.id, user);
+                        socket.emit("room-joined", room3.id);
+                    }
+                    else {
+                        let id = Math.floor(Math.random() * 10001);
+                        let room2 = rooms.find(room => room?.id === id)
+                        if (room2) {
+                            window.location.href = window.location.origin + "/lobby";
+                            return;
+                        }
+                        createRoom(id, user, time, mode)
+                        socket.emit("room-created", id)
+                    }
+                } else {
                     let id = Math.floor(Math.random() * 10001);
-                    let room2 = rooms.find(room => room?.id === id)
+                    let room2 = rooms.find(room => room.id === id)
                     if (room2) {
                         window.location.href = window.location.origin + "/lobby";
                         return;
@@ -243,17 +265,9 @@ io.on("connection", (socket) => {
                     createRoom(id, user, time, mode)
                     socket.emit("room-created", id)
                 }
-            } else {
-                let id = Math.floor(Math.random() * 10001);
-                let room2 = rooms.find(room => room.id === id)
-                if (room2) {
-                    window.location.href = window.location.origin + "/lobby";
-                    return;
-                }
-                createRoom(id, user, time, mode)
-                socket.emit("room-created", id)
-            }
-        })
+            })
+        }
+        retornaAoInicio();
     })
 
     socket.on('get-rooms', () => {

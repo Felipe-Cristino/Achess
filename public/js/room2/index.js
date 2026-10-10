@@ -1521,7 +1521,6 @@ const impedePecaListener = () => {
             return;
         }
 
-<<<<<<< HEAD
         addPecaContainer.classList.add("hidden");
 
         addPecaPecas.removeEventListener("click", selecionarPeca);
@@ -1534,22 +1533,6 @@ const impedePecaListener = () => {
         });
     };
 
-=======
-        console.log(elemento.dataset.piece)
-
-        addPecaContainer.classList.add("hidden");
-
-        addPecaPecas.removeEventListener("click", selecionarPeca);
-
-        socket.emit("carta-impedida", {
-            roomId: roomId,
-            cor: enemy,
-            peca: elemento.dataset.piece,
-            num: 2
-        });
-    };
-
->>>>>>> a862001a091725f2f925630276208716d6169739
     addPecaPecas.addEventListener("click", selecionarPeca);
 }
 
